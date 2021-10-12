@@ -1,4 +1,4 @@
-#include "open62541/open62541.h"
+#include "../open62541/open62541.h"
 
 #include <signal.h>
 #include <stdlib.h>
