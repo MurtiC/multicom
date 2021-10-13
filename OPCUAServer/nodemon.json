@@ -1,0 +1,11 @@
+{
+    "execMap": {
+      "c": ""
+    },
+    "events": {
+        "restart": "make -B -j 1 -o server.o server.o && clear && make run"
+      },
+      "ext":"c,json,h",
+      "delay":1000
+      
+  }
