@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="commons-net-3.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/commons-net-3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/javax.activation-api-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/jaxb-api-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/jd2xx-2.0.8.17-9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/metratec-connection-library-1.22.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/nrjavaserial-3.15.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/slf4j-api-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/requiredLibraries/upnp-library-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

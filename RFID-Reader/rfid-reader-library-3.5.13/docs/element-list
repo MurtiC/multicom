@@ -1,0 +1,10 @@
+com.metratec.lib.connection
+com.metratec.lib.connection.server
+com.metratec.lib.inventory
+com.metratec.lib.inventory.event
+com.metratec.lib.rfidreader
+com.metratec.lib.rfidreader.event
+com.metratec.lib.rfidreader.iso
+com.metratec.lib.rfidreader.mf
+com.metratec.lib.rfidreader.uhf
+com.metratec.lib.tag
