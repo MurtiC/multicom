@@ -6,8 +6,14 @@ import com.metratec.lib.rfidreader.RFIDReaderException;
 import com.metratec.lib.rfidreader.uhf.PulsarMX;
 import com.metratec.lib.rfidreader.uhf.UHFReader;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
