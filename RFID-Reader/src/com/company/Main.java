@@ -35,6 +35,13 @@ public class Main {
                         System.out.printf("TID:%s", tids.get(i));
 
                         double temperatur = readTemperatur(pulsarMX,tids.get(i));
+			
+			try {
+                            writeTemperature(tids.get(i), temperatur, LocalDate.now(), LocalTime.now());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }   
+			    
                         System.out.printf(":%f\t", temperatur);
 
                     }
@@ -84,6 +91,28 @@ public class Main {
             e.printStackTrace();
         }
         return -300;
+    }
+	
+    public static void writeTemperature(String tid, double temperature, LocalDate date, LocalTime time) throws IOException{
+        String s = temperature + "," + date + "," +time + "\n";
+        String filePath = "history/" +tid + ".csv";
+        File dir = new File("history");
+        File file = new File(filePath);
+
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
+        FileWriter writer = new FileWriter(filePath, true);
+        Scanner scanner = new Scanner(file);
+
+        if(!scanner.hasNext()){
+            writer.append("Temperature,Date,Time\n");
+            System.out.println(tid +".csv wurde erstellt");
+        }
+
+        writer.append(s);
+        writer.close();
     }
 
 }
