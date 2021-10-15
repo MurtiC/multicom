@@ -8,13 +8,17 @@ server.o: server.c
 	gcc -c server.c
 
 clean:
-	rm *.o server
+	rm -f *.o
 
-run: server
+clearport:
+	fuser -k 4840/tcp
+
+run:
 	./server
 
 watch: server
-	nodemon --exec ./server
+	nodemon --exec "make runner || exit 1"
 
-runner:
-	make -B -j 1 -o server.o server.o && make run
+
+
+runner: clean server run
