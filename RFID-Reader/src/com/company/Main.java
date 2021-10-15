@@ -120,5 +120,22 @@ public class Main {
         writer.append(s);
         writer.close();
     }
+	
+    public static void writeCurrentTemperature(String tid, double temperature, LocalDate date, LocalTime time) throws IOException{
+        String s = temperature + "," + date + "," +time + "\n";
+        String filePath = "history/" +tid + "current.csv";
+        File file = new File(filePath);
+        File dir = new File("history");
+
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
+        FileWriter writer = new FileWriter(filePath, false);
+        Scanner scanner = new Scanner(file);
+
+        writer.write("Temperature,Date,Time\n" +s);
+        writer.close();
+    }
 
 }
