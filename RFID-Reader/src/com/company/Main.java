@@ -141,4 +141,63 @@ public class Main {
         scanner.close();
     }
 
+    public static void writeCurrentTemperature2(String tid, double temperature, LocalDate date, LocalTime time){
+        String s = tid + CSVSeperator +temperature + CSVSeperator + date + CSVSeperator +time + "\n";
+        String filePath = "history/current.csv";
+        String tempPath = "history/current_temp.csv";
+        File file = new File(filePath);
+        File temp = new File(tempPath);
+        File dir = new File("history");
+
+        if(!dir.exists()) dir.mkdir();
+
+        try {
+            Scanner scanner = new Scanner(file);
+            try {
+                //file exists
+                FileWriter writer = new FileWriter(temp, true);
+                boolean tid_exists = false;
+                while(scanner.hasNext()){
+                    String row = scanner.next() + "\n";
+                    if(row.contains(tid)){
+                        writer.append(s);
+                        tid_exists = true;
+                        break;
+                    }else{
+                        writer.append(row);
+                    }
+                }
+
+                if(!tid_exists) writer.append(s);
+
+                scanner.close();
+                writer.close();
+
+                if(!file.delete()){
+                    System.out.println("File konnte nicht geloscht werden");
+                }
+                if(!temp.renameTo(file)){
+                    System.out.println("File konnte nicht unbenannt werden");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (FileNotFoundException e) {
+            //file does not exist
+            try {
+                //create file and write title + data
+                FileWriter writer = new FileWriter(file, true);
+                writer.append("TID" + CSVSeperator + "Temperature" + CSVSeperator + "Date" + CSVSeperator + "Time\n");
+                writer.append(s);
+                writer.close();
+                return;
+            } catch (IOException ex) {
+                System.out.println("file: current.csv konnte nicht erstellt werden");
+            }
+        }
+
+    }
+
+
 }
