@@ -101,7 +101,7 @@ public class Main {
     }
 
     public static void writeTemperature(String tid, double temperature, LocalDate date, LocalTime time) throws IOException {
-        String s = temperature + CSVSeperator + date + CSVSeperator + time + "\n";
+        String s = temperature + CSVSeperator + date + " " + time + "\n";
         String filePath = "history/" + tid + ".csv";
         File dir = new File("history");
         File file = new File(filePath);
@@ -114,7 +114,7 @@ public class Main {
         Scanner scanner = new Scanner(file);
 
         if (!scanner.hasNext()) {
-            writer.append("Temperature"+CSVSeperator+"Date"+CSVSeperator+"Time\n");
+            writer.append("Temperature"+CSVSeperator+"Date Time\n");
             System.out.println(tid + ".csv wurde erstellt");
         }
 
@@ -124,7 +124,7 @@ public class Main {
     }
 
     public static void writeCurrentTemperature(String tid, double temperature, LocalDate date, LocalTime time) throws IOException {
-        String s = temperature + CSVSeperator + date + CSVSeperator + time + "\n";
+        String s = temperature + CSVSeperator + date + " " + time + "\n";
         String filePath = "history/" + tid + "current.csv";
         File file = new File(filePath);
         File dir = new File("history");
@@ -142,7 +142,7 @@ public class Main {
     }
 
     public static void writeCurrentTemperature2(String tid, double temperature, LocalDate date, LocalTime time){
-        String s = tid + CSVSeperator +temperature + CSVSeperator + date + CSVSeperator +time + "\n";
+        String s = tid + CSVSeperator +temperature + CSVSeperator + date + " " +time + "\n";
         String filePath = "history/current.csv";
         String tempPath = "history/current_temp.csv";
         File file = new File(filePath);
@@ -188,7 +188,7 @@ public class Main {
             try {
                 //create file and write title + data
                 FileWriter writer = new FileWriter(file, true);
-                writer.append("TID" + CSVSeperator + "Temperature" + CSVSeperator + "Date" + CSVSeperator + "Time\n");
+                writer.append("TID" + CSVSeperator + "Temperature" + CSVSeperator + "Date Time\n");
                 writer.append(s);
                 writer.close();
                 return;
