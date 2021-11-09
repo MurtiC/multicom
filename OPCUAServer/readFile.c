@@ -19,6 +19,51 @@
 
 #define CSVSeperator ';'
 
+void createFolder(char *relPath) {
+    int pathLength = strlen(relPath);
+    char path[PATH_MAX];
+    if (getcwd(path, sizeof(path)) == NULL)
+    {
+        printf("OpenConfigRead:getCSV:Faild");
+         return;
+    }
+    strcat(path, relPath);
+    struct stat st = {0};
+    if (stat(path, &st) == -1) {
+        mkdir(path,0777);
+    }
+}
+
+bool fileExist(char* relPath)
+{
+    int pathLength = strlen(relPath);
+    char path[PATH_MAX];
+    if (getcwd(path, sizeof(path)) == NULL)
+    {
+        printf("OpenConfigRead:getCSV:Faild");
+         return false;
+    }
+    strcat(path, relPath);
+
+    return access( path, F_OK ) == 0;
+
+}
+
+void createCSV(
+    int rows,
+    int colums,
+    int length,
+    char result[rows][colums][length]) 
+{
+    for (int x = 0; x < rows; x++)
+    {
+        for (int y = 0; y < colums; y++)
+        {
+            strcpy(result[x][y],"");
+        }
+    }
+}
+
 int getFiles(int filesLength,int fileLength,char files[filesLength][fileLength],char* relPath) {
     
     int pathLength = strlen(relPath);
@@ -194,12 +239,64 @@ int getCSVColum(
     int headerlength = strlen(header);
     for (int y = 0; y < colums; y++)
     {
-        if (strncmp(csv[0][y], header, headerlength) == 0)
+        if (strcmp(csv[0][y], header) == 0)
         {
             return y;
         }
     }
+    
     return -1;
+}
+
+int addCSVColum(int rows,
+    int colums,
+    int length,
+    char csv[rows][colums][length],
+    char *header) {
+    // Add if not exist
+    for (int y=0; y < colums;y++) {
+       if (strlen(csv[0][y]) == 0)
+        {
+            strcpy(csv[0][y],header);
+            return y;
+        } 
+    }
+    return -1;
+}
+
+int addCSVRow(
+    int rows,
+    int colums,
+    int length,
+    char csv[rows][colums][length],
+    int colum,
+    char *content) {
+    for (int a=1; a < rows;a++) {
+         if (strlen(csv[a][colum]) == 0) {
+              strcpy(csv[a][colum],content);
+              return a;
+         }
+    }
+    return -1;
+}
+
+int getCSVRow(
+    int rows,
+    int colums,
+    int length,
+    char csv[rows][colums][length],
+    int colum,
+    char *content) {
+    int contentlength = strlen(content);
+    for (int a=1; a < rows;a++) {
+        if (strncmp(csv[a][colum],content,contentlength) == 0) {
+            return a;
+        }
+        if (strlen(csv[a][colum]) == 0) {
+            return a * (-1);
+        }
+    }
+    return 0;
 }
 
 void printCSV(
@@ -242,7 +339,7 @@ int writeCSV(
         {
             fputs(csv[x][y],file);
             if (y < colums-1) {
-                fputc(',',file);
+                fputc(CSVSeperator,file);
             }
         }
         fputc('\r',file);
@@ -253,4 +350,17 @@ int writeCSV(
     return 1;
 }
 
+
+void concatCells(
+    int rows,
+    int colums,
+    int length,
+    char csv[rows][colums][length],
+    int count,
+    int cellRows[count],
+    int cellColumes[count],char * text) {
+    for (int a=0; a < count;a++) {
+        strcat(text,csv[cellRows[a]][cellColumes[a]]);
+    }
+}
 #endif

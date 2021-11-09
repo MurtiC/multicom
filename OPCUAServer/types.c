@@ -18,8 +18,7 @@ static UA_StatusCode readTemperatur(
     const UA_NumericRange *range,
     UA_DataValue *dataValue) {
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                "The variable was updated");
+    //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The variable was updated");
 
     char tid[24] = "                        ";
     char *tidd = (nodeId)->identifier.string.data;
@@ -51,15 +50,13 @@ static UA_StatusCode readTemperatur(
            currentCSVColums,
            currentCSVLength,
            currentCSV,"Temperature");
-           UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                "Find Temperature in CSV: %d",temperaturCol);
+           //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Find Temperature in CSV: %d",temperaturCol);
         if (temperaturCol >= 0) {
             char *eptr;
             temperatur = strtod(currentCSV[1][temperaturCol],&eptr);
         }
         else {
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                "Cannot Find Temperature in CSV: %s",temperaturCol);
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Cannot Find Temperature in CSV: %s",temperaturCol);
         }
     }
 
@@ -214,3 +211,5 @@ static void updatetemptags(UA_Server *server, void *data) {
 }
 
 #endif
+
+

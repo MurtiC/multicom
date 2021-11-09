@@ -172,13 +172,17 @@ addTempTagObjectInstance(UA_Server *server, char *name)
 {
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", name);
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, name),
-                            tempTagTypeId, /* this refers to the object type
+    UA_Server_addObjectNode(
+        server,
+        UA_NODEID_NULL,
+        UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+        UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+        UA_QUALIFIEDNAME(1, name),
+        tempTagTypeId, /* this refers to the object type
                                            identifier */
-                            oAttr, NULL, NULL);
+        oAttr, 
+        NULL, 
+        NULL);
     
 }
 
