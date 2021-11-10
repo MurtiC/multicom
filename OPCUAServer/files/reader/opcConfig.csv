@@ -1,4 +1,4 @@
-Id;Name;Description;Location;;;;;;;;;;;;;;;;
+Id;Name;Description;Location;IPAdress;Port;Pin;Mode;State;;;;;;;;;;;
 reader1;;;;;;;;;;;;;;;;;;;
 InputPin1;;;;;;;;;;;;;;;;;;;
 InputPin2;;;;;;;;;;;;;;;;;;;

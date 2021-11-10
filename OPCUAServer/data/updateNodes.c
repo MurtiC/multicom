@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "../readFile.c"
 
-//#region [rgba(255,255,255,0.15)]
+//#region [rgba(255,0,0,0.15)] 
 /**
  * @brief Compare a UA_Variant with UA_Variant
  * @param variant1 UA_Variant
@@ -23,7 +23,6 @@ static bool UA_VariantCompare(UA_Variant *variant1, UA_Variant *variant2)
         {
             return false;
         }
-
         return strcmp(variant1->data, variant2->data) != 0;
     }
     else if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_DATETIME]))
@@ -84,91 +83,68 @@ static bool UA_VariantCompare(UA_Variant *variant1, UA_Variant *variant2)
     }
     return false;
 }
+//#endregion
+
+//#region [rgba(255,255,255,0.15)] Convert from Type to Variant
 
 /**
- * @brief Convert a UA_Variant to String
+ * @brief Convert int to UA_Variant 
  * @param variant UA_Variant
- * @param text string
+ * @param value int
  */
-static void UA_VariantToString(const UA_Variant *variant, char *text)
+static void IntToUA_Variant(UA_Variant *variant, int* value)
 {
-    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
-    {
-
-        UA_String uaText = *((UA_String *)variant->data);
-        char newtext[uaText.length + 2];
-        int a = 0;
-        for (a = 0; a < uaText.length; a++)
-        {
-            newtext[a] = uaText.data[a];
-        }
-        newtext[a] = '\0';
-        strcpy(text, newtext);
-    }
-    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DATETIME]))
-    {
-        UA_DateTime value = *((UA_DateTime *)variant->data);
-        UA_DateTimeStruct dateStruct = UA_DateTime_toStruct(value);
-        strcpy(text, "");
-
-        double seconds = dateStruct.sec;
-        seconds = seconds + dateStruct.milliSec / 1000;
-        seconds = seconds + dateStruct.microSec / 1000000;
-        seconds = seconds + dateStruct.nanoSec / 1000000000;
-
-        // 2021-10-15;12:37:11.713864291
-        // YYYY-MM-DD hh:mm:ssssssssssss
-        sprintf(
-            text,
-            "%02d-%02d-%02d %02d:%02d:%02.9f",
-            dateStruct.year,
-            dateStruct.month,
-            dateStruct.day,
-            dateStruct.hour,
-            dateStruct.min,
-            seconds);
-    }
-    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_INT32]))
-    {
-        int value = *((int *)variant->data);
-        sprintf(text, "%d", value);
-    }
-    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_BOOLEAN]))
-    {
-        bool value = *((bool *)variant->data);
-        if (value)
-        {
-            strcpy(text, "true");
-        }
-        else
-        {
-            strcpy(text, "false");
-        }
-    }
-    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DOUBLE]))
-    {
-        double value = *((double *)variant->data);
-        sprintf(text, "%f", value);
-    }
+    UA_Variant_setScalarCopy(variant, value, &UA_TYPES[UA_TYPES_INT32]);
 }
 
 /**
- * @brief Convert a String to UA_Variant
+ * @brief Convert bool to UA_Variant 
+ * @param variant UA_Variant
+ * @param value bool
+ */
+static void BoolToUA_Variant(UA_Variant *variant,bool* value)
+{
+     UA_Variant_setScalarCopy(variant, value, &UA_TYPES[UA_TYPES_BOOLEAN]);
+}
+
+/**
+ * @brief Convert double to UA_Variant 
+ * @param variant UA_Variant
+ * @param value double
+ */
+static void DoubleToUA_Variant( UA_Variant *variant,double* value)
+{
+    UA_Variant_setScalarCopy(variant, value, &UA_TYPES[UA_TYPES_DOUBLE]);
+}
+
+/**
+ * @brief Convert string to UA_Variant 
+ * @param variant UA_Variant
+ * @param value string
+ */
+static void StringToUA_Variant(UA_Variant *variant,char* value) 
+{
+    UA_String uaText = UA_String_fromChars(value);
+    UA_Variant_setScalarCopy(variant, &uaText, &UA_TYPES[UA_TYPES_STRING]);
+}
+
+/**
+ * @brief Cast a Text to variant type of variant and insert into variant
  * @param text string
  * @param variant UA_Variant
  */
-static void StringToUA_Variant(char *text, UA_Variant *variant)
+static bool TextToUA_Variant(char *text, UA_Variant *variant)
 {
-
     if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
     {
         // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, text);
-        UA_String uaText = UA_String_fromChars(text);
-        UA_Variant_setScalarCopy(variant, &uaText, &UA_TYPES[UA_TYPES_STRING]);
+        //UA_String uaText = UA_String_fromChars(text);
+        //UA_Variant_setScalarCopy(variant, &uaText, &UA_TYPES[UA_TYPES_STRING]);
+        StringToUA_Variant(variant,text);
+        return true;
     }
     else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DATETIME]))
     {
-
         // 2021-10-15;12:37:11.713864291
         // YYYY-MM-DD
         // hh:mm:ssssssssssss
@@ -255,7 +231,7 @@ static void StringToUA_Variant(char *text, UA_Variant *variant)
         double seconds = strtod(second, &eptr);
         if (errno == ERANGE)
         {
-            return;
+            return false;
         }
 
         dateStruct.sec = (int)seconds;
@@ -294,16 +270,21 @@ static void StringToUA_Variant(char *text, UA_Variant *variant)
 
         UA_DateTime value = UA_DateTime_fromStruct(dateStruct);
         UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_DATETIME]);
+        return true;
     }
     else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_INT32]))
     {
         int value = atoi(text);
-        UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_INT32]);
+        IntToUA_Variant(variant,&value);
+        //UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_INT32]);
+        return true;
     }
     else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_BOOLEAN]))
     {
         bool value = strcmp(text,"true")==0 || strcmp(text,"1")==0;
-        UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_BOOLEAN]);
+        BoolToUA_Variant(variant,&value);
+        //UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_BOOLEAN]);
+        return true;
     }
     else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DOUBLE]))
     {
@@ -311,12 +292,160 @@ static void StringToUA_Variant(char *text, UA_Variant *variant)
         double value = strtod(text, &eptr);
         if (errno == ERANGE)
         {
-            return;
+            return false;
         }
-        UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_DOUBLE]);
+        DoubleToUA_Variant(variant,&value);
+        //UA_Variant_setScalarCopy(variant, &value, &UA_TYPES[UA_TYPES_DOUBLE]);
+        return true;
     }
+    return false;
+}
+//#endregion
+
+//#region [rgba(0,255,255,0.15)] Convert from Variant to Type
+
+/**
+ * @brief Convert a UA_Variant to Int
+ * @param variant UA_Variant
+ */
+static int UA_VariantToInt(const UA_Variant *variant)
+{
+    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_INT32]))
+    {
+        int value = *((int *)variant->data);
+        return value;
+    }
+    return 0;
 }
 
+/**
+ * @brief Convert a UA_Variant to Bool
+ * @param variant UA_Variant
+ */
+static bool UA_VariantToBool(const UA_Variant *variant)
+{
+    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_BOOLEAN]))
+    {
+        bool value = *((bool *)variant->data);
+        return value;
+    }
+    return false;
+}
+
+/**
+ * @brief Convert a UA_Variant to Double
+ * @param variant UA_Variant
+ */
+static double UA_VariantToDouble(const UA_Variant *variant)
+{
+    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DOUBLE]))
+    {
+        double value = *((double *)variant->data);
+        return value;
+    }
+    return 0;
+}
+
+/**
+ * @brief Convert UA_Variant to string
+ * @param variant UA_Variant
+ * @param value string
+ */
+static bool UA_VariantToString(const UA_Variant *variant, char* value) 
+{
+    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
+    {
+        UA_String uaText = *((UA_String *)variant->data);
+        char newtext[uaText.length + 2];
+        int a = 0;
+        for (a = 0; a < uaText.length; a++)
+        {
+            newtext[a] = uaText.data[a];
+        }
+        newtext[a] = '\0';
+        strcpy(value, newtext);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Convert a UA_Variant to String
+ * @param variant UA_Variant
+ * @param text string
+ */
+static bool UA_VariantToText(const UA_Variant *variant, char *text)
+{
+    if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
+    {
+        return UA_VariantToString(variant,text);
+        /*
+        UA_String uaText = *((UA_String *)variant->data);
+        char newtext[uaText.length + 2];
+        int a = 0;
+        for (a = 0; a < uaText.length; a++)
+        {
+            newtext[a] = uaText.data[a];
+        }
+        newtext[a] = '\0';
+        strcpy(text, newtext);
+        return true;
+        */
+    }
+    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DATETIME]))
+    {
+        UA_DateTime value = *((UA_DateTime *)variant->data);
+        UA_DateTimeStruct dateStruct = UA_DateTime_toStruct(value);
+        strcpy(text, "");
+
+        double seconds = dateStruct.sec;
+        seconds = seconds + dateStruct.milliSec / 1000;
+        seconds = seconds + dateStruct.microSec / 1000000;
+        seconds = seconds + dateStruct.nanoSec / 1000000000;
+
+        // 2021-10-15;12:37:11.713864291
+        // YYYY-MM-DD hh:mm:ssssssssssss
+        sprintf(
+            text,
+            "%02d-%02d-%02d %02d:%02d:%02.9f",
+            dateStruct.year,
+            dateStruct.month,
+            dateStruct.day,
+            dateStruct.hour,
+            dateStruct.min,
+            seconds);
+        return true;
+    }
+    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_INT32]))
+    {
+        int value = UA_VariantToInt(variant);
+        //int value = *((int *)variant->data);
+        sprintf(text, "%d", value);
+        return true;
+    }
+    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_BOOLEAN]))
+    {
+        bool value = UA_VariantToBool(variant);
+        //bool value = *((bool *)variant->data);
+        if (value)
+        {
+            strcpy(text, "true");
+        }
+        else
+        {
+            strcpy(text, "false");
+        }
+        return true;
+    }
+    else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DOUBLE]))
+    {
+        double value = UA_VariantToDouble(variant);
+        //double value = *((double *)variant->data);
+        sprintf(text, "%f", value);
+        return true;
+    }
+    return false;
+}
 //#endregion
 
 //#region [rgba(255,0,0,0.15)]
@@ -342,26 +471,26 @@ static void UpdateNode(
 
     if (write)
     {
-        UA_VariantToString(&valueVariant, text);
+        UA_VariantToText(&valueVariant, text);
     }
     else
     {
         //char oldText[100];
-        //UA_VariantToString(&valueVariant,oldText);
+        //UA_VariantToText(&valueVariant,oldText);
         
         UA_Variant newValueVariant = valueVariant;
-        StringToUA_Variant(text, &newValueVariant);
+        bool result =  TextToUA_Variant(text, &newValueVariant);
 
         //char newText[100];
-        //UA_VariantToString(&newValueVariant,newText);
+        //UA_VariantToText(&newValueVariant,newText);
         
         bool equals =UA_VariantCompare(&newValueVariant, &valueVariant);
 
-        //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNode Read:Input:%s Old:%s New:%s equals:%d",text,oldText,newText,equals);
+        //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNode Read:Input:%s Old:%s New:%s equals:%d result:%d",text,oldText,newText,equals,result);
 
-        if (!equals)
+        if (!equals && result)
         {
-            UA_Server_writeValue(server, nodeId, newValueVariant);
+           UA_Server_writeValue(server, nodeId, newValueVariant);
         }
     }
 }
@@ -376,12 +505,13 @@ static void UpdateNode(
  * @param variables The struct for the resulting nodeIds
  * @param name The name of the node
  */
+/*
 static void UpdateNodeVariable(
     UA_Server *server,
     struct nodeVariable *variables)
 {
 
-    /* UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
      oAttr.displayName = UA_LOCALIZEDTEXT("en-US", name);
      UA_Server_addObjectNode(
          server,
@@ -404,8 +534,8 @@ static void UpdateNodeVariable(
          (variables->Value),
          "Value",
          0.00);
- */
-}
+ 
+}*/
 //#endregion
 
 //#region [rgba(255,255,0,0.15)]
@@ -417,11 +547,12 @@ static void UpdateNodeVariable(
  * @param variables The struct for the resulting nodeIds
  * @param name The name of the node
  */
+/* 
 static void UpdateNodeTemperaturSensor(
     UA_Server *server,
     struct nodeTemperaturSensor *variables)
 {
-    /*  UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
       oAttr.displayName = UA_LOCALIZEDTEXT("en-US", name);
       UA_Server_addObjectNode(
           server,
@@ -477,8 +608,8 @@ static void UpdateNodeTemperaturSensor(
           types,
           &(variables->MinTemperatur),
           "MinTemperatur");
-  */
-}
+  
+}*/
 //#endregion
 
 //#region [rgba(0,255,255,0.15)]
@@ -490,6 +621,7 @@ static void UpdateNodeTemperaturSensor(
  * @param variables The struct for the resulting nodeIds
  * @param name The name of the node
  */
+/*
 static void UpdateNodePin(
     UA_Server *server,
     struct nodePin *variables,
@@ -630,8 +762,8 @@ static void UpdateNodePin(
         types,
         &(variables->Status),
         "Status");
-*/
-}
+
+}*/
 //#endregion
 
 //#region [rgba(0,0,255,0.15)]
@@ -643,6 +775,7 @@ static void UpdateNodePin(
  * @param variables The struct for the resulting nodeIds
  * @param name The name of the node
  */
+/*
 static void UpdateNodeRFIDReader(
     UA_Server *server,
     struct nodeRFIDReader *variables,
@@ -877,7 +1010,7 @@ static void UpdateNodeRFIDReader(
         &(variables->OutputPins[a]),
         name);
     }
-*/
+
     writeCSV(
         "/files/reader/config.csv",
         configRows,
@@ -898,9 +1031,9 @@ static void UpdateNodeRFIDReader(
         readerColums,
         length,
         readerCSV);
-    //*/
+    //
     // TemperaturSensorNodes are generated at runtime !
-}
+}*/
 //#endregion
 
 //#region [rgba(255,255,0,0.15)]
@@ -912,6 +1045,7 @@ static void UpdateNodeRFIDReader(
  * @param variables The struct for the resulting nodeIds
  * @param name The name of the node
  */
+/*
 static void UpdateNodeTemperaturMonitoring(
     UA_Server *server,
     struct nodeTemperaturMonitoring *variables,
@@ -1026,8 +1160,6 @@ static void UpdateNodeTemperaturMonitoring(
         csv);
 
     /*
-
-
         UpdateStringNode(
             server,
             (variables->Version),
@@ -1042,8 +1174,8 @@ static void UpdateNodeTemperaturMonitoring(
 
         UpdateNodeRFIDReader(
             server,
-            (variables->Reader));*/
-}
+            (variables->Reader));
+}*/
 //#endregion
 
 #endif
