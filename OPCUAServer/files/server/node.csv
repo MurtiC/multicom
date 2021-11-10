@@ -1,4 +1,4 @@
-﻿Type;Name;Description;DisplayName;Parrent;Write;Min;Max;DataSource;CSVName;CSVIdentifierColum;CSVIdentifier;CSVValueColum;SourceCallback;MethodCallback
+Type;Name;Description;DisplayName;Parrent;Write;Min;Max;DataSource;CSVName;CSVIdentifierColum;CSVIdentifier;CSVValueColum;SourceCallback;MethodCallback
 1;RFID-Reader;;RFID-Reader;ORGANIZES;;;;;;;;;;
 4;Name;Name of the reader;Name;RFID-Reader;1;;;1;/files/reader/opcConfig.csv;Id;reader1;Name;;
 4;Description;Description of the reader;Description;RFID-Reader;1;;;1;/files/reader/opcConfig.csv;Id;reader1;Description;;
@@ -9,7 +9,7 @@
 4;Hardwarerevision;Hardwarerevision of the reader;Hardwarerevision;RFID-Reader;0;;;1;/files/reader/readerConfig.csv;Id;reader1;Hardwarerevision;;
 4;Softwarerevision;Softwarerevision of the reader;Softwarerevision;RFID-Reader;0;;;1;/files/reader/readerConfig.csv;Id;reader1;Softwarerevision;;
 3;NotConnected;Is true when reader is not connected;Not Connected;RFID-Reader;0;;;1;/files/reader/readerCurrent.csv;Id;reader1;NotConnected;;
-3;SoftwareNotConnected;Is true when reader-client is not connected;Software Not Connected;RFID-Reader;0;;;2;;;;;SoftwareNotConnected;
+3;SoftwareNotConnected;Is true when reader-client is not connected;Software Not Connected;RFID-Reader;0;;;2;/files/reader/readerCurrent.csv;;;;SoftwareNotConnected;
 7;AddTemperaturSensor;;AddTemperaturSensor;RFID-Reader;;;;;;;;AddTemperaturSensor;;AddTemperaturSensor
 7;RemoveTemperaturSensor;;RemoveTemperaturSensor;RFID-Reader;;;;;;;;RemoveTemperaturSensor;;RemoveTemperaturSensor
 1;InputPin1;;InputPin1;RFID-Reader;;;;;;;;;;

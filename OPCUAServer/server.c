@@ -1,36 +1,103 @@
 
 #include <signal.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
 #include "open62541/open62541.h"
 
-#include "nodes.c"
-//#include "types.c"
-//#include "typeExample.c"
-#include "typeExample2.c"
-//#include "typesExample2d.c"
 
 #include "readFile.c"
 
-#include "data/createNodes.c"
-#include "data/createNodeTypes.c"
-#include "data/dataStruct.c"
 #include "data/updateNodes.c"
 
 #include "data/nodeset.c"
 
+#define SoftwareTimeoutduration 20 // in seconds
+#define MaxLogSize 1073741824
+
 static volatile UA_Boolean running = true;
+static int LoopCount = 0;
+static FILE* logFile;
+
 static void stopHandler(int sig)
 {
+    fclose(logFile);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
     running = false;
 }
 
+static void LogIntoFile() {
+    
+    if (logFile != NULL) {
+        fclose(logFile);
+    }
+
+    
+     // Log File
+    time_t currentTimeT;
+    time(&currentTimeT);
+    struct tm* currenttimeTm;
+    currenttimeTm = gmtime(&currentTimeT);
+
+    char logPath[PATH_MAX];
+    char logPathFull[PATH_MAX];
+    sprintf(
+        logPath,
+        "/files/server/logs/opc_%d_%d_%d_%d.txt",
+        currenttimeTm->tm_year+1900,
+        currenttimeTm->tm_mon,
+        currenttimeTm->tm_mday,
+        currenttimeTm->tm_hour);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s",logPath);
+
+    getFullPath(logPath,logPathFull);    
+    logFile = freopen(logPathFull,"a",stdout);
+    
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s",logPath);
+}
+
+static void ClearOldLogs() {
+    
+
+    char oldlogFiles[200][PATH_MAX];
+    getFiles(200,PATH_MAX,oldlogFiles,"/files/server/logs");
+    long long size = 0;
+    char logFileName[PATH_MAX];
+    struct stat file;
+    for (int a=0; a < 200;a++) 
+    {
+        if (strlen(oldlogFiles[a]) > 0) {
+           strcpy(logFileName,"/files/server/logs/");
+           strcat(logFileName,oldlogFiles[a]);
+           
+            if (fileStats(logFileName,&file)) 
+            { 
+                size += file.st_size;
+            }
+
+            if (size > MaxLogSize) {
+               //deleteFile(logFileName);
+            }
+           
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Logs:%s , size:%d / %d",oldlogFiles[a],size,MaxLogSize );
+        }
+    }
+}
+
 void updateEverySecond(UA_Server *server, void *data)
 {
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "updateEverySecond");
+   LoopCount++;
     // struct nodeRFIDReader* variables = (struct nodeRFIDReader*)data;
     UpdateDynamicNodes(server);
+}
+
+void updateEveryHour(UA_Server *server, void *data)
+{
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Alive:%d",LoopCount);
+    LoopCount = 0;
+    LogIntoFile();
+    ClearOldLogs();
 }
 
 static UA_StatusCode AddTemperaturSensor(
@@ -214,10 +281,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(OverTemperatur.Parrent, Folder.Name);
     OverTemperatur.Write = false;
     OverTemperatur.DataSource = SourceCallback;
-    strcpy(OverTemperatur.CSVName, configPath);
-    strcpy(OverTemperatur.CSVIdentifierColum, ident);
-    strcpy(OverTemperatur.CSVIdentifier, inputText);
-    strcpy(OverTemperatur.CSVValueColum, nodeName);
+    strcpy(OverTemperatur.SourceCallback, "OverTemperatur");
 
     // UnderTemperatur
     struct myNode UnderTemperatur;
@@ -231,11 +295,8 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(UnderTemperatur.DisplayName, nodeName);
     strcpy(UnderTemperatur.Parrent, Folder.Name);
     UnderTemperatur.Write = false;
-    UnderTemperatur.DataSource = SourceCallback;
-    strcpy(UnderTemperatur.CSVName, configPath);
-    strcpy(UnderTemperatur.CSVIdentifierColum, ident);
-    strcpy(UnderTemperatur.CSVIdentifier, inputText);
-    strcpy(UnderTemperatur.CSVValueColum, nodeName);
+    UnderTemperatur.DataSource = SourceCallback;    
+    strcpy(UnderTemperatur.SourceCallback, "UnderTemperatur");
 
     // NotConnected
     struct myNode NotConnected;
@@ -254,6 +315,22 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(NotConnected.CSVIdentifierColum, ident);
     strcpy(NotConnected.CSVIdentifier, inputText);
     strcpy(NotConnected.CSVValueColum, nodeName);
+
+    // SoftwareNotConnected
+    struct myNode SoftwareNotConnected;
+    CreateNode(&SoftwareNotConnected);
+    strcpy(nodeName, "SoftwareNotConnected");
+    strcpy(currentName, inputText);
+    strcat(currentName, nodeName);
+    SoftwareNotConnected.Type = TypeBoolean;
+    strcpy(SoftwareNotConnected.Description,"Is set when reader client doesend respond for the timeout duration");
+    strcpy(SoftwareNotConnected.Name, currentName);
+    strcpy(SoftwareNotConnected.DisplayName, nodeName);
+    strcpy(SoftwareNotConnected.Parrent, Folder.Name);
+    SoftwareNotConnected.Write = false;
+    SoftwareNotConnected.DataSource = SourceCSV;
+    strcpy(SoftwareNotConnected.CSVName, currentPath);
+    strcpy(SoftwareNotConnected.SourceCallback, "SoftwareNotConnected");
 
     // Timeout
     struct myNode Timeout;
@@ -284,6 +361,7 @@ static UA_StatusCode AddTemperaturSensor(
                  AppandNodeToNodes(server, &OverTemperatur) < 0 ||
                  AppandNodeToNodes(server, &UnderTemperatur) < 0 ||
                  AppandNodeToNodes(server, &Timeout) < 0 ||
+                 AppandNodeToNodes(server, &SoftwareNotConnected) < 0 ||
                  AppandNodeToNodes(server, &NotConnected) < 0);
     if (fail)
     {
@@ -299,6 +377,7 @@ static UA_StatusCode AddTemperaturSensor(
         RemoveNodeFromNodes(server, &OverTemperatur);
         RemoveNodeFromNodes(server, &UnderTemperatur);
         RemoveNodeFromNodes(server, &Timeout);
+        RemoveNodeFromNodes(server, &SoftwareNotConnected);
         RemoveNodeFromNodes(server, &NotConnected);
     }
     else
@@ -428,8 +507,10 @@ static void UpdateNodesetNode(
     // checks if node is a Upper or Lower Temperatur
     // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNodesetNode");
 
-    bool overTemp = strcmp(node->DisplayName, "OverTemperatur") == 0;
-    bool underTemp = strcmp(node->DisplayName, "UnderTemperatur") == 0;
+
+    bool overTemp = strcmp(node->SourceCallback,"OverTemperatur") == 0;
+    bool underTemp = strcmp(node->SourceCallback, "UnderTemperatur") == 0;
+    bool SoftwareNotConnected =  strcmp(node->SourceCallback, "SoftwareNotConnected") == 0; 
 
     if (overTemp || underTemp)
     {
@@ -494,12 +575,53 @@ static void UpdateNodesetNode(
             UA_Server_writeValue(server, node->NodeId, valueVariant);
         }
     }
+    else if (SoftwareNotConnected) {
+
+        time_t rawtime;
+        time ( &rawtime );
+
+        struct stat stats;
+        if (fileStats(node->CSVName,&stats)) 
+        {
+            //struct tm time;
+            //time = *(gmtime(&stats.st_ctime));
+
+            double diffsecondsCTime = difftime(rawtime,stats.st_ctime);
+            double diffsecondsMTime = difftime(rawtime,stats.st_mtime);
+
+            double diffseconds = diffsecondsCTime;
+            if (diffseconds < diffsecondsMTime) {
+                diffseconds = diffsecondsMTime;
+            }
+
+            bool timeout = diffseconds >= SoftwareTimeoutduration;
+
+            UA_Variant valueVariant;
+            UA_Server_readValue(server, node->NodeId, &valueVariant);
+            bool oldValue = UA_VariantToBool(&valueVariant);
+
+            if (oldValue != timeout) {
+                BoolToUA_Variant(&valueVariant,&timeout);
+                UA_Server_writeValue(server, node->NodeId, valueVariant);
+            }
+            if (timeout) 
+            {
+                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "SoftwareNotConnected:%s: %0.01f",node->CSVName,diffseconds);
+            }
+        }
+    }
+
+
 }
+
 
 int main(void)
 {
+   ClearOldLogs();
+   LogIntoFile();
+    // Start Server
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Start Server");
-
+    
     int serverConfigRows = 2;
     int serverConfigColums = 2;
     int serverConfigLength = 256;
@@ -549,7 +671,6 @@ int main(void)
     UA_ServerConfig_setCustomHostname(
         UA_Server_getConfig(server),
         hostname);
-    // #endregion
 
     // NodeSet
 
@@ -566,102 +687,25 @@ int main(void)
     {
         LoadNodes("/files/server/node.csv");
     }
-
     UpdateDynamicNodes(server);
-
     StoreNodes("/files/server/runtimeNode.csv");
-    /*
-    // Variables
-
-    struct nodeTypes Types;
-
-
-
-    struct nodeRFIDReader Variables;
-
-    AddNodeVariableType(server,&Types);
-    AddNodeTemperaturSensorType(server,&Types);
-    AddNodePinType(server,&Types);
-    AddNodeRFIDReaderType(server,&Types);
-    AddNodeTemperaturMonitoringType(server,&Types);
-
-
-    UA_NodeId root = UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER);
-   /* AddNodeTemperaturMonitoring(
-        server,
-        root,
-        &Types,
-        &Variables,
-        "Monitoring 1");
-    */
-    /*
-     AddNodeRFIDReader(
-         server,
-         root,
-         &Types,
-         &Variables,
-         "Monitoring 1");
-
-
-      //  UpdateNodeTemperaturMonitoring(server,&Variables,true);
-
-     /*AddNodeTemperaturMonitoring(
-         server,
-         &MonitoringType,
-         UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-         "MonitoringType"
-     );
-
-     //addGenericValueType(server);
-     //addGenericValueVariable(server);
-     /*manuallyDefineTemptag(
-         server,
-         "Tag 6",
-         "E280B0403C0000000C014A97",
-         "On Sensor",
-         30,
-         20);
-     manuallyDefineTemptag(
-         server,
-         "Tag 7",
-         "E280B0403C0000000C01511E",
-         "On Sensor",
-         30,
-         20);
-     manuallyDefineTemptag(
-         server,
-         "Tag 8",
-         "E280B0403C0000000C014F84",
-         "On Sensor",
-         30,
-         20);
-     manuallyDefineTemptag(
-         server,
-         "Tag 9",
-         "E280B0403C0000000C014AE1",
-         "On Sensor",
-         30,
-         20);
-     manuallyDefineTemptag(
-         server,
-         "Tag 10",
-         "E280B0403C0000000C014855",
-         "On Sensor",
-         30,
-         20);
-     char data[24] = "Test";
-     */
-
-    // addVariableType2DPoint(server);
-    // addVariable1(server);
-    // addVariableFail(server);
-    // writeVariable1(server);
+    
 
     UA_Server_addRepeatedCallback(
         server, updateEverySecond,
         &Nodes,
         1000,
         NULL);
+
+    // 1h : 3600000
+
+
+    UA_Server_addRepeatedCallback(
+        server, updateEveryHour,
+        NULL,
+        3600000,
+        NULL);
+
 
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_Server_delete(server);

@@ -19,15 +19,25 @@
 
 #define CSVSeperator ';'
 
-void createFolder(char *relPath) {
+bool getFullPath(char* relPath,char* fullpath) 
+{
     int pathLength = strlen(relPath);
     char path[PATH_MAX];
     if (getcwd(path, sizeof(path)) == NULL)
     {
         printf("OpenConfigRead:getCSV:Faild");
-         return;
+         return false;
     }
     strcat(path, relPath);
+    strcpy(fullpath,path);
+    return true;
+}
+
+
+void createFolder(char *relPath) {
+    char path[PATH_MAX];
+    getFullPath(relPath,path);
+    
     struct stat st = {0};
     if (stat(path, &st) == -1) {
         mkdir(path,0777);
@@ -49,6 +59,32 @@ bool fileExist(char* relPath)
 
 }
 
+bool fileStats(char* relPath, struct stat* stats ) {
+    int pathLength = strlen(relPath);
+    char path[PATH_MAX];
+    if (getcwd(path, sizeof(path)) == NULL)
+    {
+        printf("OpenConfigRead:getCSV:Faild");
+         return false;
+    }
+    strcat(path, relPath);
+    if (stat(path, stats) == 0)
+    {
+
+        return true;
+    }
+
+    return false;
+}
+
+int deleteFile(char *relPath) {
+    char path[PATH_MAX];
+    getFullPath(relPath,path);
+    
+    return remove(path); 
+}
+
+
 void createCSV(
     int rows,
     int colums,
@@ -63,6 +99,7 @@ void createCSV(
         }
     }
 }
+
 
 int getFiles(int filesLength,int fileLength,char files[filesLength][fileLength],char* relPath) {
     
@@ -105,7 +142,6 @@ int getFiles(int filesLength,int fileLength,char files[filesLength][fileLength],
     }
     return 1;
 }
-
 
 int getColumCount(char *text,
                   int start)
