@@ -6,7 +6,6 @@
 
 #include "open62541/open62541.h"
 
-
 #include "readFile.c"
 
 #include "data/updateNodes.c"
@@ -18,7 +17,9 @@
 
 static volatile UA_Boolean running = true;
 static int LoopCount = 0;
-static FILE* logFile;
+
+#define LogToFile
+static FILE *logFile;
 
 static void stopHandler(int sig)
 {
@@ -27,17 +28,18 @@ static void stopHandler(int sig)
     running = false;
 }
 
-static void LogIntoFile() {
-    
-    if (logFile != NULL) {
+static void LogIntoFile()
+{
+
+    if (logFile != NULL)
+    {
         fclose(logFile);
     }
 
-    
-     // Log File
+    // Log File
     time_t currentTimeT;
     time(&currentTimeT);
-    struct tm* currenttimeTm;
+    struct tm *currenttimeTm;
     currenttimeTm = gmtime(&currentTimeT);
 
     char logPath[PATH_MAX];
@@ -45,56 +47,59 @@ static void LogIntoFile() {
     sprintf(
         logPath,
         "/files/server/logs/opc_%d_%d_%d_%d.txt",
-        currenttimeTm->tm_year+1900,
+        currenttimeTm->tm_year + 1900,
         currenttimeTm->tm_mon,
         currenttimeTm->tm_mday,
         currenttimeTm->tm_hour);
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s",logPath);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s", logPath);
 
-    getFullPath(logPath,logPathFull);    
+    getFullPath(logPath, logPathFull);
+    #ifdef LogToFile
     logFile = freopen(logPathFull,"a",stdout);
-    
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s",logPath);
+    #endif
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s", logPath);
 }
 
-static void ClearOldLogs() {
-    
+static void ClearOldLogs()
+{
 
     char oldlogFiles[200][PATH_MAX];
-    getFiles(200,PATH_MAX,oldlogFiles,"/files/server/logs");
+    getFiles(200, PATH_MAX, oldlogFiles, "/files/server/logs");
     long long size = 0;
     char logFileName[PATH_MAX];
     struct stat file;
-    for (int a=0; a < 200;a++) 
+    for (int a = 0; a < 200; a++)
     {
-        if (strlen(oldlogFiles[a]) > 0) {
-           strcpy(logFileName,"/files/server/logs/");
-           strcat(logFileName,oldlogFiles[a]);
-           
-            if (fileStats(logFileName,&file)) 
-            { 
+        if (strlen(oldlogFiles[a]) > 0)
+        {
+            strcpy(logFileName, "/files/server/logs/");
+            strcat(logFileName, oldlogFiles[a]);
+
+            if (fileStats(logFileName, &file))
+            {
                 size += file.st_size;
             }
 
-            if (size > MaxLogSize) {
-               //deleteFile(logFileName);
+            if (size > MaxLogSize)
+            {
+                // deleteFile(logFileName);
             }
-           
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Logs:%s , size:%d / %d",oldlogFiles[a],size,MaxLogSize );
+
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Logs:%s , size:%d / %d", oldlogFiles[a], size, MaxLogSize);
         }
     }
 }
 
 void updateEverySecond(UA_Server *server, void *data)
 {
-   LoopCount++;
+    LoopCount++;
     // struct nodeRFIDReader* variables = (struct nodeRFIDReader*)data;
     UpdateDynamicNodes(server);
 }
 
 void updateEveryHour(UA_Server *server, void *data)
 {
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Alive:%d",LoopCount);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Alive:%d", LoopCount);
     LoopCount = 0;
     LogIntoFile();
     ClearOldLogs();
@@ -115,7 +120,7 @@ static UA_StatusCode AddTemperaturSensor(
 
     if (strlen(inputText) != 24)
     {
-        //return;
+        // return;
     }
     // Create Folder
     char relpath[255];
@@ -149,7 +154,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Name.Type = TypeString;
-    strcpy(Name.Description,"The name of the sensor");
+    strcpy(Name.Description, "The name of the sensor");
     strcpy(Name.Name, currentName);
     strcpy(Name.DisplayName, nodeName);
     strcpy(Name.Parrent, Folder.Name);
@@ -167,7 +172,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Description.Type = TypeString;
-    strcpy(Description.Description,"The description of the sensor");
+    strcpy(Description.Description, "The description of the sensor");
     strcpy(Description.Name, currentName);
     strcpy(Description.DisplayName, nodeName);
     strcpy(Description.Parrent, Folder.Name);
@@ -185,7 +190,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Location.Type = TypeString;
-    strcpy(Location.Description,"The location of the sensor");
+    strcpy(Location.Description, "The location of the sensor");
     strcpy(Location.Name, currentName);
     strcpy(Location.DisplayName, nodeName);
     strcpy(Location.Parrent, Folder.Name);
@@ -203,7 +208,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Antenna.Type = TypeInteger;
-    strcpy(Antenna.Description,"The number of antenna the sensor belongs to. []");
+    strcpy(Antenna.Description, "The number of antenna the sensor belongs to. []");
     strcpy(Antenna.Name, currentName);
     strcpy(Antenna.DisplayName, nodeName);
     strcpy(Antenna.Parrent, Folder.Name);
@@ -221,7 +226,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Temperatur.Type = TypeDouble;
-    strcpy(Temperatur.Description,"The measured temperatur. [°C]");
+    strcpy(Temperatur.Description, "The measured temperatur. [°C]");
     strcpy(Temperatur.Name, currentName);
     strcpy(Temperatur.DisplayName, nodeName);
     strcpy(Temperatur.Parrent, Folder.Name);
@@ -239,7 +244,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     MinTemperatur.Type = TypeDouble;
-    strcpy(MinTemperatur.Description,"The lower temperatur limit. [°C]");
+    strcpy(MinTemperatur.Description, "The lower temperatur limit. [°C]");
     strcpy(MinTemperatur.Name, currentName);
     strcpy(MinTemperatur.DisplayName, nodeName);
     strcpy(MinTemperatur.Parrent, Folder.Name);
@@ -257,7 +262,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     MaxTemperatur.Type = TypeDouble;
-    strcpy(MaxTemperatur.Description,"The upper temperatur limit. [°C]");
+    strcpy(MaxTemperatur.Description, "The upper temperatur limit. [°C]");
     strcpy(MaxTemperatur.Name, currentName);
     strcpy(MaxTemperatur.DisplayName, nodeName);
     strcpy(MaxTemperatur.Parrent, Folder.Name);
@@ -275,7 +280,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     OverTemperatur.Type = TypeBoolean;
-    strcpy(OverTemperatur.Description,"Is set when temperatur is equal or above maxtemperatur [I/O]");
+    strcpy(OverTemperatur.Description, "Is set when temperatur is equal or above maxtemperatur [I/O]");
     strcpy(OverTemperatur.Name, currentName);
     strcpy(OverTemperatur.DisplayName, nodeName);
     strcpy(OverTemperatur.Parrent, Folder.Name);
@@ -290,12 +295,12 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     UnderTemperatur.Type = TypeBoolean;
-    strcpy(UnderTemperatur.Description,"Is set when temperatur is equal or below mintemperatur [I/O]");
+    strcpy(UnderTemperatur.Description, "Is set when temperatur is equal or below mintemperatur [I/O]");
     strcpy(UnderTemperatur.Name, currentName);
     strcpy(UnderTemperatur.DisplayName, nodeName);
     strcpy(UnderTemperatur.Parrent, Folder.Name);
     UnderTemperatur.Write = false;
-    UnderTemperatur.DataSource = SourceCallback;    
+    UnderTemperatur.DataSource = SourceCallback;
     strcpy(UnderTemperatur.SourceCallback, "UnderTemperatur");
 
     // NotConnected
@@ -305,7 +310,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     NotConnected.Type = TypeBoolean;
-    strcpy(NotConnected.Description,"Is set when sensor doesend respond for the timeout duration [I/O]");
+    strcpy(NotConnected.Description, "Is set when sensor doesend respond for the timeout duration [I/O]");
     strcpy(NotConnected.Name, currentName);
     strcpy(NotConnected.DisplayName, nodeName);
     strcpy(NotConnected.Parrent, Folder.Name);
@@ -323,12 +328,12 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     SoftwareNotConnected.Type = TypeBoolean;
-    strcpy(SoftwareNotConnected.Description,"Is set when reader client doesend respond for the timeout duration");
+    strcpy(SoftwareNotConnected.Description, "Is set when reader client doesend respond for the timeout duration");
     strcpy(SoftwareNotConnected.Name, currentName);
     strcpy(SoftwareNotConnected.DisplayName, nodeName);
     strcpy(SoftwareNotConnected.Parrent, Folder.Name);
     SoftwareNotConnected.Write = false;
-    SoftwareNotConnected.DataSource = SourceCSV;
+    SoftwareNotConnected.DataSource = SourceCallback;
     strcpy(SoftwareNotConnected.CSVName, currentPath);
     strcpy(SoftwareNotConnected.SourceCallback, "SoftwareNotConnected");
 
@@ -339,7 +344,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     Timeout.Type = TypeDouble;
-    strcpy(Timeout.Description,"Duration unil sensor is marked as not connected. [seconds]");
+    strcpy(Timeout.Description, "Duration unil sensor is marked as not connected. [seconds]");
     strcpy(Timeout.Name, currentName);
     strcpy(Timeout.DisplayName, nodeName);
     strcpy(Timeout.Parrent, Folder.Name);
@@ -385,7 +390,7 @@ static UA_StatusCode AddTemperaturSensor(
         // Store Nodes
         StoreNodes("/files/server/runtimeNode.csv");
         char text[100];
-        strcpy(text,inputText);
+        strcpy(text, inputText);
         UA_String uaText = UA_String_fromChars(text);
         UA_Variant_setScalarCopy(output, &uaText, &UA_TYPES[UA_TYPES_STRING]);
     }
@@ -404,7 +409,7 @@ static UA_StatusCode RemoveTemperaturSensor(
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "RemoveTemperaturSensor:%s", inputText);
 
     bool found = false;
-    
+
     for (int a = 0; a < NODESCOUNT; a++)
     {
         if (strcmp(Nodes[a].Name, inputText) == 0)
@@ -416,10 +421,11 @@ static UA_StatusCode RemoveTemperaturSensor(
     }
 
     StoreNodes("/files/server/runtimeNode.csv");
-    
-    if (found){
+
+    if (found)
+    {
         char text[100];
-        strcpy(text,inputText);
+        strcpy(text, inputText);
         UA_String uaText = UA_String_fromChars(text);
         UA_Variant_setScalarCopy(output, &uaText, &UA_TYPES[UA_TYPES_STRING]);
     }
@@ -507,10 +513,9 @@ static void UpdateNodesetNode(
     // checks if node is a Upper or Lower Temperatur
     // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNodesetNode");
 
-
-    bool overTemp = strcmp(node->SourceCallback,"OverTemperatur") == 0;
+    bool overTemp = strcmp(node->SourceCallback, "OverTemperatur") == 0;
     bool underTemp = strcmp(node->SourceCallback, "UnderTemperatur") == 0;
-    bool SoftwareNotConnected =  strcmp(node->SourceCallback, "SoftwareNotConnected") == 0; 
+    bool SoftwareNotConnected = strcmp(node->SourceCallback, "SoftwareNotConnected") == 0;
 
     if (overTemp || underTemp)
     {
@@ -575,53 +580,55 @@ static void UpdateNodesetNode(
             UA_Server_writeValue(server, node->NodeId, valueVariant);
         }
     }
-    else if (SoftwareNotConnected) {
+    else if (SoftwareNotConnected)
+    {
 
         time_t rawtime;
-        time ( &rawtime );
+        time(&rawtime);
 
         struct stat stats;
-        if (fileStats(node->CSVName,&stats)) 
+
+        bool timeout = true;
+        double diffseconds = 0;
+        if (fileStats(node->CSVName, &stats))
         {
-            //struct tm time;
-            //time = *(gmtime(&stats.st_ctime));
+            // struct tm time;
+            // time = *(gmtime(&stats.st_ctime));
 
-            double diffsecondsCTime = difftime(rawtime,stats.st_ctime);
-            double diffsecondsMTime = difftime(rawtime,stats.st_mtime);
+            double diffsecondsCTime = difftime(rawtime, stats.st_ctime);
+            double diffsecondsMTime = difftime(rawtime, stats.st_mtime);
 
-            double diffseconds = diffsecondsCTime;
-            if (diffseconds < diffsecondsMTime) {
+            diffseconds = diffsecondsCTime;
+            if (diffseconds < diffsecondsMTime)
+            {
                 diffseconds = diffsecondsMTime;
             }
 
-            bool timeout = diffseconds >= SoftwareTimeoutduration;
+            timeout = diffseconds >= SoftwareTimeoutduration;
+        }
+        UA_Variant valueVariant;
+        UA_Server_readValue(server, node->NodeId, &valueVariant);
+        bool oldValue = UA_VariantToBool(&valueVariant);
 
-            UA_Variant valueVariant;
-            UA_Server_readValue(server, node->NodeId, &valueVariant);
-            bool oldValue = UA_VariantToBool(&valueVariant);
-
-            if (oldValue != timeout) {
-                BoolToUA_Variant(&valueVariant,&timeout);
-                UA_Server_writeValue(server, node->NodeId, valueVariant);
-            }
-            if (timeout) 
-            {
-                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "SoftwareNotConnected:%s: %0.01f",node->CSVName,diffseconds);
-            }
+        if (oldValue != timeout)
+        {
+            BoolToUA_Variant(&valueVariant, &timeout);
+            UA_Server_writeValue(server, node->NodeId, valueVariant);
+        }
+        if (timeout)
+        {
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "SoftwareNotConnected:%s: %0.01f", node->CSVName, diffseconds);
         }
     }
-
-
 }
-
 
 int main(void)
 {
-   ClearOldLogs();
-   LogIntoFile();
+    ClearOldLogs();
+    LogIntoFile();
     // Start Server
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Start Server");
-    
+
     int serverConfigRows = 2;
     int serverConfigColums = 2;
     int serverConfigLength = 256;
@@ -689,7 +696,6 @@ int main(void)
     }
     UpdateDynamicNodes(server);
     StoreNodes("/files/server/runtimeNode.csv");
-    
 
     UA_Server_addRepeatedCallback(
         server, updateEverySecond,
@@ -699,13 +705,11 @@ int main(void)
 
     // 1h : 3600000
 
-
     UA_Server_addRepeatedCallback(
         server, updateEveryHour,
         NULL,
         3600000,
         NULL);
-
 
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_Server_delete(server);
