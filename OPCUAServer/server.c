@@ -122,6 +122,15 @@ static UA_StatusCode AddTemperaturSensor(
     {
         // return;
     }
+
+    for (int a = 0; a < NODESCOUNT; a++)
+    {
+        if (strcmp(Nodes[a].Name, inputText) == 0)
+        {
+            return;
+        }
+    }
+
     // Create Folder
     char relpath[255];
     strcpy(relpath, "/files/sensoren/");
