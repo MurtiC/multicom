@@ -9,17 +9,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class Reader extends PulsarMX{
     public final static String CSVSeperator = ";";
+    public int maxHistoryFiles = 14;
+    public HashMap<String, LocalDateTime> lastContact = new HashMap<String, LocalDateTime>();
 
     /**
      * Creates a PulsarMX Object. The identifier, IP and port is set in the config/pulsarMX.csv file
@@ -30,29 +29,26 @@ public class Reader extends PulsarMX{
 
     public void updateConfig(){
         try {
-            /*String serialnumber = this.getSerialNumber();
-            String hardwareversion = this.getHardwareRevision();
-            String firwareversion = this.getFirmwareRevision();
-             */
-            String serialnumber = "111123";
-            String hardwareversion = "v.923";
-            String firwareversion = "asd.2131";
-
-            List<List<String>> csvRead = this.getCSVasArrayList("config/pulsarMX.csv");
+            List<List<String>> csvRead = this.getCSVasArrayList("files/reader/readerConfig.csv");
             List<String> csvConf = csvRead.get(1);
 
-            csvConf.set(3, serialnumber);
-            csvConf.set(4, hardwareversion);
-            csvConf.set(5, firwareversion);
+            csvConf.set(0, getCSVidentifier());
+            csvConf.set(1, getHardwareRevision());
+            csvConf.set(2, getFirmwareRevision());
+            csvConf.set(3, getSerialNumber());
+            csvConf.set(6, String.valueOf(!isConnected()));
 
-            FileWriter writer = new FileWriter("config/pulsarMX.csv", false);
-            writer.write(csvRead.get(0).stream().collect(Collectors.joining(CSVSeperator)) + "\n");
-            writer.write(csvConf.stream().collect(Collectors.joining(CSVSeperator)));
+            FileWriter writer = new FileWriter("files/reader/readerConfig.csv", false);
+
+            String s ="";
+            for(List<String> line : csvRead){
+                s += line.stream().collect(Collectors.joining(CSVSeperator)) + "\n";
+            }
+            writer.write(s);
             writer.close();
 
-        /*} catch (RFIDReaderException e) {
-
-            e.printStackTrace();*/
+        } catch (RFIDReaderException e) {
+            e.printStackTrace();
         } catch (CommConnectionException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -81,7 +77,8 @@ public class Reader extends PulsarMX{
 
             return lines.get(row).get(column);
         } catch (FileNotFoundException e) {
-            return String.valueOf(e);
+            e.printStackTrace();
+            return "";
         }
 
     }
@@ -109,7 +106,6 @@ public class Reader extends PulsarMX{
             e.printStackTrace();
             return null;
         }
-
     }
 
     /**
@@ -121,13 +117,9 @@ public class Reader extends PulsarMX{
      * @return the value of the "ip-address cell" in the config/pulsarMX.csv-file
      */
     private static String getCSVip(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return getCSVCell("config/pulsarMX.csv", 1, 0);
+        String pathToOpcConfig = "files/reader/opcConfig.csv";
+
+        return getCSVCell(pathToOpcConfig, 1, 4);
     }
 
     /**
@@ -139,13 +131,10 @@ public class Reader extends PulsarMX{
      * @return the value of the "port cell" in the config/pulsarMX.csv-file
      */
     private static int getCSVport(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return Integer.parseInt(getCSVCell("config/pulsarMX.csv", 1, 1));
+        String pathToOpcConfig = "files/reader/opcConfig.csv";
+        String port = getCSVCell(pathToOpcConfig, 1, 5);
+        if(port.equals("Index out of bounds")) port = "4840";
+        return Integer.parseInt(port);
     }
 
     /**
@@ -157,13 +146,9 @@ public class Reader extends PulsarMX{
      * @return the value of the "identifier cell" in the config/pulsarMX.csv-file
      */
     private static String getCSVidentifier(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return getCSVCell("config/pulsarMX.csv", 1, 2);
+        String pathToOpcConfig = "files/reader/opcConfig.csv";
+
+        return getCSVCell(pathToOpcConfig, 1, 0);
     }
 
     /**
@@ -171,13 +156,9 @@ public class Reader extends PulsarMX{
      * @return serialnumber of PulsarMX Reader
      */
     public String getCSVserialnumber(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return getCSVCell("config/pulsarMX.csv", 1, 3);
+        String pathToReaderConfig = "files/reader/readerConfig.csv";
+
+        return getCSVCell(pathToReaderConfig, 1, 3);
     }
 
     /**
@@ -185,13 +166,9 @@ public class Reader extends PulsarMX{
      * @return hardwareversion of PulsarMX Reader
      */
     public String getCSVhardwareversion(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return getCSVCell("config/pulsarMX.csv", 1, 4);
+        String pathToReaderConfig = "files/reader/readerConfig.csv";
+
+        return getCSVCell(pathToReaderConfig, 1, 1);
     }
 
     /**
@@ -199,13 +176,9 @@ public class Reader extends PulsarMX{
      * @return firmwareversion of PulsarMX Reader
      */
     public String getCSVfirmwareversion(){
-        File configDir = new File("config");
-        String filePath = "config/pulsarMX.csv";
-        File configFile = new File(filePath);
-        if(!configDir.exists() || !configFile.exists()){
-            createConfigMX();
-        }
-        return getCSVCell("config/pulsarMX.csv", 1, 5);
+        String pathToReaderConfig = "files/reader/readerConfig.csv";
+
+        return getCSVCell(pathToReaderConfig, 1, 2);
     }
 
     /**
@@ -282,110 +255,107 @@ public class Reader extends PulsarMX{
 
     }
 
-    /**
-     * Version 1 of writeTemperature
-     * Writes the new Temperature into the history file.
-     * If the history file for the TID does not exist yet, it creates it.
-     * @param tid TID of the TempTag
-     * @param temperature measured temperature,
-     * @param date date of measured temperature
-     * @param time time of measured temperature
-     * @throws IOException FileWriter has no access to the file
-     */
-    public void writeTemperature(String tid, double temperature, LocalDate date, LocalTime time) throws IOException{
-        String s = temperature + CSVSeperator + date + " " + time + "\n";
-        String filePath = "history/" +tid + ".csv";
-        File file = new File(filePath);
-        File dir = new File("history");
-
-        if(!dir.exists()){
-            dir.mkdir();
-        }
-
-        FileWriter writer = new FileWriter(filePath, true);
-        Scanner scanner = new Scanner(file);
-
-        if(!scanner.hasNext()){
-            writer.append("Temperature" +CSVSeperator  +"Date Time\n");
-            System.out.println(tid +".csv wurde erstellt");
-        }
-
-        writer.append(s);
-        writer.close();
-        scanner.close();
-    }
 
     /**
-     * Version 2 of writeCurrentTemperature
-     * Saves only the current Temperature of every TID in history/current.csv.
-     * If there is already a measured Temperature for the selected TID, it will be overwritten.
+     * Writes the measured temperature of the TID into the "files/sensoren/'tid'/'date'.csv file.
+     * If the TID was not added yet, the function will NOT create a new directory. It only writes into directories that already exist.
+     * There is 1 file for every TID and every Day. The temperature will just be written, if the new Temperature is not equal to the latest temperature.
      * @param tid TID of the TempTag
      * @param temperature measured Temperature
-     * @param date date of measured Temperature
-     * @param time time of measured Temperature
+     * @param dateTime date and time of measured Temperature
      */
-    public void writeCurrentTemperature2(String tid, double temperature, LocalDate date, LocalTime time){
-        String s = tid + CSVSeperator +temperature + CSVSeperator + date + " " +time + "\n";
-        String filePath = "history/current.csv";
-        String tempPath = "history/current_temp.csv";
-        File file = new File(filePath);
-        File temp = new File(tempPath);
-        File dir = new File("history");
+    public void writeTemperature(String tid, double temperature, LocalDateTime dateTime){
+        String s = temperature + CSVSeperator + dateTime.toLocalDate() + " " + dateTime.toLocalTime() + "\n";
+        String pathToDir = "files/sensoren/" + tid;
+        String pathToFile = pathToDir + "/" + dateTime.toLocalDate() + ".csv";
+        File dir = new File(pathToDir);
+        File history = new File(pathToFile);
 
-        if(!dir.exists()) dir.mkdir();
+        if(!dir.exists()){
+            System.out.println("Der Sensor " + tid + " wurde noch nicht hinzugefügt");
+            return;
+        }
 
         try {
-            Scanner scanner = new Scanner(file);
-            try {
-                //file exists
-                FileWriter writer = new FileWriter(temp, true);
-                boolean tid_exists = false;
-                while(scanner.hasNext()){
-                    String row = scanner.next() + "\n";
-                    if(row.contains(tid)){
-                        writer.append(s);
-                        tid_exists = true;
-                        break;
-                    }else{
-                        writer.append(row);
-                    }
-                }
+            FileWriter writer = new FileWriter(history, true);
+            Scanner scanner = new Scanner(history);
 
-                if(!tid_exists) writer.append(s);
-
-                scanner.close();
-                writer.close();
-
-                if(!file.delete()){
-                    System.out.println("File konnte nicht geloscht werden");
-                }
-                if(!temp.renameTo(file)){
-                    System.out.println("File konnte nicht unbenannt werden");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } catch (FileNotFoundException e) {
-            //file does not exist
-            try {
-                //create file and write title + data
-                FileWriter writer = new FileWriter(file, true);
-                writer.append("TID" + CSVSeperator + "Temperature" + CSVSeperator + "Date Time\n");
+            if(!scanner.hasNext()){
+                writer.append("Temperature" +CSVSeperator  +"Date Time\n");
                 writer.append(s);
                 writer.close();
-                return;
-            } catch (IOException ex) {
-                System.out.println("file: current.csv konnte nicht erstellt werden");
+                scanner.close();
+                System.out.println(pathToFile +" wurde erstellt");
+            }else {
+                String r = "";
+                while (scanner.hasNextLine()) {
+                    r = scanner.nextLine();
+                }
+
+                String[] value = r.split(CSVSeperator);
+                if (!value[0].equals(String.valueOf(temperature))) {
+                    writer.append(s);
+                }
+                writer.close();
+                scanner.close();
             }
+            this.deleteOldestFile(pathToDir, dateTime);
+        } catch (FileNotFoundException e) {
+            System.out.println("File: " + pathToFile + "konnte nicht gelesen werden (writer)");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("File: " + pathToFile + "konnte nicht gelesen werden (writer)");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes the current temperature of the TID sensor into the /current.csv file.
+     * If the temperature is -300 (error) and the sensor was not accessible in the specified time (timeout), the sensor will be marked as notConnected;
+     * @param tid tid of the temperature sensor
+     * @param temperature measured temperature
+     */
+    public void writeCurrentTemperature(String tid, double temperature, LocalDateTime dateTime){
+        String s;
+        if(temperature == -300){
+            LocalDateTime lastContactTid = lastContact.get(tid);
+            Duration diffBetweenContacts = Duration.between(lastContactTid, dateTime);
+
+            double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", 1, 7)); //antenne soll noch raus dann 6
+            if(diffBetweenContacts.toMinutes() > timeout){
+                s = tid + CSVSeperator + "" + CSVSeperator + "true\n";
+            }else{
+                s = tid + CSVSeperator + "" + CSVSeperator + "false\n";
+            }
+        }else{
+            s = tid + CSVSeperator + temperature + CSVSeperator + "false\n";
+        }
+
+        String pathToDir = "files/sensoren/" + tid;
+        String pathToFile =  pathToDir + "/current.csv";
+        File file = new File(pathToFile);
+        File dir = new File(pathToDir);
+
+        if(!dir.exists()){
+            System.out.println("TID " + tid + " wurde noch nicht hinzugefügt");
+            return;
+        }
+
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write("TID;Temperature;NotConnected\n" + s);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }
 
     /**
-     *
-     * @param tid
-     * @return
+     * Reads the temperature of the sensor with the matching TID.
+     * If the reader can not access the sensor, the function will return -300 (not reachable).
+     * @param tid TID of the wanted sensor
+     * @return the measured temperature or -300 (error)
      */
     public double readTemperature(String tid) {
 
@@ -394,14 +364,15 @@ public class Reader extends PulsarMX{
             this.setTagData(UHFReader.MEMBANK.USR, "0000", 256);
             //Thread.sleep(100);
             List<String> data = this.getTagData(UHFReader.MEMBANK.USR, 256, 1);
-            if (data.size() > 0) {
-
+            if (data.size() > 0) { // == 0 wenn tid nicht in reichweite
                 int rawdata = Integer.parseInt(data.get(0), 16);
-                double temperatur = ((double) rawdata) / 255 * 63.75;
+                double temperature = ((double) rawdata) / 255 * 63.75;
                 if (rawdata >= 255 || rawdata == 0) {
-                    temperatur = -300;
+                    temperature = -300;
+                }else{
+                    lastContact.put(tid, LocalDateTime.now());
                 }
-                return temperatur;
+                return temperature;
             }
         } catch (CommConnectionException e) {
             e.printStackTrace();
@@ -412,72 +383,83 @@ public class Reader extends PulsarMX{
     }
 
     /**
-     * Version 2 of Write Temperature
-     * Writes the measured temperature in the history file. There is 1 file for every TID and every Day.
-     * The temperature will just be written, if the new Temperature is not equal to the latest temperature.
-     * @param tid TID of the TempTag
-     * @param temperature measured Temperature
-     * @param date date of measured Temperature
-     * @param time time of measured Temperature
-     * @throws IOException FileWriter has no access to the file
+     * If there are more than 'maxHistoryFiles' files for 1 TID, the oldest file will be deleted.
+     * The history will only be saved for 'maxHistoryFiles' days.
+     * @param pathToDir path to directory
+     * @param dateTime dateTime of the measured value
      */
-    public void writeTemperature2(String tid, double temperature, LocalDate date, LocalTime time) throws IOException{
-        String s = temperature + CSVSeperator + date + " " + time + "\n";
-        String filePath = "history/" +tid + date + ".csv";
-        File file = new File(filePath);
-        File dir = new File("history");
-
-        if(!dir.exists()){
-            dir.mkdir();
-        }
-
-        FileWriter writer = new FileWriter(filePath, true);
-        Scanner scanner = new Scanner(file);
-
-        if(!scanner.hasNext()){
-            writer.append("Temperature" +CSVSeperator  +"Date Time\n");
-            writer.append(s);
-            writer.close();
-            scanner.close();
-            System.out.println(filePath +" wurde erstellt");
-            this.deleteOldestFile(tid, date);
-        }else{
-            //mit letzten wert vergleichen
-            String r = "";
-            while(scanner.hasNextLine()){
-                r = scanner.nextLine();
-            }
-
-            String[] value = r.split(CSVSeperator);
-            if(value[0].equals(String.valueOf(temperature))){
-                System.out.println("temperatur daten gleich");
-            }else{
-                System.out.println("Temperatur angehängt");
-                writer.append(s);
-            }
-
-            writer.close();
-            scanner.close();
-        }
-
-    }
-
-    /**
-     * If there are more than 14 files for 1 TID, the oldest file will be deleted.
-     * The history will only be saved for 14 days
-     * @param tid TID of the TempTag
-     * @param date date of the measured value
-     */
-    public void deleteOldestFile(String tid, LocalDate date){
-        File f1 = new File("history/" +tid + date.minusDays(14) + ".csv");
+    public void deleteOldestFile(String pathToDir, LocalDateTime dateTime){
+        File f1 = new File(pathToDir + "/" + dateTime.toLocalDate().minusDays(maxHistoryFiles) + ".csv");
         if(f1.exists()) {
             f1.delete();
             System.out.println(f1.getName() + " gelöscht");
         }
     }
 
+    /**
+     * This function is used to get every added TID from the files Directory.
+     * @return TIDs of the added Temperature Sensors
+     */
+    public List<String> getTIDs(){
+        List<String> tids = new ArrayList<>();
+        String path = "files/sensoren";
+        File[] dir = new File(path).listFiles();
+        for(int i = 0; i < dir.length; i++){
+            tids.add(dir[i].getName());
+        }
+        return tids;
+    }
 
+    /**
+     * Writes the state of the reader into the readerCurrent.csv file.
+     * If the reader is connected, it will write: notConnected; false
+     * If the reader is not connected, it will write: notConnected; true
+     * @param state state of connection of the reader
+     */
+    public void setState(boolean state){
+        String pathToFile = "files/reader/readerCurrent.csv";
+        File file = new File(pathToFile);
 
+        List<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
+        readerCurrentCSV.get(1).set(2, String.valueOf(!state));
+
+        String s = "";
+        for(List l : readerCurrentCSV){
+            s += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
+        }
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(s);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes the state of the input Pin into the readerCurrent.csv file.
+     * @param pin selected pin
+     * @param state state of selected pin
+     */
+    public void setInputState(int pin, boolean state){
+        String pathToFile = "files/reader/readerCurrent.csv";
+        File file = new File(pathToFile);
+
+        List<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
+        readerCurrentCSV.get(pin+1).set(1, String.valueOf(state));
+
+        String s = "";
+        for(List l : readerCurrentCSV){
+            s += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
+        }
+        try {
+            FileWriter writer = new FileWriter(file, false);
+            writer.write(s);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
 
