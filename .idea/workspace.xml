@@ -6,9 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build">
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build v4">
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +130,21 @@
       <option name="project" value="LOCAL" />
       <updated>1637251296289</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=".jar build v3">
+      <created>1637252260149</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1637252260149</updated>
+    </task>
+    <task id="LOCAL-00008" summary=".jar build v4">
+      <created>1637252554081</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1637252554081</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,6 +177,8 @@
     <MESSAGE value="Methode addMissingTIDS(List&lt;String&gt;) hinzugefügt" />
     <MESSAGE value="TID zu TagId umbenannt" />
     <MESSAGE value=".jar build" />
-    <option name="LAST_COMMIT_MESSAGE" value=".jar build" />
+    <MESSAGE value=".jar build v3" />
+    <MESSAGE value=".jar build v4" />
+    <option name="LAST_COMMIT_MESSAGE" value=".jar build v4" />
   </component>
 </project>
