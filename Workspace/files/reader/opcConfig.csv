@@ -1,5 +1,5 @@
-Id;Name;Description;Location;IPAdress;Port;Pin;Mode;State;;;;;;;;;;;
-reader1;;;;;;;;;;;;;;;;;;;
+Id;Name;Description;Location;IPAdress;Port;Pin;Mode;State;;;;;;192.168.2.239;10001;;;;
+reader1;;;;192.168.2.239;10001;;;;;;;;;;;;;;
 InputPin1;;;;;;;;;;;;;;;;;;;
 InputPin2;;;;;;;;;;;;;;;;;;;
 OutputPin1;;;;;;;;;;;;;;;;;;;
