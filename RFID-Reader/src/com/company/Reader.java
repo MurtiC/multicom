@@ -339,13 +339,13 @@ public class Reader extends PulsarMX{
         File dir = new File(pathToDir);
 
         if(!dir.exists()){
-            System.out.println("TID " + tid + " wurde noch nicht hinzugefügt");
+            System.out.println("TagId " + tid + " wurde noch nicht hinzugefügt");
             return;
         }
 
         try {
             FileWriter writer = new FileWriter(file, false);
-            writer.write("TID;Temperature;NotConnected\n" + s);
+            writer.write("TagId;Temperature;NotConnected\n" + s);
             writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
