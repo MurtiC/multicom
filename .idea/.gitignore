@@ -1,3 +1,10 @@
 # Default ignored files
-/shelf/
-/workspace.xml
+**.o
+**.exe
+~$**
+
+
+runtimeNode.csv
+**/logs/**
+
+!/Workspace/*
