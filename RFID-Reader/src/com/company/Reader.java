@@ -467,7 +467,7 @@ public class Reader extends PulsarMX{
         }
     }
 
-    public void addMissingTIDs(List<String> tids){
+    /*public void addMissingTIDs(List<String> tids){
         String s = "";
         try {
             List<String> allTIDs = this.getTagTIDs();
@@ -502,7 +502,7 @@ public class Reader extends PulsarMX{
             e.printStackTrace();
         }
     }
-
+*/
 
 
     public static void main(String[] args) {

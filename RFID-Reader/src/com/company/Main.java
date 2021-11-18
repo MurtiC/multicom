@@ -35,7 +35,7 @@ public class Main {
                         pulsarMX.setInputState(2, pulsarMX.getInput(1));
 
                         List<String> tids = pulsarMX.getTIDs();
-                        pulsarMX.addMissingTIDs(tids);
+                        //pulsarMX.addMissingTIDs(tids);
 
                         for (int i = 0; i < tids.size(); i++) {
                             if(!pulsarMX.lastContact.containsKey(tids.get(i))){
