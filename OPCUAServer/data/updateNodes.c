@@ -360,7 +360,12 @@ static bool UA_VariantToString(const UA_Variant *variant, char* value)
         int a = 0;
         for (a = 0; a < uaText.length; a++)
         {
-            newtext[a] = uaText.data[a];
+            if ( uaText.data[a] == ';') {
+                 newtext[a] = ',';
+            }
+            else {
+                newtext[a] = uaText.data[a];
+            }
         }
         newtext[a] = '\0';
         strcpy(value, newtext);
@@ -475,10 +480,16 @@ static void UpdateNode(
     }
     else
     {
+        UA_Variant newValueVariant = valueVariant;
+
+        if (strlen(text)==0) {
+            
+            //UA_Variant_setScalarCopy(newValueVariant, value, &UA_TYPES[UA_TYPES_BOOLEAN]);
+        }
         //char oldText[100];
         //UA_VariantToText(&valueVariant,oldText);
         
-        UA_Variant newValueVariant = valueVariant;
+        
         bool result =  TextToUA_Variant(text, &newValueVariant);
 
         //char newText[100];

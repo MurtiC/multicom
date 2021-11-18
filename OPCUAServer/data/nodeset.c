@@ -68,6 +68,7 @@ struct myNode
     // Runtime:
     bool Created;
     UA_NodeId NodeId;
+    
 };
 #define myNodeTypeName "Type"
 #define myNodeNameName "Name"
