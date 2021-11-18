@@ -360,7 +360,12 @@ static bool UA_VariantToString(const UA_Variant *variant, char* value)
         int a = 0;
         for (a = 0; a < uaText.length; a++)
         {
-            newtext[a] = uaText.data[a];
+            if ( uaText.data[a] == ';') {
+                 newtext[a] = ',';
+            }
+            else {
+                newtext[a] = uaText.data[a];
+            }
         }
         newtext[a] = '\0';
         strcpy(value, newtext);

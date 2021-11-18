@@ -210,24 +210,6 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(Location.CSVIdentifier, inputText);
     strcpy(Location.CSVValueColum, nodeName);
 
-    // Antenna
-    struct myNode Antenna;
-    CreateNode(&Antenna);
-    strcpy(nodeName, "Antenna");
-    strcpy(currentName, inputText);
-    strcat(currentName, nodeName);
-    Antenna.Type = TypeInteger;
-    strcpy(Antenna.Description, "The number of antenna the sensor belongs to. []");
-    strcpy(Antenna.Name, currentName);
-    strcpy(Antenna.DisplayName, nodeName);
-    strcpy(Antenna.Parrent, Folder.Name);
-    Antenna.Write = true;
-    Antenna.DataSource = SourceCSV;
-    strcpy(Antenna.CSVName, configPath);
-    strcpy(Antenna.CSVIdentifierColum, ident);
-    strcpy(Antenna.CSVIdentifier, inputText);
-    strcpy(Antenna.CSVValueColum, nodeName);
-
     // Temperatur
     struct myNode Temperatur;
     CreateNode(&Temperatur);
@@ -368,7 +350,6 @@ static UA_StatusCode AddTemperaturSensor(
                  AppandNodeToNodes(server, &Name) < 0 ||
                  AppandNodeToNodes(server, &Description) < 0 ||
                  AppandNodeToNodes(server, &Location) < 0 ||
-                 AppandNodeToNodes(server, &Antenna) < 0 ||
                  AppandNodeToNodes(server, &Temperatur) < 0 ||
                  AppandNodeToNodes(server, &MinTemperatur) < 0 ||
                  AppandNodeToNodes(server, &MaxTemperatur) < 0 ||
@@ -384,7 +365,6 @@ static UA_StatusCode AddTemperaturSensor(
         RemoveNodeFromNodes(server, &Name);
         RemoveNodeFromNodes(server, &Description);
         RemoveNodeFromNodes(server, &Location);
-        RemoveNodeFromNodes(server, &Antenna);
         RemoveNodeFromNodes(server, &Temperatur);
         RemoveNodeFromNodes(server, &MinTemperatur);
         RemoveNodeFromNodes(server, &MaxTemperatur);
