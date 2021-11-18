@@ -6,7 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="Bug fixes&#10;Malte" />
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="Methode addMissingTIDS(List&lt;String&gt;) hinzugefügt">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,21 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637233953645</updated>
     </task>
-    <task id="LOCAL-00003" summary="Bug fixes&#10;Malte">
-      <created>1637240658171</created>
+    <task id="LOCAL-00003" summary="Methode addMissingTIDS(List&lt;String&gt;) hinzugefügt">
+      <created>1637242902774</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1637240658171</updated>
+      <updated>1637242902774</updated>
     </task>
-    <task id="LOCAL-00004" summary="Bug fixes&#10;Malte">
-      <created>1637240695567</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1637240695567</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,7 +116,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="RFID-Reader" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -131,8 +138,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Testversion" />
     <MESSAGE value=".jar erstellt" />
-    <MESSAGE value="Bug fixes&#10;Malte" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes&#10;Malte" />
+    <MESSAGE value="Methode addMissingTIDS(List&lt;String&gt;) hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Methode addMissingTIDS(List&lt;String&gt;) hinzugefügt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
