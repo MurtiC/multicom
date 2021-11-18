@@ -4,6 +4,7 @@ import com.metratec.lib.rfidreader.RFIDReaderException;
 import com.metratec.lib.connection.CommConnectionException;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -12,8 +13,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start");
         Reader pulsarMX = new Reader();
+        HashMap<String, LocalDateTime> lastContact =  new HashMap<String, LocalDateTime>();
         while (true) {
             try {
+                if (pulsarMX == null) {
+                    pulsarMX = new Reader();
+                    pulsarMX.lastContact = lastContact;
+                }
                 pulsarMX.connect();
                 System.out.println("Connected");
                 //switchAntennas
@@ -23,10 +29,10 @@ public class Main {
                 pulsarMX.setRFInterface(true);
 
                 while (true) {
-                    try {
+
                         pulsarMX.setState(pulsarMX.isConnected());
-                        pulsarMX.setInputState(1, pulsarMX.getInput(1));
-                        pulsarMX.setInputState(2, pulsarMX.getInput(2));
+                        pulsarMX.setInputState(1, pulsarMX.getInput(0));
+                        pulsarMX.setInputState(2, pulsarMX.getInput(1));
 
                         List<String> tids = pulsarMX.getTIDs();
 
@@ -44,10 +50,7 @@ public class Main {
                             pulsarMX.writeCurrentTemperature(tids.get(i), temperature, dateTime);
                         }
                         System.out.println();
-                        Thread.sleep(1000L);
-                    } catch (InterruptedException var9) {
-                        var9.printStackTrace();
-                    }
+
                 }
             } catch (RFIDReaderException e) {
                 e.printStackTrace();
@@ -57,6 +60,11 @@ public class Main {
                 pulsarMX.setState(pulsarMX.isConnected());
                 System.out.println("pulsar not connected!");
                 var10.printStackTrace();
+                lastContact = pulsarMX.lastContact;
+                pulsarMX = null;
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }

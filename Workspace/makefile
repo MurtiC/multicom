@@ -3,7 +3,7 @@ watch: server
 
 
 runReader:
-	java -jar Java.jar
+	java -jar GitHub.jar
 
 runOPC:
 	./server

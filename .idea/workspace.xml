@@ -7,11 +7,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar erstellt">
-      <change afterPath="$PROJECT_DIR$/Workspace/GitHub.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/GitHub.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/Java.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123456/config.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123456789/config.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123456789/current.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/987654321/config.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/opcConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/opcConfig.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/readerConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerConfig.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerCurrent.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +67,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Workspace" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -62,7 +79,7 @@
       <recent name="S:\OneDrive\Uni\Semester 5\GitHub" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Tet">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
       <module name="GitHub" />
@@ -124,5 +141,19 @@
     <MESSAGE value="Testversion" />
     <MESSAGE value=".jar erstellt" />
     <option name="LAST_COMMIT_MESSAGE" value=".jar erstellt" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java</url>
+          <line>205</line>
+          <properties class="com.company.Reader" method="createConfigMX">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

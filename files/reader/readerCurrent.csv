@@ -1,4 +1,4 @@
 Id;State;NotConnected;
 reader1;;false;
-InputPin1;true;
+InputPin1;false;
 InputPin2;false;

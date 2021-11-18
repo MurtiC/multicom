@@ -1,4 +1,4 @@
-Id;Hardwarerevision;Softwarerevision;SerialNumber;Pin;Mode;
-reader1;123;3211;;;;true;
-InputPin1;;;;1;1;;
-InputPin2;;;;2;1;;
+Id;Hardwarerevision;Softwarerevision;SerialNumber;Pin;Mode
+reader1;0105;0314;2014081312353176;;;false
+InputPin1;;;;1;1
+InputPin2;;;;2;1

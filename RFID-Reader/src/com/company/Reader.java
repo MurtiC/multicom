@@ -316,6 +316,8 @@ public class Reader extends PulsarMX{
      * @param temperature measured temperature
      */
     public void writeCurrentTemperature(String tid, double temperature, LocalDateTime dateTime){
+        try {
+
         String s;
         if(temperature == -300){
             LocalDateTime lastContactTid = lastContact.get(tid);
@@ -349,6 +351,10 @@ public class Reader extends PulsarMX{
             ex.printStackTrace();
         }
 
+        }
+        catch (NumberFormatException ex) {
+
+        }
     }
 
     /**
