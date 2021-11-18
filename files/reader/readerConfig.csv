@@ -1,0 +1,4 @@
+Id;Hardwarerevision;Softwarerevision;SerialNumber;Pin;Mode;
+reader1;123;3211;;;;true;
+InputPin1;;;;1;1;;
+InputPin2;;;;2;1;;

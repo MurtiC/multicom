@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="metratec-rfid-reader-library-3.5.13">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/rfid-reader-library-3.5.13/metratec-rfid-reader-library-3.5.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
