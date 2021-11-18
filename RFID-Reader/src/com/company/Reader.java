@@ -478,7 +478,12 @@ public class Reader extends PulsarMX{
             }
             s += CSVSeperator;
             List<List<String>> readerCurrentCSV = getCSVasArrayList("files/reader/readerCurrent.csv");
-            readerCurrentCSV.get(1).set(3, s);
+
+            if(readerCurrentCSV.size() < 4){
+                readerCurrentCSV.get(1).add(s);
+            }else{
+                readerCurrentCSV.get(1).set(3, s);
+            }
 
             String allLines = "";
             for(List l : readerCurrentCSV){

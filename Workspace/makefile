@@ -3,9 +3,11 @@ watch: server
 
 
 runReader:
+    chmod +x GitHub.jar
 	java -jar GitHub.jar
 
 runOPC:
+    chmod +x server
 	./server
 
 launch: runReader runOPC
