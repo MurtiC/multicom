@@ -467,6 +467,38 @@ public class Reader extends PulsarMX{
         }
     }
 
+    public void addMissingTIDs(List<String> tids){
+        String s = "";
+        try {
+            List<String> allTIDs = this.getTagTIDs();
+            for(int i = 0; i < allTIDs.size(); i++){
+                if(!tids.contains(allTIDs.get(i).substring(0, 24))){
+                    s += allTIDs.get(i) +",";
+                }
+            }
+            List<List<String>> readerCurrentCSV = getCSVasArrayList("files/reader/readerCurrent.csv");
+            readerCurrentCSV.get(1).set(3, s);
+
+            String allLines = "";
+            for(List l : readerCurrentCSV){
+                allLines += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
+            }
+
+            FileWriter writer = new FileWriter("files/reader/readerCurrent.csv", false);
+            writer.write(allLines);
+            writer.close();
+
+        } catch (CommConnectionException e) {
+            e.printStackTrace();
+        } catch (RFIDReaderException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static void main(String[] args) {
 
     }
