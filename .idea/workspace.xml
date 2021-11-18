@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build" />
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build">
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637250426492</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".jar build">
+      <created>1637251296289</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1637251296289</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

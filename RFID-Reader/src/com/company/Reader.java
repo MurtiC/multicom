@@ -476,6 +476,7 @@ public class Reader extends PulsarMX{
                     s += allTIDs.get(i) +",";
                 }
             }
+            s += CSVSeperator;
             List<List<String>> readerCurrentCSV = getCSVasArrayList("files/reader/readerCurrent.csv");
             readerCurrentCSV.get(1).set(3, s);
 
