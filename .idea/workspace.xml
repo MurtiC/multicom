@@ -6,9 +6,11 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build v4">
-      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment=".jar build v5">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerCurrent.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +146,21 @@
       <option name="project" value="LOCAL" />
       <updated>1637252554081</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary=".jar build v5">
+      <created>1637253069848</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1637253069848</updated>
+    </task>
+    <task id="LOCAL-00010" summary=".jar build v5">
+      <created>1637253089314</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1637253089314</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,6 +195,7 @@
     <MESSAGE value=".jar build" />
     <MESSAGE value=".jar build v3" />
     <MESSAGE value=".jar build v4" />
-    <option name="LAST_COMMIT_MESSAGE" value=".jar build v4" />
+    <MESSAGE value=".jar build v5" />
+    <option name="LAST_COMMIT_MESSAGE" value=".jar build v5" />
   </component>
 </project>

@@ -467,7 +467,7 @@ public class Reader extends PulsarMX{
         }
     }
 
-    /*public void addMissingTIDs(List<String> tids){
+    public void addMissingTIDs(List<String> tids){
         String s = "";
         try {
             List<String> allTIDs = this.getTagTIDs();
@@ -476,11 +476,18 @@ public class Reader extends PulsarMX{
                     s += allTIDs.get(i) +",";
                 }
             }
-            s += CSVSeperator;
+            s = s.substring(0, s.length()-1); //letztes Komma weg
             List<List<String>> readerCurrentCSV = getCSVasArrayList("files/reader/readerCurrent.csv");
 
-            if(readerCurrentCSV.size() < 4){
-                readerCurrentCSV.get(1).add(s);
+            if(readerCurrentCSV.get(1).size() < 4){
+                List<String> temp = new ArrayList<>();
+
+                for(int i = 0; i < readerCurrentCSV.get(1).size(); i++){
+                    temp.add(readerCurrentCSV.get(1).get(i));
+                }
+                temp.add(s);
+                readerCurrentCSV.set(1, temp);
+
             }else{
                 readerCurrentCSV.get(1).set(3, s);
             }
@@ -502,7 +509,7 @@ public class Reader extends PulsarMX{
             e.printStackTrace();
         }
     }
-*/
+
 
 
     public static void main(String[] args) {
