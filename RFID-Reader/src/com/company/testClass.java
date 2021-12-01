@@ -75,13 +75,13 @@ public class testClass {
     }
 
     public static void main(String[] args) {
-
-        Reader r =  new Reader();
-        List<String> tids = r.getTIDs();
-        addMissingTIDs(tids);
+        Logger l = new Logger();
 
 
-
+        File opcConfigFile = new File("files/reader/opcConfig123.csv");
+        if(!opcConfigFile.exists()){
+            l.log("Main: " +opcConfigFile.getPath()+" does not exists!");
+        }
 
 
     }
