@@ -73,33 +73,27 @@ public class Reader extends PulsarMX {
      * @return the value of the cell(row,colum) in the file (filepath)
      */
     public static String getCSVCell(String filePath, int row, int column) {
-        try {
-            Scanner scanner = new Scanner(new File(filePath));
-            List<List<String>> lines = getCSVasArrayList(filePath);
+        ArrayList<List<String>> lines = getCSVasArrayList(filePath);
 
-            if (row > (lines.size() - 1) || column > (lines.get(row).size() - 1)) {
-                return "Index out of bounds";
-            }
-
-            return lines.get(row).get(column);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return "";
+        if (row > (lines.size() - 1) || column > (lines.get(row).size() - 1)) {
+            return "Index out of bounds";
         }
+
+        return lines.get(row).get(column);
 
     }
 
     /**
-     * Returns the selected csv File as a List<List<String>>.
+     * Returns the selected csv File as a ArrayList<List<String>>.
      * Each line of the csv File is saved in a List<String>.
      *
      * @param filePath path to the selected csv-file
      * @return the data of the selected csv-file
      */
-    public static List<List<String>> getCSVasArrayList(String filePath) {
+    public static ArrayList<List<String>> getCSVasArrayList(String filePath) {
         try {
             Scanner scanner = new Scanner(new File(filePath));
-            List<List<String>> lines = new ArrayList<>();
+            ArrayList<List<String>> lines = new ArrayList<>();
 
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
@@ -164,54 +158,7 @@ public class Reader extends PulsarMX {
     }
 
     /**
-     * This function returns the serialnumber of the PulsarMX Reader
-     *
-     * @return serialnumber of PulsarMX Reader
-     */
-    public String getCSVserialnumber() {
-        String pathToReaderConfig = "files/reader/readerConfig.csv";
-
-        return getCSVCell(pathToReaderConfig, 1, 3);
-    }
-
-    /**
-     * This function returns the hardwareversion of the PulsarMX Reader
-     *
-     * @return hardwareversion of PulsarMX Reader
-     */
-    public String getCSVhardwareversion() {
-        String pathToReaderConfig = "files/reader/readerConfig.csv";
-
-        return getCSVCell(pathToReaderConfig, 1, 1);
-    }
-
-    /**
-     * This function returns the firmwareversion of the PulsarMX Reader
-     *
-     * @return firmwareversion of PulsarMX Reader
-     */
-    public String getCSVfirmwareversion() {
-        String pathToReaderConfig = "files/reader/readerConfig.csv";
-
-        return getCSVCell(pathToReaderConfig, 1, 2);
-    }
-
-    /**
-     * @return value of function getCSVip(); IP-Address
-     */
-    public String getIP() {
-        return getCSVip();
-    }
-
-    /**
-     * @return value of function getCSVport(); Port
-     */
-    public int getPort() {
-        return getCSVport();
-    }
-
-    /**
-     * This Function creates the opcConfig file with standard values. This function will only be called if the file wasn't created by the OPC Server before.
+     * This Function creates the opcConfig file with standard values.
      * The standard values are:
      * IP-Address:  192.168.2.239
      * Port:        10001
@@ -282,7 +229,7 @@ public class Reader extends PulsarMX {
         } catch (FileNotFoundException e) {
             logger.log("Reader.writeTemperature(): FileNotFoundException: " + e.toString());
         } catch (IOException e) {
-            logger.log("Reader.writeTemperature(): FileNotFoundException: " + e.toString());
+            logger.log("Reader.writeTemperature(): IOException: " + e.toString());
         }
     }
 
@@ -406,7 +353,7 @@ public class Reader extends PulsarMX {
         String pathToFile = "files/reader/readerCurrent.csv";
         File file = new File(pathToFile);
 
-        List<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
+        ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
         readerCurrentCSV.get(1).set(2, String.valueOf(!state));
 
         String s = "";
@@ -432,7 +379,7 @@ public class Reader extends PulsarMX {
         String pathToFile = "files/reader/readerCurrent.csv";
         File file = new File(pathToFile);
 
-        List<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
+        ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
         readerCurrentCSV.get(pin + 1).set(1, String.valueOf(state));
 
         String s = "";
@@ -450,6 +397,7 @@ public class Reader extends PulsarMX {
 
     /**
      * Compares the added Temperature Sensors with the accessible Sensors and writes the TIDs of the missing Sensor to the readerCurrent.csv file.
+     *
      * @param tids List of added Temperature Sensors
      */
     public void addMissingTIDs(List<String> tids) {
@@ -462,7 +410,7 @@ public class Reader extends PulsarMX {
                 }
             }
             s = s.substring(0, s.length() - 1); //letztes Komma weg
-            List<List<String>> readerCurrentCSV = getCSVasArrayList("files/reader/readerCurrent.csv");
+            ArrayList<List<String>> readerCurrentCSV = this.getCSVasArrayList("files/reader/readerCurrent.csv");
 
             if (readerCurrentCSV.get(1).size() < 4) {
                 List<String> temp = new ArrayList<>();

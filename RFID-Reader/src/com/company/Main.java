@@ -19,7 +19,7 @@ public class Main {
         if(!opcConfigFile.exists()){
             logger.log("Main: " +opcConfigFile.getPath() +" does not exists!");
             Reader.createOpcConfig();
-            logger.log("Main: files/reader/opcConfig.csv file was created with standard values (Identifier: reader1, IP: 192.168.2.239, Port: 10001");
+            logger.log("Main: files/reader/opcConfig.csv file created with standard values (Identifier: reader1, IP: 192.168.2.239, Port: 10001");
         }
 
         Reader pulsarMX = new Reader();

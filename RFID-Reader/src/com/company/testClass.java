@@ -74,14 +74,34 @@ public class testClass {
         }
     }
 
+    private static String getCSVip() {
+        String pathToOpcConfig = "files/reader/opcConfig.csv";
+        ArrayList<List<String>> csvFile = Reader.getCSVasArrayList(pathToOpcConfig);
+        int column = 0;
+        if(csvFile.size() > 0){
+            for(int i = 0; i < csvFile.get(0).size(); i++){
+                if(csvFile.get(0).get(i).equals("IPAdress")){
+                    column = i;
+                    break;
+                }
+            }
+        }
+        String ipAdress = Reader.getCSVCell(pathToOpcConfig, 1 , column);
+        if (ipAdress.equals("Index out of bounds")) ipAdress = "1111111";
+        return ipAdress;
+    }
+
+
+
+
+
+
     public static void main(String[] args) {
         Logger l = new Logger();
 
 
-        File opcConfigFile = new File("files/reader/opcConfig123.csv");
-        if(!opcConfigFile.exists()){
-            l.log("Main: " +opcConfigFile.getPath()+" does not exists!");
-        }
+        String s = testClass.getCSVip();
+        System.out.println(s);
 
 
     }
