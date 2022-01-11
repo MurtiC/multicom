@@ -3,6 +3,7 @@ package com.company;
 import com.metratec.lib.rfidreader.RFIDReaderException;
 import com.metratec.lib.connection.CommConnectionException;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -11,17 +12,26 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Start");
+        Logger logger = new Logger();
+        logger.log("Main: Reader Start!");
+
+        File opcConfigFile = new File("files/reader/opcConfig.csv");
+        if(!opcConfigFile.exists()){
+            logger.log("Main: " +opcConfigFile.getPath() +" does not exists!");
+            Reader.createOpcConfig();
+            logger.log("Main: files/reader/opcConfig.csv file created with standard values (Identifier: reader1, IP: 192.168.2.239, Port: 10001");
+        }
+
         Reader pulsarMX = new Reader();
-        HashMap<String, LocalDateTime> lastContact =  new HashMap<String, LocalDateTime>();
+        HashMap<String, LocalDateTime> lastContacts =  new HashMap<String, LocalDateTime>();
         while (true) {
             try {
                 if (pulsarMX == null) {
                     pulsarMX = new Reader();
-                    pulsarMX.lastContact = lastContact;
+                    pulsarMX.lastContact = lastContacts;
                 }
                 pulsarMX.connect();
-                System.out.println("Connected");
+                logger.log("Main: Reader Connected!");
                 //switchAntennas
                 pulsarMX.updateConfig();
                 pulsarMX.setRFInterface(false);
@@ -30,12 +40,12 @@ public class Main {
 
                 while (true) {
 
-                        pulsarMX.setState(pulsarMX.isConnected());
-                        pulsarMX.setInputState(1, pulsarMX.getInput(0));
-                        pulsarMX.setInputState(2, pulsarMX.getInput(1));
+                        pulsarMX.setReaderConnectionState(pulsarMX.isConnected());
+                        pulsarMX.setInputPinState(1, pulsarMX.getInput(0));
+                        pulsarMX.setInputPinState(2, pulsarMX.getInput(1));
 
                         List<String> tids = pulsarMX.getTIDs();
-                        //pulsarMX.addMissingTIDs(tids);
+                        pulsarMX.addMissingTIDs(tids);
 
                         for (int i = 0; i < tids.size(); i++) {
                             if(!pulsarMX.lastContact.containsKey(tids.get(i))){
@@ -54,18 +64,18 @@ public class Main {
 
                 }
             } catch (RFIDReaderException e) {
-                e.printStackTrace();
+                logger.log("Main: RFIDReaderException: " + e.toString());
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (CommConnectionException var10) {
-                pulsarMX.setState(pulsarMX.isConnected());
-                System.out.println("pulsar not connected!");
-                var10.printStackTrace();
-                lastContact = pulsarMX.lastContact;
+                logger.log("Main: InterruptedException: " + e.toString());
+            } catch (CommConnectionException e) {
+                pulsarMX.setReaderConnectionState(pulsarMX.isConnected());
+                logger.log("Main: Reader is not connected!");
+                logger.log("Main: CommConnectionException: " + e.toString());
+                lastContacts = pulsarMX.lastContact;
                 pulsarMX = null;
             }
-            catch (Exception ex) {
-                ex.printStackTrace();
+            catch (Exception e) {
+                logger.log("Main: Exception: " + e.toString());
             }
         }
     }

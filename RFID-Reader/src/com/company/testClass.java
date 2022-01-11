@@ -1,88 +1,96 @@
 package com.company;
 
+import com.metratec.lib.connection.CommConnectionException;
+import com.metratec.lib.rfidreader.RFIDReaderException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class testClass {
 
-    public static void main(String[] args) {
-        /*LocalTime time = LocalTime.of(0,14,59);
-        LocalDate date = LocalDate.of(2021,11,15);
+    public static String CSVSeperator = ";";
 
-        LocalTime oldTime = LocalTime.of(23,45,0);
-        LocalDate oldDate = LocalDate.of(2021,11,14);
+    public static void addMissingTIDs(List<String> tids){
+        String s = "";
+        try {
+            List<String> allTIDs = new ArrayList<>();
+            allTIDs.add("E280B0403C0000000C014A97");
+            allTIDs.add("E280B0403C0000000C014F84");
+            allTIDs.add("E280B0403C0000000C014991");
+            allTIDs.add("E280B0403C0000000C014992");
 
-        double diff = Duration.between(oldTime, time).toMinutes();
+            allTIDs.add("E280B0403C0000000C014000");
+            allTIDs.add("E280B0403C0000000C014001");
+            allTIDs.add("E280B0403C0000000C014002");
+            allTIDs.add("E280B0403C0000000C014003");
 
-        if(date.compareTo(oldDate) > 0) {
-            diff += 1440;
-        }
+            allTIDs.add("E280B0403C0000000C014004");
 
-        System.out.println("Differenz: " +diff);
-
-        System.out.println(time);
-        System.out.println(date);
-        System.out.println(oldTime);
-        System.out.println(oldDate);
-
-
-        LocalDateTime dateTime = LocalDateTime.of(2021,11,15,0,14,59);
-        LocalDateTime oldDateTime = LocalDateTime.of(1,1,1,0,0,0);
-
-        Duration asd = Duration.between(oldDateTime, dateTime);
-        System.out.println("LocalDateTime: " +asd.toMinutes());
-        System.out.println(dateTime);
-
-
-        Reader r = new Reader();
-
-        List<String> tags = r.getTIDs();
-
-        if(!r.lastContact.containsKey(tags.get(0))){
-            r.lastContact.put(tags.get(0), LocalDateTime.now());
-        }
-        System.out.println(tags.get(0));
-
-        Reader r = new Reader();
-
-        for(int i = 0; i < 20; i++){
-            r.setState(true);
-            r.setInputState(1,true);
-            r.setInputState(2,false);
-
-            List<String> tags = r.getTIDs();
-
-            for(String tag : tags){
-                if(!r.lastContact.containsKey(tag)){
-                    r.lastContact.put(tag, LocalDateTime.now());
+            for(int i = 0; i < allTIDs.size(); i++){
+                if(!tids.contains(allTIDs.get(i).substring(0, 24))){
+                    s += allTIDs.get(i) +",";
                 }
+            }
+            s = s.substring(0, s.length()-1); //letztes Komma weg
+            List<List<String>> readerCurrentCSV = Reader.getCSVasArrayList("files/reader/readerCurrent.csv");
 
-                double temperature = Math.random() + 20.0;
-                LocalDateTime dateTime = LocalDateTime.now().plusDays(i);
+            if(readerCurrentCSV.get(1).size() < 4){
+                List<String> temp = new ArrayList<String>();
 
-                r.writeTemperature(tag, temperature, dateTime);
-                r.writeCurrentTemperature(tag, temperature, dateTime);
+                for(int i = 0; i < readerCurrentCSV.get(1).size(); i++){
+                    temp.add(readerCurrentCSV.get(1).get(i));
+                }
+                temp.add(s);
+                readerCurrentCSV.set(1, temp);
+
+            }else{
+                readerCurrentCSV.get(1).set(3, s);
             }
 
-        }*/
+            String allLines = "";
+            for(List l : readerCurrentCSV){
+                allLines += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
+            }
 
-
-        /*try {
-            FileWriter writer = new FileWriter("files/reader/readerConfig.csv", false);
-            writer.write(csvRead.get(0).stream().collect(Collectors.joining(";")) + "\n");
-            writer.write(csvConf.stream().collect(Collectors.joining(";")));
+            FileWriter writer = new FileWriter("files/reader/readerCurrent.csv", false);
+            writer.write(allLines);
             writer.close();
+
+        } catch (CommConnectionException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-         */
+
+
+    public static void main(String[] args) {
+        Logger l = new Logger();
+        Reader r = new Reader();
+        String s = Reader.getCSVCell("files/reader/opcConfig.csv", "ipadress", 1);
+        System.out.println(s);
+
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", 20.4, LocalDateTime.now());
+        r.lastContact.put("E280B0403C0000000C014A97", LocalDateTime.now());
+
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(1));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(2));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(3));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(4));
+
+
 
 
 
