@@ -6,18 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="überflüssige Funtkionen entfernt, Suchen nach Parametern in CSV; GitHub.jar update">
-      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/reader/opcConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/opcConfig.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" afterDir="false" />
-    </list>
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="idk" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +18,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="RFID-Reader" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -47,6 +39,7 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="20x6wGgLdEkX17C2ZtzCsP7pk5i" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -58,6 +51,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -69,8 +63,9 @@
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
-      <module name="GitHub" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
