@@ -5,3 +5,5 @@
 
 runtimeNode.csv
 **/logs/**
+
+!/Workspace/*

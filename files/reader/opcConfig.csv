@@ -1,0 +1,8 @@
+Id;Name;Description;Location;IPAdress;Port;Pin;Mode;State;
+reader1;pulsarMX;Lesegeraet;;192.168.2.239;10001;;;;
+InputPin1;;;;;;;;;;;;;;;;;;;
+InputPin2;;;;;;;;;;;;;;;;;;;
+OutputPin1;;;;;;;;;;;;;;;;;;;
+OutputPin2;;;;;;;;;;;;;;;;;;;
+OutputPin3;;;;;;;;;;;;;;;;;;;
+OutputPin4;;;;;;;;;;;;;;;;;;;
