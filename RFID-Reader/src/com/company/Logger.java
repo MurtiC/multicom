@@ -10,7 +10,7 @@ public class Logger {
     FileWriter writer;
 
     public Logger() {
-        File dir = new File("files/logs");
+        File dir = new File("files/reader/logs");
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -18,7 +18,7 @@ public class Logger {
 
     public void log(String log) {
         try {
-            writer = new FileWriter("files/logs/log-" + LocalDateTime.now().toLocalDate()+".txt", true);
+            writer = new FileWriter("files/reader/logs/log-" + LocalDateTime.now().toLocalDate()+".txt", true);
             writer.append(LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + ": " + log + "\n");
             writer.close();
             this.deleteOldestFile();

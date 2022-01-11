@@ -6,15 +6,17 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="GitHub.jar update">
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="überflüssige Funtkionen entfernt, Suchen nach Parametern in CSV; GitHub.jar update">
+      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/testClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/files/reader/opcConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/opcConfig.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/testClass.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +67,7 @@
       <recent name="S:\OneDrive\Uni\Semester 5\GitHub" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Tet">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.company.Main" />
       <module name="GitHub" />
@@ -192,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638351788808</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="überflüssige Funtkionen entfernt, Suchen nach Parametern in CSV; GitHub.jar update">
+      <created>1638435847429</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1638435847429</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,6 +240,7 @@
     <MESSAGE value="Funktion addMissingTIDs() hinzugefügt; GitHub.jar updated" />
     <MESSAGE value="Logger hinzugefügt, createOpcConfig() überarbeitet," />
     <MESSAGE value="GitHub.jar update" />
-    <option name="LAST_COMMIT_MESSAGE" value="GitHub.jar update" />
+    <MESSAGE value="überflüssige Funtkionen entfernt, Suchen nach Parametern in CSV; GitHub.jar update" />
+    <option name="LAST_COMMIT_MESSAGE" value="überflüssige Funtkionen entfernt, Suchen nach Parametern in CSV; GitHub.jar update" />
   </component>
 </project>

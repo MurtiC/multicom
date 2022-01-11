@@ -24,6 +24,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\2021-11-18.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

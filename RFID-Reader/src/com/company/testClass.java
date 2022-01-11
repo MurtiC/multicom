@@ -74,34 +74,25 @@ public class testClass {
         }
     }
 
-    private static String getCSVip() {
-        String pathToOpcConfig = "files/reader/opcConfig.csv";
-        ArrayList<List<String>> csvFile = Reader.getCSVasArrayList(pathToOpcConfig);
-        int column = 0;
-        if(csvFile.size() > 0){
-            for(int i = 0; i < csvFile.get(0).size(); i++){
-                if(csvFile.get(0).get(i).equals("IPAdress")){
-                    column = i;
-                    break;
-                }
-            }
-        }
-        String ipAdress = Reader.getCSVCell(pathToOpcConfig, 1 , column);
-        if (ipAdress.equals("Index out of bounds")) ipAdress = "1111111";
-        return ipAdress;
-    }
-
-
-
-
 
 
     public static void main(String[] args) {
         Logger l = new Logger();
-
-
-        String s = testClass.getCSVip();
+        Reader r = new Reader();
+        String s = Reader.getCSVCell("files/reader/opcConfig.csv", "ipadress", 1);
         System.out.println(s);
+
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", 20.4, LocalDateTime.now());
+        r.lastContact.put("E280B0403C0000000C014A97", LocalDateTime.now());
+
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(1));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(2));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(3));
+        r.writeCurrentTemperature("E280B0403C0000000C014A97", -300, LocalDateTime.now().plusDays(4));
+
+
+
+
 
 
     }

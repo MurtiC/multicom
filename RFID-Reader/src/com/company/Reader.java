@@ -72,11 +72,40 @@ public class Reader extends PulsarMX {
      * @param column   column number of the selected cell (starts with 0)
      * @return the value of the cell(row,colum) in the file (filepath)
      */
-    public static String getCSVCell(String filePath, int row, int column) {
+    public static String getCSVCellOld(String filePath, int row, int column) {
         ArrayList<List<String>> lines = getCSVasArrayList(filePath);
 
         if (row > (lines.size() - 1) || column > (lines.get(row).size() - 1)) {
             return "Index out of bounds";
+        }
+
+        return lines.get(row).get(column);
+
+    }
+
+    public static String getCSVCell(String filePath, String attribute, int row) {
+        ArrayList<List<String>> lines = getCSVasArrayList(filePath);
+        int column = -1;
+        boolean found = false;
+
+        if(lines.size() > 0){
+            for(int i = 0; i < lines.get(0).size(); i++){
+                if(lines.get(0).get(i).toLowerCase(Locale.ROOT).equals(attribute.toLowerCase(Locale.ROOT))){
+                    column = i;
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if(found == false){
+            return "Index out of bounds";
+        }
+        if(column == -1){
+            if (row > (lines.size() - 1) || column > (lines.get(row).size() - 1)) {
+                return "Index out of bounds";
+            }
+
         }
 
         return lines.get(row).get(column);
@@ -120,7 +149,7 @@ public class Reader extends PulsarMX {
      */
     private static String getCSVip() {
         String pathToOpcConfig = "files/reader/opcConfig.csv";
-        String ipAdress = getCSVCell(pathToOpcConfig, 1, 4);
+        String ipAdress = getCSVCell(pathToOpcConfig, "IPAdress", 1);
         if (ipAdress.equals("Index out of bounds")) ipAdress = "192.168.2.239";
         return ipAdress;
     }
@@ -136,7 +165,7 @@ public class Reader extends PulsarMX {
      */
     private static int getCSVport() {
         String pathToOpcConfig = "files/reader/opcConfig.csv";
-        String port = getCSVCell(pathToOpcConfig, 1, 5);
+        String port = getCSVCell(pathToOpcConfig, "Port", 1);
         if (port.equals("Index out of bounds")) port = "10001";
         return Integer.parseInt(port);
     }
@@ -152,7 +181,7 @@ public class Reader extends PulsarMX {
      */
     private static String getCSVidentifier() {
         String pathToOpcConfig = "files/reader/opcConfig.csv";
-        String identifier = getCSVCell(pathToOpcConfig, 1, 0);
+        String identifier = getCSVCell(pathToOpcConfig, "Id", 1);
         if (identifier.equals("Index out of bounds")) identifier = "reader1";
         return identifier;
     }
@@ -247,8 +276,11 @@ public class Reader extends PulsarMX {
                 LocalDateTime lastContactTid = lastContact.get(tid);
                 Duration diffBetweenContacts = Duration.between(lastContactTid, dateTime);
 
-                double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", 1, 7)); //antenne soll noch raus dann 6
+                double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", "timeout", 1)); //antenne soll noch raus dann 6
                 if (diffBetweenContacts.toMinutes() > timeout) {
+                    if(getCSVCell("files/sensoren/" +tid+"/current.csv", "NotConnected", 1).toLowerCase(Locale.ROOT).equals("false")){
+                        logger.log(tid+" Timeout reached!");
+                    }
                     s = tid + CSVSeperator + "" + CSVSeperator + "true\n";
                 } else {
                     s = tid + CSVSeperator + "" + CSVSeperator + "false\n";
@@ -350,7 +382,7 @@ public class Reader extends PulsarMX {
      * @param state state of connection of the reader
      */
     public void setReaderConnectionState(boolean state) {
-        String pathToFile = "files/reader/readerCurrent.csv";
+        String pathToFile = "files/reader/ ";
         File file = new File(pathToFile);
 
         ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
