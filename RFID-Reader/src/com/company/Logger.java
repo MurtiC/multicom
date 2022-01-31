@@ -3,6 +3,7 @@ package com.company;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,6 +19,7 @@ public class Logger {
 
     public void log(String log) {
         try {
+            System.out.println(log);
             writer = new FileWriter("files/reader/logs/log-" + LocalDateTime.now().toLocalDate()+".txt", true);
             writer.append(LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + ": " + log + "\n");
             writer.close();

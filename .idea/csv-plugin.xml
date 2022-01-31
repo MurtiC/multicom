@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\reader\opcCurrent.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\reader\readerConfig.csv">
           <value>
             <Attribute>

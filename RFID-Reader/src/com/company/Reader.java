@@ -236,7 +236,7 @@ public class Reader extends PulsarMX {
             Scanner scanner = new Scanner(history);
 
             if (!scanner.hasNext()) {
-                writer.append("Temperature" + CSVSeperator + "Date Time\n");
+                writer.append("Temperatur" + CSVSeperator + "Date Time\n");
                 writer.append(s);
                 writer.close();
                 scanner.close();
@@ -301,7 +301,7 @@ public class Reader extends PulsarMX {
 
             try {
                 FileWriter writer = new FileWriter(file, false);
-                writer.write("TagId;Temperature;NotConnected\n" + s);
+                writer.write("TagId;Temperatur;NotConnected\n" + s);
                 writer.close();
             } catch (IOException e) {
                 logger.log("Reader.writeCurrentTemperature(): IOException: " + e.toString());
@@ -382,7 +382,7 @@ public class Reader extends PulsarMX {
      * @param state state of connection of the reader
      */
     public void setReaderConnectionState(boolean state) {
-        String pathToFile = "files/reader/ ";
+        String pathToFile = "files/reader/readerCurrent.csv";
         File file = new File(pathToFile);
 
         ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
@@ -435,13 +435,14 @@ public class Reader extends PulsarMX {
     public void addMissingTIDs(List<String> tids) {
         String s = "";
         try {
+            this.setNoMask();
             List<String> allTIDs = this.getTagTIDs();
             for (int i = 0; i < allTIDs.size(); i++) {
                 if (!tids.contains(allTIDs.get(i).substring(0, 24))) {
-                    s += allTIDs.get(i) + ",";
+                    s += allTIDs.get(i).substring(0, 24) + ",";
                 }
             }
-            s = s.substring(0, s.length() - 1); //letztes Komma weg
+            if(s.length() > 0) s = s.substring(0, s.length() - 1); //letztes Komma weg
             ArrayList<List<String>> readerCurrentCSV = this.getCSVasArrayList("files/reader/readerCurrent.csv");
 
             if (readerCurrentCSV.get(1).size() < 4) {

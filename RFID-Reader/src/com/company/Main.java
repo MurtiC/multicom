@@ -33,7 +33,7 @@ public class Main {
                 pulsarMX.connect();
                 logger.log("Main: Reader Connected!");
                 //switchAntennas
-                pulsarMX.updateConfig();
+                //pulsarMX.updateConfig();
                 pulsarMX.setRFInterface(false);
                 Thread.sleep(2000);
                 pulsarMX.setRFInterface(true);
