@@ -38,6 +38,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014A97\config.csv">
           <value>
             <Attribute>
@@ -46,6 +53,48 @@
           </value>
         </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014A97\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014AE1\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014AE1\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014AE1\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014F84\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014F84\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014F84\current.csv">
           <value>
             <Attribute>
               <option name="separator" value=";" />
