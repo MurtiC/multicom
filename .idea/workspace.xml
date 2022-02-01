@@ -6,26 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="updateConfig() bug fixed: notConnected raus, input pins raus">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="updateConfig() bug fixed: Namen angepasst, prüfen ob schon erstellt">
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/reader/readerConfig.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/reader/readerCurrent.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123123123/2022-01-31.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123123123/config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/123123123/current.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/2022-01-31.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/2022-01-31.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014F84/2022-01-31.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014F84/current.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/server/config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/server/node.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/files/server/node.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/reader/readerConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerConfig.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/server/node.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/server/node.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643713454030</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="updateConfig() bug fixed: Namen angepasst, prüfen ob schon erstellt">
+      <created>1643715272729</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1643715272729</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,6 +238,7 @@
     <MESSAGE value="System.out.println entfernt; rebuild" />
     <MESSAGE value="writeCurrentTemperature() updated: alte Temperatur schreiben, wenn -300 gelesen und notConntected = false; rebuild" />
     <MESSAGE value="updateConfig() bug fixed: notConnected raus, input pins raus" />
-    <option name="LAST_COMMIT_MESSAGE" value="updateConfig() bug fixed: notConnected raus, input pins raus" />
+    <MESSAGE value="updateConfig() bug fixed: Namen angepasst, prüfen ob schon erstellt" />
+    <option name="LAST_COMMIT_MESSAGE" value="updateConfig() bug fixed: Namen angepasst, prüfen ob schon erstellt" />
   </component>
 </project>

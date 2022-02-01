@@ -207,8 +207,8 @@ public class Reader extends PulsarMX {
     public static void createOpcConfig() {
         File opcConfigFile = new File("files/reader/opcConfig.csv");
 
-        String title = "Id" + CSVSeperator + "Name" + CSVSeperator + "Description" + CSVSeperator + "Location" + CSVSeperator + "IPAdress" + CSVSeperator + "Port" + CSVSeperator + "Pin" + CSVSeperator + "Mode" + CSVSeperator + "State" + CSVSeperator + "\n";
-        String standard = "reader1" + CSVSeperator + "pulsarMX" + CSVSeperator + "Lesegeraet" + CSVSeperator + "" + CSVSeperator + "192.168.2.239" + CSVSeperator + "10001" + CSVSeperator + CSVSeperator + CSVSeperator + CSVSeperator + "\n";
+        String title = "Id" + CSVSeperator + "Name" + CSVSeperator + "Description" + CSVSeperator + "Location" + CSVSeperator + "IPAdress" + CSVSeperator + "Port" + CSVSeperator + "\n";
+        String standard = "reader1" + CSVSeperator + "pulsarMX" + CSVSeperator + "Lesegeraet" + CSVSeperator + "" + CSVSeperator + "192.168.2.239" + CSVSeperator + "10001" + CSVSeperator + "\n";
 
         try {
             FileWriter writer = new FileWriter(opcConfigFile.getPath(), false);
