@@ -41,7 +41,7 @@ public class Reader extends PulsarMX {
             csvConf.set(1, getHardwareRevision());
             csvConf.set(2, getFirmwareRevision());
             csvConf.set(3, getSerialNumber());
-            csvConf.set(6, String.valueOf(!isConnected()));
+            csvConf.set(5, String.valueOf(!isConnected()));
 
             FileWriter writer = new FileWriter("files/reader/readerConfig.csv", false);
 
@@ -283,7 +283,8 @@ public class Reader extends PulsarMX {
                     }
                     s = tid + CSVSeperator + "" + CSVSeperator + "true\n";
                 } else {
-                    s = tid + CSVSeperator + "" + CSVSeperator + "false\n";
+                    String oldTemperature = getCSVCell("files/sensoren/" + tid + "/current.csv", "Temperatur", 1);
+                    s = tid + CSVSeperator + oldTemperature + CSVSeperator + "false\n";
                 }
             } else {
                 s = tid + CSVSeperator + temperature + CSVSeperator + "false\n";

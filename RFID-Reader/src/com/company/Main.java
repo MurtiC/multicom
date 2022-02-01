@@ -32,8 +32,9 @@ public class Main {
                 }
                 pulsarMX.connect();
                 logger.log("Main: Reader Connected!");
+                pulsarMX.setNoMask();
                 //switchAntennas
-                //pulsarMX.updateConfig();
+                pulsarMX.updateConfig();
                 pulsarMX.setRFInterface(false);
                 Thread.sleep(2000);
                 pulsarMX.setRFInterface(true);
@@ -51,16 +52,16 @@ public class Main {
                             if(!pulsarMX.lastContact.containsKey(tids.get(i))){
                                 pulsarMX.lastContact.put(tids.get(i), LocalDateTime.now());
                             }
-                            System.out.printf("TID:%s", tids.get(i));
+                            //System.out.printf("TID:%s", tids.get(i));
                             double temperature = pulsarMX.readTemperature(tids.get(i));
-                            System.out.printf(":%f\t", temperature);
+                            //System.out.printf(":%f\t", temperature);
 
 
                             LocalDateTime dateTime = LocalDateTime.now();
                             pulsarMX.writeTemperature(tids.get(i), temperature, dateTime);
                             pulsarMX.writeCurrentTemperature(tids.get(i), temperature, dateTime);
                         }
-                        System.out.println();
+                        //System.out.println();
 
                 }
             } catch (RFIDReaderException e) {

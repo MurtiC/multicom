@@ -3,17 +3,101 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\files\reader\opcConfig.csv">
+        <entry key="\Workspace\files\reader\readerConfig.csv">
           <value>
             <Attribute>
               <option name="separator" value=";" />
             </Attribute>
           </value>
         </entry>
-        <entry key="\files\reader\opcCurrent.csv">
+        <entry key="\Workspace\files\reader\readerCurrent.csv">
           <value>
             <Attribute>
-              <option name="separator" value="," />
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014855\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014855\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014A97\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014A97\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014AE1\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014AE1\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014F84\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C014F84\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C01511E\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\sensoren\E280B0403C0000000C01511E\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Workspace\files\server\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\reader\opcConfig.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
             </Attribute>
           </value>
         </entry>
@@ -31,14 +115,49 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\files\sensoren\E280B0403C0000000C014A97\2021-11-18.csv">
+        <entry key="\files\sensoren\E280B0403C0000000C014855\2022-01-31.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014855\2022-02-01.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014855\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014855\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\2021-10-29.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014A97\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014A97\2022-02-01.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
@@ -59,10 +178,24 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014AE1\2021-10-29.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014AE1\2022-01-31.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014AE1\2022-02-01.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
             </Attribute>
           </value>
         </entry>
@@ -87,6 +220,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C014F84\2022-02-01.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014F84\config.csv">
           <value>
             <Attribute>
@@ -95,6 +235,48 @@
           </value>
         </entry>
         <entry key="\files\sensoren\E280B0403C0000000C014F84\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C01511E\2022-01-31.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C01511E\2022-02-01.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C01511E\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\sensoren\E280B0403C0000000C01511E\current.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\server\config.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\files\server\node.csv">
           <value>
             <Attribute>
               <option name="separator" value=";" />

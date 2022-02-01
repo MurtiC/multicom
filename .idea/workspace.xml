@@ -6,68 +6,45 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="Kommentare hinzugefügt">
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="System.out.println entfernt; rebuild">
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014855/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014855/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014F84/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014F84/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C01511E/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C01511E/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/config.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-10-29.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/2021-10-29.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/2022-01-31.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/config.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/server/config.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/server/node.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/server/node.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/reader/opcCurrent.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/GitHub.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/reader/readerConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/reader/readerConfig.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/reader/readerCurrent.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/sensoren/E280B0403C0000000C014AE1/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/server/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/server/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/opcConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/opcConfig.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/readerConfig.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerConfig.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerCurrent.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-18.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-22.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-23.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-24.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-26.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-27.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-28.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-29.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-11-30.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-12-01.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-12-02.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-12-03.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-12-04.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/2021-12-05.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014991/current.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-18.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-22.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-23.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-24.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-26.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-27.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-28.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-29.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-11-30.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-12-01.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-12-02.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-12-03.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-12-04.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/2021-12-05.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014992/current.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-18.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-22.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-23.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-24.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-25.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-26.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-27.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-28.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-29.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-11-30.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-12-01.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-12-02.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-12-03.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-12-04.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2021-12-05.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2022-01-31.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2022-01-31.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/2021-11-18.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/2022-01-31.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/2022-01-31.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/current.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/2022-01-31.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/2022-01-31.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/current.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/current.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" afterDir="false" />
@@ -208,7 +185,21 @@
       <option name="project" value="LOCAL" />
       <updated>1637252554081</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="addMissingTIDs() error fix">
+      <created>1643627676552</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1643627676552</updated>
+    </task>
+    <task id="LOCAL-00010" summary="rebuild">
+      <created>1643627712365</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1643627712365</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,17 +234,9 @@
     <MESSAGE value=".jar build" />
     <MESSAGE value=".jar build v3" />
     <MESSAGE value=".jar build v4" />
-    <option name="LAST_COMMIT_MESSAGE" value=".jar build v4" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="addMissingTIDs() error fix" />
+    <MESSAGE value="rebuild" />
+    <MESSAGE value="System.out.println entfernt; rebuild" />
+    <option name="LAST_COMMIT_MESSAGE" value="System.out.println entfernt; rebuild" />
   </component>
 </project>
