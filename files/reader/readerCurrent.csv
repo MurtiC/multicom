@@ -1,2 +1,2 @@
-Id;State;NotConnected;
-reader1;;false;;
+Id;NotConnected;MissingTids;
+reader1;false;;

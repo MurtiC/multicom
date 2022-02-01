@@ -44,7 +44,7 @@ public class Reader extends PulsarMX {
                 writer.write(getFirmwareRevision() + CSVSeperator);
                 writer.write(getSerialNumber() + CSVSeperator);
                 writer.close();
-            }else{
+            } else {
                 List<List<String>> csvRead = this.getCSVasArrayList(filePath);
                 List<String> csvConf = csvRead.get(1);
 
@@ -396,18 +396,26 @@ public class Reader extends PulsarMX {
     public void setReaderConnectionState(boolean state) {
         String pathToFile = "files/reader/readerCurrent.csv";
         File file = new File(pathToFile);
-
-        ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
-        readerCurrentCSV.get(1).set(2, String.valueOf(!state));
-
-        String s = "";
-        for (List l : readerCurrentCSV) {
-            s += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
-        }
         try {
-            FileWriter writer = new FileWriter(file, false);
-            writer.write(s);
-            writer.close();
+            if (!file.exists()) {
+                FileWriter writer = new FileWriter(file, true);
+                writer.write("Id" + CSVSeperator + "NotConnected" + CSVSeperator + "MissingTids" + CSVSeperator + "\n");
+                writer.write(this.getIdentifier() + CSVSeperator + String.valueOf(!state) + CSVSeperator + CSVSeperator);
+                writer.close();
+            }else{
+                ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
+                readerCurrentCSV.get(1).set(1, String.valueOf(!state));
+
+                String s = "";
+                for (List l : readerCurrentCSV) {
+                    s += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
+                }
+
+                FileWriter writer = new FileWriter(file, false);
+                writer.write(s);
+                writer.close();
+            }
+
         } catch (IOException e) {
             logger.log("Reader.setState(): IOException: " + e.toString());
         }

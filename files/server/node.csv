@@ -13,7 +13,7 @@ Type;Name;Description;DisplayName;Parrent;Write;Min;Max;DataSource;CSVName;CSVId
 7;AddTemperatureSensor;;Add Temperature Sensor;RFID-Reader;;;;;;;;AddTemperatureSensor;;AddTemperatureSensor
 7;RemoveTemperatureSensor;;Remove Temperature Sensor;RFID-Reader;;;;;;;;RemoveTemperatureSensor;;RemoveTemperatureSensor
 1;TemperatureSensors;Contains all Temperatursensors;Temperature Sensors;RFID-Reader;;;;;;;;;;
-4;FoundTemperaureSensors;;Found Temperaure Sensors;RFID-Reader;;;;1;/files/reader/readerConfig.csv;Id;reader1;MissingTids;;
+4;FoundTemperaureSensors;;Found Temperaure Sensors;RFID-Reader;;;;1;/files/reader/readerCurrent.csv;Id;reader1;MissingTids;;
 ;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;
