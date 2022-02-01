@@ -414,32 +414,6 @@ public class Reader extends PulsarMX {
     }
 
     /**
-     * Writes the state of the input Pin into the readerCurrent.csv file.
-     *
-     * @param pin   selected pin
-     * @param state state of selected pin
-     */
-    public void setInputPinState(int pin, boolean state) {
-        String pathToFile = "files/reader/readerCurrent.csv";
-        File file = new File(pathToFile);
-
-        ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
-        readerCurrentCSV.get(pin + 1).set(1, String.valueOf(state));
-
-        String s = "";
-        for (List l : readerCurrentCSV) {
-            s += l.stream().collect(Collectors.joining(CSVSeperator)) + ";\n";
-        }
-        try {
-            FileWriter writer = new FileWriter(file, false);
-            writer.write(s);
-            writer.close();
-        } catch (IOException e) {
-            logger.log("Reader.setInputState(): IOException: " + e.toString());
-        }
-    }
-
-    /**
      * Compares the added Temperature Sensors with the accessible Sensors and writes the TIDs of the missing Sensor to the readerCurrent.csv file.
      *
      * @param tids List of added Temperature Sensors
