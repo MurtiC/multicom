@@ -48,6 +48,7 @@ void createFolder(char *relPath) {
     
         int index = strlen(path)-lenlast;
         char folderpath[PATH_MAX];
+        strcpy(folderpath,"");
         strncpy(folderpath,path,index);
         strcpy(path,folderpath);
     }

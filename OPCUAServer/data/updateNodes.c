@@ -169,6 +169,9 @@ static void StringToUA_Variant(UA_Variant *variant,char* value)
  */
 static bool TextToUA_Variant(char *text, UA_Variant *variant)
 {
+    if (strlen(text) == 0) {
+        return false;
+    }
     // Check if target variant is a string
     if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
     {

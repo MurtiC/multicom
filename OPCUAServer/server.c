@@ -48,9 +48,9 @@ static void LogIntoFile()
         logPath,
         "/files/server/logs/opc_%d_%d_%d_%d.txt",
         currenttimeTm->tm_year + 1900,
-        currenttimeTm->tm_mon,
+        currenttimeTm->tm_mon+1,
         currenttimeTm->tm_mday,
-        currenttimeTm->tm_hour);
+        currenttimeTm->tm_hour+1);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s", logPath);
 
     getFullPath(logPath, logPathFull);
