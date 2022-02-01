@@ -400,7 +400,7 @@ public class Reader extends PulsarMX {
             if (!file.exists()) {
                 FileWriter writer = new FileWriter(file, true);
                 writer.write("Id" + CSVSeperator + "NotConnected" + CSVSeperator + "MissingTids" + CSVSeperator + "\n");
-                writer.write(this.getIdentifier() + CSVSeperator + String.valueOf(!state) + CSVSeperator + CSVSeperator);
+                writer.write(this.getIdentifier() + CSVSeperator + String.valueOf(!state) + CSVSeperator);
                 writer.close();
             }else{
                 ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
@@ -428,18 +428,25 @@ public class Reader extends PulsarMX {
      */
     public void addMissingTIDs(List<String> tids) {
         String s = "";
+        ArrayList<String> newTids = new ArrayList<>();
         try {
             this.setNoMask();
             List<String> allTIDs = this.getTagTIDs();
             for (int i = 0; i < allTIDs.size(); i++) {
                 if (!tids.contains(allTIDs.get(i).substring(0, 24))) {
-                    s += allTIDs.get(i).substring(0, 24) + ",";
+                    newTids.add(allTIDs.get(i).substring(0, 24));
+                    //s += allTIDs.get(i).substring(0, 24) + ",";
                 }
             }
+            Collections.sort(newTids);
+            for(String tid : newTids){
+                s += tid + ",";
+            }
             if (s.length() > 0) s = s.substring(0, s.length() - 1); //letztes Komma weg
+
             ArrayList<List<String>> readerCurrentCSV = this.getCSVasArrayList("files/reader/readerCurrent.csv");
 
-            if (readerCurrentCSV.get(1).size() < 4) {
+            if (readerCurrentCSV.get(1).size() < 3) {
                 List<String> temp = new ArrayList<>();
 
                 for (int i = 0; i < readerCurrentCSV.get(1).size(); i++) {
@@ -449,7 +456,7 @@ public class Reader extends PulsarMX {
                 readerCurrentCSV.set(1, temp);
 
             } else {
-                readerCurrentCSV.get(1).set(3, s);
+                readerCurrentCSV.get(1).set(2, s);
             }
 
             String allLines = "";

@@ -101,6 +101,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Workspace\files\server\node.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\files\reader\opcConfig.csv">
           <value>
             <Attribute>
