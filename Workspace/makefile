@@ -1,13 +1,11 @@
 watch: server
 	nodemon --exec "make runner || exit 1"
-
-
 runReader:
-    chmod +x GitHub.jar
+	chmod +x GitHub.jar
 	java -jar GitHub.jar
 
 runOPC:
-    chmod +x server
+	chmod +x server
 	./server
 
 launch: runReader runOPC

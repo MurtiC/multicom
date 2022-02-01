@@ -3,7 +3,9 @@
 ~$**
 
 
-runtimeNode.csv
+Workspace/files/server/runtimeNode.csv
+Workspace/files/server/logs/*
+Workspace/files/sensoren
 **/logs/**
 
 !/Workspace/*

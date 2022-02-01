@@ -34,22 +34,34 @@ public class Reader extends PulsarMX {
      */
     public void updateConfig() {
         try {
-            List<List<String>> csvRead = this.getCSVasArrayList("files/reader/readerConfig.csv");
-            List<String> csvConf = csvRead.get(1);
+            String filePath = "files/reader/readerConfig.csv";
+            File f1 = new File(filePath);
+            if (!f1.exists()) {
+                FileWriter writer = new FileWriter(filePath, true);
+                writer.write("Id;Hardwarerevision;Softwarerevision;Serialnumber;\n");
+                writer.write(getCSVidentifier() + CSVSeperator);
+                writer.write(getHardwareRevision() + CSVSeperator);
+                writer.write(getFirmwareRevision() + CSVSeperator);
+                writer.write(getSerialNumber() + CSVSeperator);
+                writer.close();
+            }else{
+                List<List<String>> csvRead = this.getCSVasArrayList(filePath);
+                List<String> csvConf = csvRead.get(1);
 
-            csvConf.set(0, getCSVidentifier());
-            csvConf.set(1, getHardwareRevision());
-            csvConf.set(2, getFirmwareRevision());
-            csvConf.set(3, getSerialNumber());
+                csvConf.set(0, getCSVidentifier());
+                csvConf.set(1, getHardwareRevision());
+                csvConf.set(2, getFirmwareRevision());
+                csvConf.set(3, getSerialNumber());
 
-            FileWriter writer = new FileWriter("files/reader/readerConfig.csv", false);
+                FileWriter writer = new FileWriter(filePath, false);
 
-            String s = "";
-            for (List<String> line : csvRead) {
-                s += line.stream().collect(Collectors.joining(CSVSeperator)) + "\n";
+                String s = "";
+                for (List<String> line : csvRead) {
+                    s += line.stream().collect(Collectors.joining(CSVSeperator)) + "\n";
+                }
+                writer.write(s);
+                writer.close();
             }
-            writer.write(s);
-            writer.close();
 
         } catch (RFIDReaderException e) {
             logger.log("Reader.updateConfig(): RFIDReaderException: " + e.toString());
@@ -87,9 +99,9 @@ public class Reader extends PulsarMX {
         int column = -1;
         boolean found = false;
 
-        if(lines.size() > 0){
-            for(int i = 0; i < lines.get(0).size(); i++){
-                if(lines.get(0).get(i).toLowerCase(Locale.ROOT).equals(attribute.toLowerCase(Locale.ROOT))){
+        if (lines.size() > 0) {
+            for (int i = 0; i < lines.get(0).size(); i++) {
+                if (lines.get(0).get(i).toLowerCase(Locale.ROOT).equals(attribute.toLowerCase(Locale.ROOT))) {
                     column = i;
                     found = true;
                     break;
@@ -97,10 +109,10 @@ public class Reader extends PulsarMX {
             }
         }
 
-        if(found == false){
+        if (found == false) {
             return "Index out of bounds";
         }
-        if(column == -1){
+        if (column == -1) {
             if (row > (lines.size() - 1) || column > (lines.get(row).size() - 1)) {
                 return "Index out of bounds";
             }
@@ -277,8 +289,8 @@ public class Reader extends PulsarMX {
 
                 double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", "timeout", 1)); //antenne soll noch raus dann 6
                 if (diffBetweenContacts.toMinutes() > timeout) {
-                    if(getCSVCell("files/sensoren/" +tid+"/current.csv", "NotConnected", 1).toLowerCase(Locale.ROOT).equals("false")){
-                        logger.log(tid+" Timeout reached!");
+                    if (getCSVCell("files/sensoren/" + tid + "/current.csv", "NotConnected", 1).toLowerCase(Locale.ROOT).equals("false")) {
+                        logger.log(tid + " Timeout reached!");
                     }
                     s = tid + CSVSeperator + "" + CSVSeperator + "true\n";
                 } else {
@@ -442,7 +454,7 @@ public class Reader extends PulsarMX {
                     s += allTIDs.get(i).substring(0, 24) + ",";
                 }
             }
-            if(s.length() > 0) s = s.substring(0, s.length() - 1); //letztes Komma weg
+            if (s.length() > 0) s = s.substring(0, s.length() - 1); //letztes Komma weg
             ArrayList<List<String>> readerCurrentCSV = this.getCSVasArrayList("files/reader/readerCurrent.csv");
 
             if (readerCurrentCSV.get(1).size() < 4) {
