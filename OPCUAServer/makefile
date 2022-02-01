@@ -13,12 +13,12 @@ clean:
 clearport:
 	fuser -k 4840/tcp
 
-run:
+runServer:
 	./server
 
 watch: server
-	nodemon --exec "make runner || exit 1"
+	nodemon --exec "make run || exit 1"
 
 
 
-runner: clean server run
+run: clean server runServer

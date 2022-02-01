@@ -9,34 +9,51 @@
 #include <stdlib.h>
 #include "../readFile.c"
 
+static bool UA_VariantToString(const UA_Variant *variant, char* value) ;
+
 //#region [rgba(255,0,0,0.15)] 
 /**
  * @brief Compare a UA_Variant with UA_Variant
  * @param variant1 UA_Variant
  * @param variant2 UA_Variant
  */
-static bool UA_VariantCompare(UA_Variant *variant1, UA_Variant *variant2)
+static bool UA_VariantCompare(const UA_Variant *variant1,const UA_Variant *variant2)
 {
+    // Check if variant1 is a string
     if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_STRING]))
     {
+        // Check if variant2 is a string
         if (!UA_Variant_hasScalarType(variant2, &UA_TYPES[UA_TYPES_STRING]))
         {
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1: STRING, Variant2: Not STRING");
             return false;
         }
-        return strcmp(variant1->data, variant2->data) != 0;
+        
+        // Compare variant1 string to variant2 string
+        
+        char text1[1024];
+        char text2[1024];
+        UA_VariantToString(variant1,text1);
+        UA_VariantToString(variant2,text2);
+        //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1: STRING, Variant2: STRING-> %s, %s",text1,text2);
+        return strcmp(text1, text2) == 0;
     }
+    // Check if variant1 is a datetime
     else if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_DATETIME]))
     {
+        // Check if variant2 is a datetime
         if (!UA_Variant_hasScalarType(variant2, &UA_TYPES[UA_TYPES_DATETIME]))
         {
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1: DATETIME, Variant2: Not DATETIME");
             return false;
         }
+        // Convert variant to date struct
         UA_DateTime value1 = *((UA_DateTime *)variant1->data);
         UA_DateTimeStruct dateStruct1 = UA_DateTime_toStruct(value1);
 
         UA_DateTime value2 = *((UA_DateTime *)variant2->data);
         UA_DateTimeStruct dateStruct2 = UA_DateTime_toStruct(value2);
-
+        // compare date structs
         return dateStruct1.nanoSec == dateStruct2.nanoSec &&
                dateStruct1.microSec == dateStruct2.microSec &&
                dateStruct1.milliSec == dateStruct2.milliSec &&
@@ -47,38 +64,54 @@ static bool UA_VariantCompare(UA_Variant *variant1, UA_Variant *variant2)
                dateStruct1.month == dateStruct2.month &&
                dateStruct1.year == dateStruct2.year;
     }
+    // Check if variant1 is a int32
     else if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_INT32]))
     {
+        // Check if variant2 is a int32
         if (!UA_Variant_hasScalarType(variant2, &UA_TYPES[UA_TYPES_INT32]))
         {
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1: INT32, Variant2: Not INT32");
             return false;
         }
+        // Convert variant to int
         int value1 = *((int *)variant1->data);
         int value2 = *((int *)variant2->data);
+        // Compare values
         return value1 == value2;
     }
+    // Check if variant1 is a bool
     else if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_BOOLEAN]))
     {
+        // Check if variant2 is a bool
         if (!UA_Variant_hasScalarType(variant2, &UA_TYPES[UA_TYPES_BOOLEAN]))
         {
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1:BOOLEAN, Variant2: Not BOOLEAN");
             return false;
         }
+        // Convert variant to bool
         bool value1 = *((bool *)variant1->data);
         bool value2 = *((bool *)variant2->data);
+        // Compare values
         return value1 == value2;
     }
+    // Check if variant1 is a double
     else if (UA_Variant_hasScalarType(variant1, &UA_TYPES[UA_TYPES_DOUBLE]))
     {
+        // Check if variant2 is a double
         if (!UA_Variant_hasScalarType(variant2, &UA_TYPES[UA_TYPES_DOUBLE]))
         {
+            //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1:DOUBLE, Variant2: Not DOUBLE");
             return false;
         }
+        // Convert variant to double
         double value1 = *((double *)variant1->data);
         double value2 = *((double *)variant2->data);
+        // Compare values
         return value1 == value2;
     }
     else
     {
+        //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,"[UA_VariantCompare] Variant1:Unknown, Variant2: Unknown");
         return false;
     }
     return false;
@@ -104,7 +137,7 @@ static void IntToUA_Variant(UA_Variant *variant, int* value)
  */
 static void BoolToUA_Variant(UA_Variant *variant,bool* value)
 {
-     UA_Variant_setScalarCopy(variant, value, &UA_TYPES[UA_TYPES_BOOLEAN]);
+    UA_Variant_setScalarCopy(variant, value, &UA_TYPES[UA_TYPES_BOOLEAN]);
 }
 
 /**
@@ -124,6 +157,7 @@ static void DoubleToUA_Variant( UA_Variant *variant,double* value)
  */
 static void StringToUA_Variant(UA_Variant *variant,char* value) 
 {
+    // Convert char arr into UA_String
     UA_String uaText = UA_String_fromChars(value);
     UA_Variant_setScalarCopy(variant, &uaText, &UA_TYPES[UA_TYPES_STRING]);
 }
@@ -135,22 +169,24 @@ static void StringToUA_Variant(UA_Variant *variant,char* value)
  */
 static bool TextToUA_Variant(char *text, UA_Variant *variant)
 {
+    // Check if target variant is a string
     if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_STRING]))
     {
-        // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, text);
-        //UA_String uaText = UA_String_fromChars(text);
-        //UA_Variant_setScalarCopy(variant, &uaText, &UA_TYPES[UA_TYPES_STRING]);
+        // update text in variant
         StringToUA_Variant(variant,text);
         return true;
     }
+    // Check if target variant is a datetime
     else if (UA_Variant_hasScalarType(variant, &UA_TYPES[UA_TYPES_DATETIME]))
     {
+        // Parseable Datetime formats
         // 2021-10-15;12:37:11.713864291
         // YYYY-MM-DD
         // hh:mm:ssssssssssss
         // YYYY-MM-DD;hh:mm:ssssssssssss
         // YYYY-MM-DD hh:mm:ssssssssssss
         // 1    2  3  4  5  6
+        // Seperate Text in Datetime
         int textlen = strlen(text);
         char year[10] = "";
         char month[10] = "";
@@ -159,10 +195,11 @@ static bool TextToUA_Variant(char *text, UA_Variant *variant)
         char minute[10] = "";
         char second[20] = "";
         int mode = 0;
-
         char tmpText[50] = "";
+        // Iterate through the text and check for a seperator
         for (int a = 0; a < textlen; a++)
         {
+            // If the char is a : oder a end text then copy the text to the time values
             if ((mode == 0 || mode > 3) && (text[a] == ':' || text[a] == ';' || text[a] == ' ' || text[a] == '\0' || a == textlen - 1)) // Time Seperator
             {
                 if (mode == 0)
@@ -186,6 +223,7 @@ static bool TextToUA_Variant(char *text, UA_Variant *variant)
                 }
                 strcpy(tmpText, "");
             }
+            // If the char is a - oder a end text then copy the text to the date values
             else if ((mode == 0 || mode <= 3) && (text[a] == '-' || text[a] == ';' || text[a] == ' ' || text[a] == '\0' || a == textlen - 1))
             {
                 // Date Seperator
@@ -210,16 +248,18 @@ static bool TextToUA_Variant(char *text, UA_Variant *variant)
                 }
                 strcpy(tmpText, "");
             }
+            // If the char is a end text then reset
             else if (text[a] == ';' || text[a] == ' ')
             { // Split Seperator
                 mode = 0;
             }
+            // If char is other then appand to the temporary storrage
             else
             {
                 strncat(tmpText, &text[a], 1);
             }
         }
-
+        // Convert datetime texts to datetime struct
         UA_DateTimeStruct dateStruct;
         dateStruct.year = atoi(year);
         dateStruct.month = atoi(month);
@@ -461,7 +501,7 @@ static bool UA_VariantToText(const UA_Variant *variant, char *text)
  * @param text text with value
  * @param write True:reads from node to text. False: writes from text to node
  */
-static void UpdateNode(
+static int UpdateNode(
     UA_Server *server,
     UA_NodeId nodeId,
     char *text,
@@ -476,33 +516,40 @@ static void UpdateNode(
 
     if (write)
     {
-        UA_VariantToText(&valueVariant, text);
+       if (UA_VariantToText(&valueVariant, text)) {
+           return 1;
+       }
+       else {
+           return -1;
+       }
     }
     else
     {
         UA_Variant newValueVariant = valueVariant;
 
         if (strlen(text)==0) {
-            
+            return -3;
             //UA_Variant_setScalarCopy(newValueVariant, value, &UA_TYPES[UA_TYPES_BOOLEAN]);
         }
-        //char oldText[100];
-        //UA_VariantToText(&valueVariant,oldText);
+        char oldText[100];
+        UA_VariantToText(&valueVariant,oldText);
         
         
         bool result =  TextToUA_Variant(text, &newValueVariant);
 
-        //char newText[100];
-        //UA_VariantToText(&newValueVariant,newText);
+        char newText[100];
+        UA_VariantToText(&newValueVariant,newText);
         
-        bool equals =UA_VariantCompare(&newValueVariant, &valueVariant);
+        bool equals = UA_VariantCompare(&newValueVariant, &valueVariant);
 
         //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNode Read:Input:%s Old:%s New:%s equals:%d result:%d",text,oldText,newText,equals,result);
 
         if (!equals && result)
         {
            UA_Server_writeValue(server, nodeId, newValueVariant);
+           return 2;
         }
+        return -2;
     }
 }
 //#endregion

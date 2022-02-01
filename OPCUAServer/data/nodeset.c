@@ -20,8 +20,10 @@ Node
     String: MethodCallback
     String: EventCallback
 */
-
-
+/*
+ * enum myNodeType
+ * Contains the types that a node can be  
+ */
 enum myNodeType
 {
     TypeNone = 0,
@@ -33,6 +35,10 @@ enum myNodeType
     TypeDate = 6,
     TypeMethod = 7
 };
+/*
+ * enum myNodeType
+ * Contains the data origin of a node
+ */
 enum myNodeDataSourceType
 {
     SourceNone = 0,
@@ -40,27 +46,26 @@ enum myNodeDataSourceType
     SourceCallback = 2,
 
 };
-
 #ifndef NODECHARLENGTH
-#define NODECHARLENGTH 256
+#define NODECHARLENGTH 256 // The Length of a string in struct myNode
 #endif
 struct myNode
 {
     // File
-    enum myNodeType Type;            // Datatype of Node [Object, Integer, Boolean, String, Double]
-    char Name[NODECHARLENGTH];        // Name of Node
-    char Description[NODECHARLENGTH*4]; // Description of Node
-    char DisplayName[NODECHARLENGTH]; // DisplayName of Node
-    char Parrent[NODECHARLENGTH];     // Parrent Name of Node (BaseFolder is the Root)
-    bool Write;                      // Set the ReadWrite Parameter
-    double Min;                      // Min Value
-    double Max;                      // Max Value
+    enum myNodeType Type;                 // Datatype of Node [Object, Integer, Boolean, String, Double]
+    char Name[NODECHARLENGTH];            // Name of Node
+    char Description[NODECHARLENGTH * 4]; // Description of Node
+    char DisplayName[NODECHARLENGTH];     // DisplayName of Node
+    char Parrent[NODECHARLENGTH];         // Parrent Name of Node (BaseFolder is the Root)
+    bool Write;                           // Set the ReadWrite Parameter
+    double Min;                           // Min Value
+    double Max;                           // Max Value
     enum myNodeDataSourceType DataSource;
     // CSV Data Source
-    char CSVName[NODECHARLENGTH];     // Value Source CSV
+    char CSVName[NODECHARLENGTH]; // Value Source CSV
     char CSVIdentifierColum[NODECHARLENGTH];
     char CSVIdentifier[NODECHARLENGTH];
-    char CSVValueColum[NODECHARLENGTH];  // Value Source Colum Name
+    char CSVValueColum[NODECHARLENGTH]; // Value Source Colum Name
     // Callback Data Source
     char SourceCallback[NODECHARLENGTH]; // Callback Data Source
     // Method
@@ -68,8 +73,8 @@ struct myNode
     // Runtime:
     bool Created;
     UA_NodeId NodeId;
-    
 };
+
 #define myNodeTypeName "Type"
 #define myNodeNameName "Name"
 #define myNodeDescriptionName "Description"
@@ -90,43 +95,44 @@ struct myNode
 #define NODESCOUNT 300
 #endif
 #ifndef CSVROWS
-#define CSVROWS NODESCOUNT+1
+#define CSVROWS NODESCOUNT + 1
 #endif
 #ifndef CSVCOLUMS
 #define CSVCOLUMS 20
 #endif
 #ifndef CSVLENGTH
-#define CSVLENGTH NODECHARLENGTH*4
+#define CSVLENGTH NODECHARLENGTH * 4
 #endif
 
-// Create a global List of Nodes 
+// Create a global List of Nodes
 struct myNode Nodes[NODESCOUNT];
 // Create a Global Callback for adding a Method to Node
 //                          (Server, node, parrent, attr)
-void (*NodesetAddMethodNode)(UA_Server*, struct myNode*, UA_NodeId, UA_MethodAttributes*);
-void (*NodesetUpdateNode)(UA_Server*, struct myNode*);
+void (*NodesetAddMethodNode)(UA_Server *, struct myNode *, UA_NodeId, UA_MethodAttributes *);
+void (*NodesetUpdateNode)(UA_Server *, struct myNode *);
 
 //#region [rgba(255,255,0,0.1)]
 /**
  * @brief Clears or create the fields of a node
  * @param node 
  */
-static void CreateNode(struct myNode *node) {
+static void CreateNode(struct myNode *node)
+{
     node->Type = TypeNone;
-    strcpy(node->Name,"");
-    strcpy(node->Description,"");
-    strcpy(node->DisplayName,"");
-    strcpy(node->Parrent,"");
+    strcpy(node->Name, "");
+    strcpy(node->Description, "");
+    strcpy(node->DisplayName, "");
+    strcpy(node->Parrent, "");
     node->Write = false;
     node->Min = 0;
     node->Max = 0;
     node->DataSource = SourceNone;
-    strcpy(node->CSVName,"");
-    strcpy(node->CSVIdentifierColum,"");
-    strcpy(node->CSVIdentifier,"");
-    strcpy(node->CSVValueColum,"");
-    strcpy(node->SourceCallback,"");
-    strcpy(node->MethodCallback,"");
+    strcpy(node->CSVName, "");
+    strcpy(node->CSVIdentifierColum, "");
+    strcpy(node->CSVIdentifier, "");
+    strcpy(node->CSVValueColum, "");
+    strcpy(node->SourceCallback, "");
+    strcpy(node->MethodCallback, "");
     node->Created = false;
     node->NodeId = UA_NODEID_NULL;
 }
@@ -138,51 +144,67 @@ static void CreateNode(struct myNode *node) {
  * @param node1
  * @param node2 
  */
-static bool CompareNode(struct myNode *node1,struct myNode *node2) {
-    if (node1->Type != node2->Type) {
+static bool CompareNode(struct myNode *node1, struct myNode *node2)
+{
+    if (node1->Type != node2->Type)
+    {
         return false;
     }
-    if (strcmp(node1->Name,node2->Name) != 0) {
-       return false;
-    }
-    if (strcmp(node1->Description,node2->Description) != 0) {
-       return false;
-    }
-    if (strcmp(node1->DisplayName,node2->DisplayName) != 0) {
-       return false;
-    }
-    if (strcmp(node1->Parrent,node2->Parrent) != 0) {
-       return false;
-    }
-    if (node1->Write != node2->Write) {
+    if (strcmp(node1->Name, node2->Name) != 0)
+    {
         return false;
     }
-    if (node1->Min != node2->Min) {
+    if (strcmp(node1->Description, node2->Description) != 0)
+    {
         return false;
     }
-    if (node1->Max != node2->Max) {
+    if (strcmp(node1->DisplayName, node2->DisplayName) != 0)
+    {
         return false;
     }
-    if (strcmp(node1->CSVName,node2->CSVName) != 0) {
-       return false;
+    if (strcmp(node1->Parrent, node2->Parrent) != 0)
+    {
+        return false;
     }
-    if (strcmp(node1->CSVIdentifierColum,node2->CSVIdentifierColum) != 0) {
-       return false;
+    if (node1->Write != node2->Write)
+    {
+        return false;
     }
-    if (strcmp(node1->CSVIdentifier,node2->CSVIdentifier) != 0) {
-       return false;
+    if (node1->Min != node2->Min)
+    {
+        return false;
     }
-    if (strcmp(node1->CSVValueColum,node2->CSVValueColum) != 0) {
-       return false;
+    if (node1->Max != node2->Max)
+    {
+        return false;
     }
-    if (strcmp(node1->MethodCallback,node2->MethodCallback) != 0) {
-       return false;
+    if (strcmp(node1->CSVName, node2->CSVName) != 0)
+    {
+        return false;
     }
-    if (strcmp(node1->Name,node2->Name) != 0) {
-       return false;
+    if (strcmp(node1->CSVIdentifierColum, node2->CSVIdentifierColum) != 0)
+    {
+        return false;
     }
-    if (strcmp(node1->Name,node2->Name) != 0) {
-       return false;
+    if (strcmp(node1->CSVIdentifier, node2->CSVIdentifier) != 0)
+    {
+        return false;
+    }
+    if (strcmp(node1->CSVValueColum, node2->CSVValueColum) != 0)
+    {
+        return false;
+    }
+    if (strcmp(node1->MethodCallback, node2->MethodCallback) != 0)
+    {
+        return false;
+    }
+    if (strcmp(node1->Name, node2->Name) != 0)
+    {
+        return false;
+    }
+    if (strcmp(node1->Name, node2->Name) != 0)
+    {
+        return false;
     }
     return true;
 }
@@ -257,7 +279,7 @@ static bool LoadNodes(char *path)
 
     for (int a = 1; a < nodesCSV_Rows; a++)
     {
-        
+
         int nodeNum = a - 1;
         // Init Values
         CreateNode(&Nodes[nodeNum]);
@@ -312,11 +334,11 @@ static bool LoadNodes(char *path)
                         Nodes[nodeNum].Max = atof(nodesCSV[a][colum_Max]);
                     }
                 }
-                if (colum_DataSource > -1) 
+                if (colum_DataSource > -1)
                 {
-                    if (strlen(nodesCSV[a][colum_DataSource]) > 0) 
+                    if (strlen(nodesCSV[a][colum_DataSource]) > 0)
                     {
-                        Nodes[nodeNum].DataSource = (enum myNodeDataSourceType) atoi(nodesCSV[a][colum_DataSource]);
+                        Nodes[nodeNum].DataSource = (enum myNodeDataSourceType)atoi(nodesCSV[a][colum_DataSource]);
                     }
                 }
                 if (colum_CSVName > -1)
@@ -503,7 +525,8 @@ static void AddDynamicNode(
     UA_Server *server,
     struct myNode *node)
 {
-    if (node->Created) {
+    if (node->Created)
+    {
         return;
     }
     node->Created = true;
@@ -512,7 +535,7 @@ static void AddDynamicNode(
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Parrent is null:%s", node->Name);
         return;
     }*/
-    
+
     if (strlen(node->Parrent) == 0)
     {
         // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Parrent length is null:%s", node->Name);
@@ -528,9 +551,11 @@ static void AddDynamicNode(
         UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
         oAttr.displayName = UA_LOCALIZEDTEXT("en-US", node->DisplayName);
         oAttr.description = UA_LOCALIZEDTEXT("en-US", node->Description);
+        UA_NodeId targetNodeId = UA_NODEID_STRING(0,node->Name);
+       
         UA_Server_addObjectNode(
             server,
-            UA_NODEID_NULL,
+            targetNodeId,
             parrent,
             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
             UA_QUALIFIEDNAME(1, node->Name),
@@ -545,12 +570,12 @@ static void AddDynamicNode(
     {
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Create Method:%s", node->Name);
         UA_MethodAttributes Attr = UA_MethodAttributes_default;
-        Attr.description = UA_LOCALIZEDTEXT("en-US",node->DisplayName);
-        Attr.displayName = UA_LOCALIZEDTEXT("en-US",node->Description);
+        Attr.displayName = UA_LOCALIZEDTEXT("en-US", node->DisplayName);
+        Attr.description = UA_LOCALIZEDTEXT("en-US", node->Description);
         Attr.executable = true;
         Attr.userExecutable = true;
 
-        NodesetAddMethodNode(server,node,parrent,&Attr);
+        NodesetAddMethodNode(server, node, parrent, &Attr);
         /*
         Todo in NodesetAddMethodNode:
 
@@ -652,10 +677,12 @@ static void AddDynamicNode(
                 &defaultValue,
                 &UA_TYPES[UA_TYPES_DATETIME]);
         }
+        UA_NodeId targetNodeId = UA_NODEID_STRING(0,node->Name);
+
 
         UA_Server_addVariableNode(
             server,
-            UA_NODEID_NULL,
+            targetNodeId,
             parrent,
             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
             UA_QUALIFIEDNAME(1, node->Name),
@@ -663,6 +690,7 @@ static void AddDynamicNode(
             Attr,
             NULL,
             &(node->NodeId));
+        
         //*/
     }
 }
@@ -673,13 +701,15 @@ static void AddDynamicNode(
  * @brief Store Nodes to CSV File
  * @param path path to CSV File
  */
-static void UpdateDynamicNode(UA_Server *server,struct myNode *node);
-static int AppandNodeToNodes(UA_Server* server,struct myNode *node)
+static void UpdateDynamicNode(UA_Server *server, struct myNode *node);
+static int AppandNodeToNodes(UA_Server *server, struct myNode *node)
 {
-    for (int a=0; a < NODESCOUNT;a++) {
-        if (Nodes[a].Type == TypeNone) {
+    for (int a = 0; a < NODESCOUNT; a++)
+    {
+        if (Nodes[a].Type == TypeNone)
+        {
             Nodes[a] = *node;
-            UpdateDynamicNode(server,&Nodes[a]);
+            UpdateDynamicNode(server, &Nodes[a]);
             return a;
         }
     }
@@ -692,25 +722,26 @@ static int AppandNodeToNodes(UA_Server* server,struct myNode *node)
  * @brief Store Nodes to CSV File
  * @param path path to CSV File
  */
-static int RemoveNodeFromNodes(UA_Server* server,struct myNode *node)
+static int RemoveNodeFromNodes(UA_Server *server, struct myNode *node)
 {
-    for (int a=0; a < NODESCOUNT;a++) {
-        if (CompareNode(node,&Nodes[a]))
-        {            
+    for (int a = 0; a < NODESCOUNT; a++)
+    {
+        if (CompareNode(node, &Nodes[a]))
+        {
             if (node->Type == TypeObject)
             {
-                for (int b=0; b < NODESCOUNT;b++) 
+                for (int b = 0; b < NODESCOUNT; b++)
                 {
-                    if (strcmp(Nodes[b].Parrent, node->Name)==0) {
-                        RemoveNodeFromNodes(server,&Nodes[b]);
+                    if (strcmp(Nodes[b].Parrent, node->Name) == 0)
+                    {
+                        RemoveNodeFromNodes(server, &Nodes[b]);
                     }
                 }
             }
             UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Removed Node:%s", node->Name);
-            UA_Server_deleteNode(server,node->NodeId,true);
+            UA_Server_deleteNode(server, node->NodeId, true);
 
             CreateNode(&Nodes[a]);
-
 
             return a;
         }
@@ -728,36 +759,40 @@ static int RemoveNodeFromNodes(UA_Server* server,struct myNode *node)
 static void UpdateDynamicNodeCSV(
     UA_Server *server,
     struct myNode *node,
-    bool init) {
-
+    bool init)
+{
+    // override write then node is init
     bool write = node->Write && !init;
-
+    // Create CSV
     int csvRows = CSVROWS;
     int csvColums = CSVCOLUMS;
     int csvLength = CSVLENGTH;
-
     char csv[csvRows][csvColums][csvLength];
     createCSV(csvRows, csvColums, csvLength, csv);
-    if(getCSV(
-        node->CSVName,
-        csvRows,
-        csvColums,
-        csvLength,
-        csv) == -1 && !write)
+    // Read CSV file
+    if (getCSV(
+            node->CSVName,
+            csvRows,
+            csvColums,
+            csvLength,
+            csv) == -1 &&
+        !write)
     {
         return;
     }
-
+    // Get Identifier Colum
     int identColum = getCSVColum(
         csvRows,
         csvColums,
         csvLength,
         csv,
         node->CSVIdentifierColum);
+    // Check if Identifier not exist
     if (identColum < 0)
     {
         if (write)
         {
+            // Create a colum with identifier columname as colum header       
             identColum = addCSVColum(csvRows,
                                      csvColums,
                                      csvLength,
@@ -829,43 +864,40 @@ static void UpdateDynamicNodeCSV(
         node->CSVValueColum);
     if (currentColum < 0)
     {
-    
-            currentColum = addCSVColum(csvRows,
-                                       csvColums,
-                                       csvLength,
-                                       csv,
-                                       node->CSVValueColum);
-            if (currentColum < 0)
-            {
-                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                            "[Write] CSV:%s: cannot add Colum:%s -> %d",
-                            node->CSVName,
-                            node->CSVValueColum,
-                            currentColum);
-                return;
-            }
-        if (!write) 
+
+        currentColum = addCSVColum(csvRows,
+                                   csvColums,
+                                   csvLength,
+                                   csv,
+                                   node->CSVValueColum);
+        if (currentColum < 0)
+        {
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
+                        "[Write] CSV:%s: cannot add Colum:%s -> %d",
+                        node->CSVName,
+                        node->CSVValueColum,
+                        currentColum);
+            return;
+        }
+        if (!write)
         {
             writeCSV(
-            node->CSVName,
-            csvRows,
-            csvColums,
-            csvLength,
-            csv);
+                node->CSVName,
+                csvRows,
+                csvColums,
+                csvLength,
+                csv);
         }
-      
     }
 
+   
 
-       // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Node %s R/W:%d from %s [%d][%d]=%s",node->Name, write , node->CSVName,currentRow, currentColum, csv[currentRow][currentColum]);
-
-
-    UpdateNode(
+   int state = UpdateNode(
         server,
         node->NodeId,
         csv[currentRow][currentColum],
         write);
-
+    //UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "[nodeset] Update Node %s R/W:%d(%d) from %s [%d][%d]=%s -> State:%d",node->Name, write,init , node->CSVName,currentRow, currentColum, csv[currentRow][currentColum],state);
     if (write)
     {
         writeCSV(
@@ -892,23 +924,24 @@ static void UpdateDynamicNode(
     if (!node->Created)
     {
         AddDynamicNode(server, node);
-       init = true;
+        init = true;
     }
-
+    
     if (node->Type == TypeNone || node->Type == TypeObject || node->Type == TypeMethod)
     {
         // Node is Object, nothing todo
         return;
     }
-   // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Node:%s", node->Name);
-    if (node->DataSource == SourceCSV) {
-       UpdateDynamicNodeCSV(server,node,init);
-    }
-    else if (node->DataSource == SourceCallback) 
+    // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Node:%s", node->Name);
+    if (node->DataSource == SourceCSV)
     {
-        NodesetUpdateNode(server,node);
+        UpdateDynamicNodeCSV(server, node, init);
     }
-    
+    else if (node->DataSource == SourceCallback)
+    {
+        NodesetUpdateNode(server, node);
+    }
+
     //*/
 }
 //#endregion
