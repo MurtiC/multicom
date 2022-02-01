@@ -74,6 +74,7 @@ public class Main {
                 pulsarMX = null;
             }
             catch (Exception e) {
+                System.out.println(e.getCause());
                 logger.log("Main: Exception: " + e.toString());
             }
         }
