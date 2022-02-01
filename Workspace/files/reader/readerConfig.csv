@@ -1,4 +1,3 @@
-Id;Hardwarerevision;Softwarerevision;SerialNumber;Pin;Mode
-reader1;;;;;false
-InputPin1;;;;1;1
-InputPin2;;;;2;1
+Id;Hardwarerevision;Softwarerevision;SerialNumber;MissingTids;
+reader1;123;3211;23424;E280B0403C0000000C014A97,E280B0403C0000000C014A97;
+>>>>>>> origin/bugfix/opcuaServer

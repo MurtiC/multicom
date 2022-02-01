@@ -48,9 +48,9 @@ static void LogIntoFile()
         logPath,
         "/files/server/logs/opc_%d_%d_%d_%d.txt",
         currenttimeTm->tm_year + 1900,
-        currenttimeTm->tm_mon,
+        currenttimeTm->tm_mon+1,
         currenttimeTm->tm_mday,
-        currenttimeTm->tm_hour);
+        currenttimeTm->tm_hour+1);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Log to:%s", logPath);
 
     getFullPath(logPath, logPathFull);
@@ -105,7 +105,8 @@ void updateEveryHour(UA_Server *server, void *data)
     ClearOldLogs();
 }
 
-static UA_StatusCode AddTemperaturSensor(
+
+static UA_StatusCode AddTemperatureSensor(
     UA_Server *server,
     const UA_NodeId *sessionId, void *sessionHandle,
     const UA_NodeId *methodId, void *methodContext,
@@ -116,7 +117,7 @@ static UA_StatusCode AddTemperaturSensor(
     UA_Variant inputVariant = *input;
     char inputText[50];
     UA_VariantToText(&inputVariant, inputText);
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "AddTemperaturSensor:%s", inputText);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "AddTemperatureSensor:%s", inputText);
 
     if (strlen(inputText) != 24)
     {
@@ -140,20 +141,23 @@ static UA_StatusCode AddTemperaturSensor(
     char configPath[255];
     strcpy(configPath, relpath);
     strcat(configPath, "/config.csv");
+    createfile(configPath);
+
     char currentPath[255];
     strcpy(currentPath, relpath);
     strcat(currentPath, "/current.csv");
+    createfile(currentPath);
 
     struct myNode Folder;
     CreateNode(&Folder);
     Folder.Type = TypeObject;
     strcpy(Folder.Name, inputText);
     strcpy(Folder.DisplayName, inputText);
-    strcpy(Folder.Parrent, "Temperatursensoren");
+    strcpy(Folder.Parrent, "TemperatureSensors");
 
-    char currentName[100];
-    char nodeName[100];
-    char ident[100];
+    char currentName[200];
+    char nodeName[200];
+    char ident[200];
     strcpy(ident, "TagId");
 
     // Name
@@ -210,89 +214,89 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(Location.CSVIdentifier, inputText);
     strcpy(Location.CSVValueColum, nodeName);
 
-    // Temperatur
-    struct myNode Temperatur;
-    CreateNode(&Temperatur);
-    strcpy(nodeName, "Temperatur");
+    // Temperature
+    struct myNode Temperature;
+    CreateNode(&Temperature);
+    strcpy(nodeName, "Temperature");
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
-    Temperatur.Type = TypeDouble;
-    strcpy(Temperatur.Description, "The measured temperatur. [°C]");
-    strcpy(Temperatur.Name, currentName);
-    strcpy(Temperatur.DisplayName, nodeName);
-    strcpy(Temperatur.Parrent, Folder.Name);
-    Temperatur.Write = false;
-    Temperatur.DataSource = SourceCSV;
-    strcpy(Temperatur.CSVName, currentPath);
-    strcpy(Temperatur.CSVIdentifierColum, ident);
-    strcpy(Temperatur.CSVIdentifier, inputText);
-    strcpy(Temperatur.CSVValueColum, nodeName);
+    Temperature.Type = TypeDouble;
+    strcpy(Temperature.Description, "The measured temperature. [°C]");
+    strcpy(Temperature.Name, currentName);
+    strcpy(Temperature.DisplayName, nodeName);
+    strcpy(Temperature.Parrent, Folder.Name);
+    Temperature.Write = false;
+    Temperature.DataSource = SourceCSV;
+    strcpy(Temperature.CSVName, currentPath);
+    strcpy(Temperature.CSVIdentifierColum, ident);
+    strcpy(Temperature.CSVIdentifier, inputText);
+    strcpy(Temperature.CSVValueColum, nodeName);
 
-    // MinTemperatur
-    struct myNode MinTemperatur;
-    CreateNode(&MinTemperatur);
-    strcpy(nodeName, "MinTemperatur");
+    // MinTemperature
+    struct myNode MinTemperature;
+    CreateNode(&MinTemperature);
+    strcpy(nodeName, "MinTemperature");
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
-    MinTemperatur.Type = TypeDouble;
-    strcpy(MinTemperatur.Description, "The lower temperatur limit. [°C]");
-    strcpy(MinTemperatur.Name, currentName);
-    strcpy(MinTemperatur.DisplayName, nodeName);
-    strcpy(MinTemperatur.Parrent, Folder.Name);
-    MinTemperatur.Write = true;
-    MinTemperatur.DataSource = SourceCSV;
-    strcpy(MinTemperatur.CSVName, configPath);
-    strcpy(MinTemperatur.CSVIdentifierColum, ident);
-    strcpy(MinTemperatur.CSVIdentifier, inputText);
-    strcpy(MinTemperatur.CSVValueColum, nodeName);
+    MinTemperature.Type = TypeDouble;
+    strcpy(MinTemperature.Description, "The lower temperature limit. [°C]");
+    strcpy(MinTemperature.Name, currentName);
+    strcpy(MinTemperature.DisplayName, nodeName);
+    strcpy(MinTemperature.Parrent, Folder.Name);
+    MinTemperature.Write = true;
+    MinTemperature.DataSource = SourceCSV;
+    strcpy(MinTemperature.CSVName, configPath);
+    strcpy(MinTemperature.CSVIdentifierColum, ident);
+    strcpy(MinTemperature.CSVIdentifier, inputText);
+    strcpy(MinTemperature.CSVValueColum, nodeName);
 
-    // MaxTemperatur
-    struct myNode MaxTemperatur;
-    CreateNode(&MaxTemperatur);
-    strcpy(nodeName, "MaxTemperatur");
+    // MaxTemperature
+    struct myNode MaxTemperature;
+    CreateNode(&MaxTemperature);
+    strcpy(nodeName, "MaxTemperature");
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
-    MaxTemperatur.Type = TypeDouble;
-    strcpy(MaxTemperatur.Description, "The upper temperatur limit. [°C]");
-    strcpy(MaxTemperatur.Name, currentName);
-    strcpy(MaxTemperatur.DisplayName, nodeName);
-    strcpy(MaxTemperatur.Parrent, Folder.Name);
-    MaxTemperatur.Write = true;
-    MaxTemperatur.DataSource = SourceCSV;
-    strcpy(MaxTemperatur.CSVName, configPath);
-    strcpy(MaxTemperatur.CSVIdentifierColum, ident);
-    strcpy(MaxTemperatur.CSVIdentifier, inputText);
-    strcpy(MaxTemperatur.CSVValueColum, nodeName);
+    MaxTemperature.Type = TypeDouble;
+    strcpy(MaxTemperature.Description, "The upper temperature limit. [°C]");
+    strcpy(MaxTemperature.Name, currentName);
+    strcpy(MaxTemperature.DisplayName, nodeName);
+    strcpy(MaxTemperature.Parrent, Folder.Name);
+    MaxTemperature.Write = true;
+    MaxTemperature.DataSource = SourceCSV;
+    strcpy(MaxTemperature.CSVName, configPath);
+    strcpy(MaxTemperature.CSVIdentifierColum, ident);
+    strcpy(MaxTemperature.CSVIdentifier, inputText);
+    strcpy(MaxTemperature.CSVValueColum, nodeName);
 
-    // OverTemperatur
-    struct myNode OverTemperatur;
-    CreateNode(&OverTemperatur);
-    strcpy(nodeName, "OverTemperatur");
+    // OverTemperature
+    struct myNode OverTemperature;
+    CreateNode(&OverTemperature);
+    strcpy(nodeName, "OverTemperature");
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
-    OverTemperatur.Type = TypeBoolean;
-    strcpy(OverTemperatur.Description, "Is set when temperatur is equal or above maxtemperatur [I/O]");
-    strcpy(OverTemperatur.Name, currentName);
-    strcpy(OverTemperatur.DisplayName, nodeName);
-    strcpy(OverTemperatur.Parrent, Folder.Name);
-    OverTemperatur.Write = false;
-    OverTemperatur.DataSource = SourceCallback;
-    strcpy(OverTemperatur.SourceCallback, "OverTemperatur");
+    OverTemperature.Type = TypeBoolean;
+    strcpy(OverTemperature.Description, "Is set when temperature is equal or above max temperature [I/O]");
+    strcpy(OverTemperature.Name, currentName);
+    strcpy(OverTemperature.DisplayName, nodeName);
+    strcpy(OverTemperature.Parrent, Folder.Name);
+    OverTemperature.Write = false;
+    OverTemperature.DataSource = SourceCallback;
+    strcpy(OverTemperature.SourceCallback, "OverTemperature");
 
-    // UnderTemperatur
-    struct myNode UnderTemperatur;
-    CreateNode(&UnderTemperatur);
-    strcpy(nodeName, "UnderTemperatur");
+    // UnderTemperature
+    struct myNode UnderTemperature;
+    CreateNode(&UnderTemperature);
+    strcpy(nodeName, "UnderTemperature");
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
-    UnderTemperatur.Type = TypeBoolean;
-    strcpy(UnderTemperatur.Description, "Is set when temperatur is equal or below mintemperatur [I/O]");
-    strcpy(UnderTemperatur.Name, currentName);
-    strcpy(UnderTemperatur.DisplayName, nodeName);
-    strcpy(UnderTemperatur.Parrent, Folder.Name);
-    UnderTemperatur.Write = false;
-    UnderTemperatur.DataSource = SourceCallback;
-    strcpy(UnderTemperatur.SourceCallback, "UnderTemperatur");
+    UnderTemperature.Type = TypeBoolean;
+    strcpy(UnderTemperature.Description, "Is set when temperature is equal or below min temperature [I/O]");
+    strcpy(UnderTemperature.Name, currentName);
+    strcpy(UnderTemperature.DisplayName, nodeName);
+    strcpy(UnderTemperature.Parrent, Folder.Name);
+    UnderTemperature.Write = false;
+    UnderTemperature.DataSource = SourceCallback;
+    strcpy(UnderTemperature.SourceCallback, "UnderTemperature");
 
     // NotConnected
     struct myNode NotConnected;
@@ -301,7 +305,7 @@ static UA_StatusCode AddTemperaturSensor(
     strcpy(currentName, inputText);
     strcat(currentName, nodeName);
     NotConnected.Type = TypeBoolean;
-    strcpy(NotConnected.Description, "Is set when sensor doesend respond for the timeout duration [I/O]");
+    strcpy(NotConnected.Description, "Is set when sensor doesent respond for the timeout duration [I/O]");
     strcpy(NotConnected.Name, currentName);
     strcpy(NotConnected.DisplayName, nodeName);
     strcpy(NotConnected.Parrent, Folder.Name);
@@ -350,11 +354,11 @@ static UA_StatusCode AddTemperaturSensor(
                  AppandNodeToNodes(server, &Name) < 0 ||
                  AppandNodeToNodes(server, &Description) < 0 ||
                  AppandNodeToNodes(server, &Location) < 0 ||
-                 AppandNodeToNodes(server, &Temperatur) < 0 ||
-                 AppandNodeToNodes(server, &MinTemperatur) < 0 ||
-                 AppandNodeToNodes(server, &MaxTemperatur) < 0 ||
-                 AppandNodeToNodes(server, &OverTemperatur) < 0 ||
-                 AppandNodeToNodes(server, &UnderTemperatur) < 0 ||
+                 AppandNodeToNodes(server, &Temperature) < 0 ||
+                 AppandNodeToNodes(server, &MinTemperature) < 0 ||
+                 AppandNodeToNodes(server, &MaxTemperature) < 0 ||
+                 AppandNodeToNodes(server, &OverTemperature) < 0 ||
+                 AppandNodeToNodes(server, &UnderTemperature) < 0 ||
                  AppandNodeToNodes(server, &Timeout) < 0 ||
                  AppandNodeToNodes(server, &SoftwareNotConnected) < 0 ||
                  AppandNodeToNodes(server, &NotConnected) < 0);
@@ -365,11 +369,11 @@ static UA_StatusCode AddTemperaturSensor(
         RemoveNodeFromNodes(server, &Name);
         RemoveNodeFromNodes(server, &Description);
         RemoveNodeFromNodes(server, &Location);
-        RemoveNodeFromNodes(server, &Temperatur);
-        RemoveNodeFromNodes(server, &MinTemperatur);
-        RemoveNodeFromNodes(server, &MaxTemperatur);
-        RemoveNodeFromNodes(server, &OverTemperatur);
-        RemoveNodeFromNodes(server, &UnderTemperatur);
+        RemoveNodeFromNodes(server, &Temperature);
+        RemoveNodeFromNodes(server, &MinTemperature);
+        RemoveNodeFromNodes(server, &MaxTemperature);
+        RemoveNodeFromNodes(server, &OverTemperature);
+        RemoveNodeFromNodes(server, &UnderTemperature);
         RemoveNodeFromNodes(server, &Timeout);
         RemoveNodeFromNodes(server, &SoftwareNotConnected);
         RemoveNodeFromNodes(server, &NotConnected);
@@ -385,7 +389,7 @@ static UA_StatusCode AddTemperaturSensor(
     }
 }
 
-static UA_StatusCode RemoveTemperaturSensor(
+static UA_StatusCode RemoveTemperatureSensor(
     UA_Server *server,
     const UA_NodeId *sessionId, void *sessionHandle,
     const UA_NodeId *methodId, void *methodContext,
@@ -395,7 +399,7 @@ static UA_StatusCode RemoveTemperaturSensor(
 {
     char inputText[50];
     UA_VariantToText(input, inputText);
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "RemoveTemperaturSensor:%s", inputText);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "RemoveTemperatureSensor:%s", inputText);
 
     bool found = false;
 
@@ -427,7 +431,7 @@ static void AddMethodNode(
     UA_MethodAttributes *Attr)
 {
 
-    if (strcmp(node->MethodCallback, "AddTemperaturSensor") == 0)
+    if (strcmp(node->MethodCallback, "AddTemperatureSensor") == 0)
     {
 
         UA_Argument inputArgument;
@@ -445,14 +449,15 @@ static void AddMethodNode(
         outputArgument.dataType = UA_TYPES[UA_TYPES_STRING].typeId;
         outputArgument.valueRank = UA_VALUERANK_SCALAR;
 
+        UA_NodeId targetNodeId = UA_NODEID_STRING(0,node->Name);
         UA_Server_addMethodNode(
             server,
-            UA_NODEID_NULL,
+            targetNodeId,
             parrent,
             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
             UA_QUALIFIEDNAME(1, node->Name),
             *Attr,
-            &AddTemperaturSensor,
+            &AddTemperatureSensor,
             1,
             &inputArgument,
             1,
@@ -460,7 +465,7 @@ static void AddMethodNode(
             NULL,
             &(node->NodeId));
     }
-    else if (strcmp(node->MethodCallback, "RemoveTemperaturSensor") == 0)
+    else if (strcmp(node->MethodCallback, "RemoveTemperatureSensor") == 0)
     {
 
         UA_Argument inputArgument;
@@ -478,14 +483,15 @@ static void AddMethodNode(
         outputArgument.dataType = UA_TYPES[UA_TYPES_STRING].typeId;
         outputArgument.valueRank = UA_VALUERANK_SCALAR;
 
+        UA_NodeId targetNodeId = UA_NODEID_STRING(0,node->Name);
         UA_Server_addMethodNode(
             server,
-            UA_NODEID_NULL,
+            targetNodeId,
             parrent,
             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
             UA_QUALIFIEDNAME(1, node->Name),
             *Attr,
-            &RemoveTemperaturSensor,
+            &RemoveTemperatureSensor,
             1,
             &inputArgument,
             1,
@@ -499,68 +505,67 @@ static void UpdateNodesetNode(
     UA_Server *server,
     struct myNode *node)
 {
-    // checks if node is a Upper or Lower Temperatur
+    // checks if node is a Upper or Lower Temperature
     // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "UpdateNodesetNode");
 
-    bool overTemp = strcmp(node->SourceCallback, "OverTemperatur") == 0;
-    bool underTemp = strcmp(node->SourceCallback, "UnderTemperatur") == 0;
+    bool overTemp = strcmp(node->SourceCallback, "OverTemperature") == 0;
+    bool underTemp = strcmp(node->SourceCallback, "UnderTemperature") == 0;
     bool SoftwareNotConnected = strcmp(node->SourceCallback, "SoftwareNotConnected") == 0;
-
     if (overTemp || underTemp)
     {
-        char temperaturName[NODECHARLENGTH];
-        strcpy(temperaturName, node->Parrent);
-        strcat(temperaturName, "Temperatur");
-        char minTemperaturName[NODECHARLENGTH];
-        strcpy(minTemperaturName, node->Parrent);
-        strcat(minTemperaturName, "MinTemperatur");
-        char maxTemperaturName[NODECHARLENGTH];
-        strcpy(maxTemperaturName, node->Parrent);
-        strcat(maxTemperaturName, "MaxTemperatur");
-        struct myNode *temperaturStruct;
-        struct myNode *minTemperaturStruct;
-        struct myNode *maxTemperaturStruct;
+        char TemperatureName[NODECHARLENGTH];
+        strcpy(TemperatureName, node->Parrent);
+        strcat(TemperatureName, "Temperature");
+        char minTemperatureName[NODECHARLENGTH];
+        strcpy(minTemperatureName, node->Parrent);
+        strcat(minTemperatureName, "MinTemperature");
+        char maxTemperatureName[NODECHARLENGTH];
+        strcpy(maxTemperatureName, node->Parrent);
+        strcat(maxTemperatureName, "MaxTemperature");
+        struct myNode *TemperatureStruct;
+        struct myNode *minTemperatureStruct;
+        struct myNode *maxTemperatureStruct;
         for (int a = 0; a < NODESCOUNT; a++)
         {
-            if (strcmp(Nodes[a].Name, temperaturName) == 0)
+            if (strcmp(Nodes[a].Name, TemperatureName) == 0)
             {
-                temperaturStruct = &Nodes[a];
+                TemperatureStruct = &Nodes[a];
             }
-            if (strcmp(Nodes[a].Name, minTemperaturName) == 0)
+            if (strcmp(Nodes[a].Name, minTemperatureName) == 0)
             {
-                minTemperaturStruct = &Nodes[a];
+                minTemperatureStruct = &Nodes[a];
             }
-            if (strcmp(Nodes[a].Name, maxTemperaturName) == 0)
+            if (strcmp(Nodes[a].Name, maxTemperatureName) == 0)
             {
-                maxTemperaturStruct = &Nodes[a];
+                maxTemperatureStruct = &Nodes[a];
             }
         }
 
-        UA_Variant temperaturVariant;
-        UA_Variant minTemperaturVariant;
-        UA_Variant maxTemperaturVariant;
+        UA_Variant TemperatureVariant;
+        UA_Variant minTemperatureVariant;
+        UA_Variant maxTemperatureVariant;
         UA_Variant valueVariant;
         UA_Variant oldValueVariant;
 
-        UA_Server_readValue(server, temperaturStruct->NodeId, &temperaturVariant);
-        UA_Server_readValue(server, minTemperaturStruct->NodeId, &minTemperaturVariant);
-        UA_Server_readValue(server, maxTemperaturStruct->NodeId, &maxTemperaturVariant);
+        UA_Server_readValue(server, TemperatureStruct->NodeId, &TemperatureVariant);
+        UA_Server_readValue(server, minTemperatureStruct->NodeId, &minTemperatureVariant);
+        UA_Server_readValue(server, maxTemperatureStruct->NodeId, &maxTemperatureVariant);
 
         UA_Server_readValue(server, node->NodeId, &oldValueVariant);
 
-        double temperaturValue = UA_VariantToDouble(&temperaturVariant);
-        double minTemperaturValue = UA_VariantToDouble(&minTemperaturVariant);
-        double maxTemperaturValue = UA_VariantToDouble(&maxTemperaturVariant);
+        double TemperatureValue = UA_VariantToDouble(&TemperatureVariant);
+        double minTemperatureValue = UA_VariantToDouble(&minTemperatureVariant);
+        double maxTemperatureValue = UA_VariantToDouble(&maxTemperatureVariant);
         bool oldValue = UA_VariantToBool(&oldValueVariant);
         bool value = false;
 
         if (overTemp)
         {
-            value = temperaturValue >= maxTemperaturValue;
+            value = TemperatureValue >= maxTemperatureValue;
         }
         else if (underTemp)
         {
-            value = temperaturValue <= minTemperaturValue;
+            value = TemperatureValue <= minTemperatureValue;
         }
         BoolToUA_Variant(&valueVariant, &value);
 

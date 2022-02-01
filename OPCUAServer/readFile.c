@@ -37,7 +37,21 @@ bool getFullPath(char* relPath,char* fullpath)
 void createFolder(char *relPath) {
     char path[PATH_MAX];
     getFullPath(relPath,path);
+    char *ret;
+    ret = strchr(path,'.');
+    if (ret != NULL) {
+        // Path to File
+        // Remove all to last / 
+        char* pch;
+        pch = strrchr(path,'/');
+        int lenlast = strlen(pch);
     
+        int index = strlen(path)-lenlast;
+        char folderpath[PATH_MAX];
+        strcpy(folderpath,"");
+        strncpy(folderpath,path,index);
+        strcpy(path,folderpath);
+    }
     struct stat st = {0};
     if (stat(path, &st) == -1) {
         mkdir(path,0777);
@@ -77,6 +91,15 @@ bool fileStats(char* relPath, struct stat* stats ) {
     return false;
 }
 
+int createfile(char *relPath) {
+    char path[PATH_MAX];
+    getFullPath(relPath,path);
+    FILE *file = fopen(path, "w");
+    fputc(" ",file);
+    fclose(file);
+
+}
+
 int deleteFile(char *relPath) {
     char path[PATH_MAX];
     getFullPath(relPath,path);
@@ -112,6 +135,7 @@ int getFiles(int filesLength,int fileLength,char files[filesLength][fileLength],
     }
     strcat(path, relPath);
 
+createFolder(relPath);
     
     int currentDir = 0;
 
@@ -233,6 +257,9 @@ int getCSV(
 
         return -1;
     }
+
+    createFolder(relPath);
+
     strcat(path, relPath);
     if (access(path, R_OK) != 0)
     {
@@ -366,9 +393,9 @@ int writeCSV(
         return -1;
     }
     strcat(path, relPath);
-
+    createFolder(relPath);
+    
     FILE *file = fopen(path, "w");
-
      for (int x = 0; x < rows; x++)
     {
         for (int y = 0; y < colums; y++)
