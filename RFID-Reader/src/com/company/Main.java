@@ -42,8 +42,8 @@ public class Main {
                 while (true) {
 
                         pulsarMX.setReaderConnectionState(pulsarMX.isConnected());
-                        pulsarMX.setInputPinState(1, pulsarMX.getInput(0));
-                        pulsarMX.setInputPinState(2, pulsarMX.getInput(1));
+                        //pulsarMX.setInputPinState(1, pulsarMX.getInput(0));
+                        //pulsarMX.setInputPinState(2, pulsarMX.getInput(1));
 
                         List<String> tids = pulsarMX.getTIDs();
                         pulsarMX.addMissingTIDs(tids);

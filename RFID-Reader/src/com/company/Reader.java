@@ -41,7 +41,6 @@ public class Reader extends PulsarMX {
             csvConf.set(1, getHardwareRevision());
             csvConf.set(2, getFirmwareRevision());
             csvConf.set(3, getSerialNumber());
-            csvConf.set(5, String.valueOf(!isConnected()));
 
             FileWriter writer = new FileWriter("files/reader/readerConfig.csv", false);
 

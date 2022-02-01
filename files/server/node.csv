@@ -10,48 +10,13 @@ Type;Name;Description;DisplayName;Parrent;Write;Min;Max;DataSource;CSVName;CSVId
 4;Softwarerevision;Softwarerevision of the reader;Softwarerevision;RFID-Reader;0;;;1;/files/reader/readerConfig.csv;Id;reader1;Softwarerevision;;
 3;NotConnected;Is true when reader is not connected;Not Connected;RFID-Reader;0;;;1;/files/reader/readerCurrent.csv;Id;reader1;NotConnected;;
 3;SoftwareNotConnected;Is true when reader-client is not connected;Software Not Connected;RFID-Reader;0;;;2;/files/reader/readerCurrent.csv;;;;SoftwareNotConnected;
-7;AddTemperaturSensor;;AddTemperaturSensor;RFID-Reader;;;;;;;;AddTemperaturSensor;;AddTemperaturSensor
-7;RemoveTemperaturSensor;;RemoveTemperaturSensor;RFID-Reader;;;;;;;;RemoveTemperaturSensor;;RemoveTemperaturSensor
-1;InputPin1;;InputPin1;RFID-Reader;;;;;;;;;;
-4;Name1;Name of the pin;Name;InputPin1;1;;;1;/files/reader/opcConfig.csv;Id;InputPin1;Name;;
-4;Description1;Description of the pin;Description;InputPin1;1;;;1;/files/reader/opcConfig.csv;Id;InputPin1;Description;;
-4;Location1;Location of the pin;Location;InputPin1;1;;;1;/files/reader/opcConfig.csv;Id;InputPin1;Location;;
-2;Pin;Pinnumber;Pin;InputPin1;0;;;1;/files/reader/readerConfig.csv;Id;InputPin1;Pin;;
-3;Mode;Pinmode (0=Input, 1=Output);Mode;InputPin1;0;;;1;/files/reader/readerConfig.csv;Id;InputPin1;Mode;;
-3;State;State of the pin;State;InputPin1;0;;;1;/files/reader/readerCurrent.csv;Id;InputPin1;State;;
-1;InputPin2;;InputPin2;RFID-Reader;;;;;;;;;;
-4;Name2;Name of the pin;Name;InputPin2;1;;;1;/files/reader/opcConfig.csv;Id;InputPin2;Name;;
-4;Description2;Description of the pin;Description;InputPin2;1;;;1;/files/reader/opcConfig.csv;Id;InputPin2;Description;;
-4;Location2;Location of the pin;Location;InputPin2;1;;;1;/files/reader/opcConfig.csv;Id;InputPin2;Location;;
-2;Pin1;Pinnumber;Pin;InputPin2;0;;;1;/files/reader/readerConfig.csv;Id;InputPin2;Pin;;
-3;Mode1;Pinmode (0=Input, 1=Output);Mode;InputPin2;0;;;1;/files/reader/readerConfig.csv;Id;InputPin2;Mode;;
-3;State1;State of the pin;State;InputPin2;0;;;1;/files/reader/readerCurrent.csv;Id;InputPin2;State;;
-1;OutputPin1;;OutputPin1;RFID-Reader;;;;;;;;;;
-4;Name3;Name of the pin;Name;OutputPin1;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;Name;;
-4;Description3;Description of the pin;Description;OutputPin1;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;Description;;
-4;Location3;Location of the pin;Location;OutputPin1;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;Location;;
-2;Pin2;Pinnumber;Pin;OutputPin1;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;Pin;;
-3;Mode2;Pinmode (0=Input, 1=Output);Mode;OutputPin1;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;Mode;;
-3;State2;State of the pin;State;OutputPin1;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin1;State;;
-1;OutputPin2;;OutputPin2;RFID-Reader;;;;;;;;;;
-4;Name4;Name of the pin;Name;OutputPin2;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;Name;;
-4;Description4;Description of the pin;Description;OutputPin2;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;Description;;
-4;Location4;Location of the pin;Location;OutputPin2;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;Location;;
-2;Pin3;Pinnumber;Pin;OutputPin2;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;Pin;;
-3;Mode3;Pinmode (0=Input, 1=Output);Mode;OutputPin2;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;Mode;;
-3;State3;State of the pin;State;OutputPin2;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin2;State;;
-1;OutputPin3;;OutputPin3;RFID-Reader;;;;;;;;;;
-4;Name5;Name of the pin;Name;OutputPin3;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;Name;;
-4;Description5;Description of the pin;Description;OutputPin3;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;Description;;
-4;Location5;Location of the pin;Location;OutputPin3;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;Location;;
-2;Pin4;Pinnumber;Pin;OutputPin3;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;Pin;;
-3;Mode4;Pinmode (0=Input, 1=Output);Mode;OutputPin3;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;Mode;;
-3;State4;State of the pin;State;OutputPin3;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin3;State;;
-1;OutputPin4;;OutputPin4;RFID-Reader;;;;;;;;;;
-4;Name6;Name of the pin;Name;OutputPin4;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;Name;;
-4;Description6;Description of the pin;Description;OutputPin4;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;Description;;
-4;Location6;Location of the pin;Location;OutputPin4;1;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;Location;;
-2;Pin5;Pinnumber;Pin;OutputPin4;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;Pin;;
-3;Mode5;Pinmode (0=Input, 1=Output);Mode;OutputPin4;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;Mode;;
-3;State5;State of the pin;State;OutputPin4;0;;;1;/files/reader/opcConfig.csv;Id;OutputPin4;State;;
-1;Temperatursensoren;Contains all Temperatursensors;Temperatursensoren;RFID-Reader;;;;;;;;;;
+7;AddTemperatureSensor;;Add Temperature Sensor;RFID-Reader;;;;;;;;AddTemperatureSensor;;AddTemperatureSensor
+7;RemoveTemperatureSensor;;Remove Temperature Sensor;RFID-Reader;;;;;;;;RemoveTemperatureSensor;;RemoveTemperatureSensor
+1;TemperatureSensors;Contains all Temperatursensors;Temperature Sensors;RFID-Reader;;;;;;;;;;
+4;FoundTemperaureSensors;;Found Temperaure Sensors;RFID-Reader;;;;1;/files/reader/readerConfig.csv;Id;reader1;MissingTids;;
+;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;
