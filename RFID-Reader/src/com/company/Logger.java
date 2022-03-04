@@ -18,7 +18,6 @@ public class Logger {
 
     public void log(String log) {
         try {
-            System.out.println(log);
             writer = new FileWriter("files/reader/logs/log-" + LocalDateTime.now().toLocalDate()+".txt", true);
             writer.append(LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + ": " + log + "\n");
             writer.close();

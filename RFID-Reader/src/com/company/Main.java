@@ -14,16 +14,17 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = new Logger();
         logger.log("Main: Reader Start!");
+        System.out.println("Main: Reader Start!");
 
         File opcConfigFile = new File("files/reader/opcConfig.csv");
-        if(!opcConfigFile.exists()){
-            logger.log("Main: " +opcConfigFile.getPath() +" does not exists!");
+        if (!opcConfigFile.exists()) {
+            logger.log("Main: " + opcConfigFile.getPath() + " does not exists!");
             Reader.createOpcConfig();
             logger.log("Main: files/reader/opcConfig.csv file created with standard values (Identifier: reader1, IP: 192.168.2.239, Port: 10001");
         }
 
         Reader pulsarMX = new Reader();
-        HashMap<String, LocalDateTime> lastContacts =  new HashMap<String, LocalDateTime>();
+        HashMap<String, LocalDateTime> lastContacts = new HashMap<String, LocalDateTime>();
         while (true) {
             try {
                 if (pulsarMX == null) {
@@ -32,6 +33,7 @@ public class Main {
                 }
                 pulsarMX.connect();
                 logger.log("Main: Reader Connected!");
+                System.out.println("Main: Reader Connected!");
                 pulsarMX.setNoMask();
                 //switchAntennas
                 pulsarMX.updateConfig();
@@ -40,26 +42,23 @@ public class Main {
                 pulsarMX.setRFInterface(true);
 
                 while (true) {
+                    pulsarMX.setReaderConnectionState(pulsarMX.isConnected());
 
-                        pulsarMX.setReaderConnectionState(pulsarMX.isConnected());
+                    List<String> tids = pulsarMX.getTIDs();
+                    pulsarMX.addMissingTIDs(tids);
 
-                        List<String> tids = pulsarMX.getTIDs();
-                        pulsarMX.addMissingTIDs(tids);
-
-                        for (int i = 0; i < tids.size(); i++) {
-                            if(!pulsarMX.lastContact.containsKey(tids.get(i))){
-                                pulsarMX.lastContact.put(tids.get(i), LocalDateTime.now());
-                            }
-                            //System.out.printf("TID:%s", tids.get(i));
-                            double temperature = pulsarMX.readTemperature(tids.get(i));
-                            //System.out.printf(":%f\t", temperature);
-
-
-                            LocalDateTime dateTime = LocalDateTime.now();
-                            pulsarMX.writeTemperature(tids.get(i), temperature, dateTime);
-                            pulsarMX.writeCurrentTemperature(tids.get(i), temperature, dateTime);
+                    for (int i = 0; i < tids.size(); i++) {
+                        if (!pulsarMX.lastContact.containsKey(tids.get(i))) {
+                            pulsarMX.lastContact.put(tids.get(i), LocalDateTime.now());
                         }
-                        //System.out.println();
+                        double temperature = pulsarMX.readTemperature(tids.get(i));
+
+                        LocalDateTime dateTime = LocalDateTime.now();
+                        pulsarMX.writeTemperature(tids.get(i), temperature, dateTime);
+                        pulsarMX.writeCurrentTemperature(tids.get(i), temperature, dateTime);
+                        pulsarMX.checkMaxTemp(tids.get(i), temperature);
+                        pulsarMX.checkMinTemp(tids.get(i), temperature);
+                    }
 
                 }
             } catch (RFIDReaderException e) {
@@ -72,8 +71,7 @@ public class Main {
                 logger.log("Main: CommConnectionException: " + e.toString());
                 lastContacts = pulsarMX.lastContact;
                 pulsarMX = null;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getCause());
                 logger.log("Main: Exception: " + e.toString());
             }

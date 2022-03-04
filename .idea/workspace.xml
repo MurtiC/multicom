@@ -6,17 +6,30 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="rebuild">
+    <list default="true" id="e1b1cbe4-f994-46ca-98ef-709098024664" name="Changes" comment="addMissingTIDs() sortiert; rebuild">
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/2022-02-27.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/current.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/2022-02-27.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/current.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Logger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/GitHub.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Workspace/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Workspace/files/reader/readerCurrent.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/reader/opcConfig.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/files/reader/readerCurrent.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/reader/readerCurrent.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/2022-02-01.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/2022-02-01.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/2022-01-31.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/2022-02-01.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014F84/current.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/2022-02-01.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/2022-02-01.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/2022-01-31.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/2022-02-01.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014A97/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014855/current.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/2022-01-31.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/2022-02-01.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/config.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C014AE1/config.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/sensoren/E280B0403C0000000C01511E/current.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Logger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GitHub/com/company/Reader.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +60,11 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/files/reader/opcConfig.csv" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/RFID-Reader/src/com/company/Reader.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/RFID-Reader/src/com/company/Main.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="20x6wGgLdEkX17C2ZtzCsP7pk5i" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -56,13 +74,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Workspace" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/files/sensoren" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="S:\OneDrive\Uni\Semester 5\GitHub\files\sensoren" />
       <recent name="S:\OneDrive\Uni\Semester 5\GitHub\Workspace" />
       <recent name="S:\OneDrive\Uni\Semester 5\GitHub" />
     </key>
@@ -218,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643716544967</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="addMissingTIDs() sortiert; rebuild">
+      <created>1643717618047</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1643717618047</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -280,6 +306,7 @@
     <MESSAGE value="SetInputPinState() entfernt" />
     <MESSAGE value="setReaderConnectionState() bug fixed: Namen angepasst, prüfen ob schon erstellt" />
     <MESSAGE value="rebuild" />
-    <option name="LAST_COMMIT_MESSAGE" value="rebuild" />
+    <MESSAGE value="addMissingTIDs() sortiert; rebuild" />
+    <option name="LAST_COMMIT_MESSAGE" value="addMissingTIDs() sortiert; rebuild" />
   </component>
 </project>

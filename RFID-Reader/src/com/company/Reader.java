@@ -35,33 +35,13 @@ public class Reader extends PulsarMX {
     public void updateConfig() {
         try {
             String filePath = "files/reader/readerConfig.csv";
-            File f1 = new File(filePath);
-            if (!f1.exists()) {
-                FileWriter writer = new FileWriter(filePath, true);
-                writer.write("Id;Hardwarerevision;Softwarerevision;Serialnumber;\n");
-                writer.write(getCSVidentifier() + CSVSeperator);
-                writer.write(getHardwareRevision() + CSVSeperator);
-                writer.write(getFirmwareRevision() + CSVSeperator);
-                writer.write(getSerialNumber() + CSVSeperator);
-                writer.close();
-            } else {
-                List<List<String>> csvRead = this.getCSVasArrayList(filePath);
-                List<String> csvConf = csvRead.get(1);
-
-                csvConf.set(0, getCSVidentifier());
-                csvConf.set(1, getHardwareRevision());
-                csvConf.set(2, getFirmwareRevision());
-                csvConf.set(3, getSerialNumber());
-
-                FileWriter writer = new FileWriter(filePath, false);
-
-                String s = "";
-                for (List<String> line : csvRead) {
-                    s += line.stream().collect(Collectors.joining(CSVSeperator)) + "\n";
-                }
-                writer.write(s);
-                writer.close();
-            }
+            FileWriter writer = new FileWriter(filePath, false);
+            writer.write("Id;Hardwarerevision;Softwarerevision;Serialnumber;\n");
+            writer.write(getCSVidentifier() + CSVSeperator);
+            writer.write(getHardwareRevision() + CSVSeperator);
+            writer.write(getFirmwareRevision() + CSVSeperator);
+            writer.write(getSerialNumber() + CSVSeperator);
+            writer.close();
 
         } catch (RFIDReaderException e) {
             logger.log("Reader.updateConfig(): RFIDReaderException: " + e.toString());
@@ -231,11 +211,18 @@ public class Reader extends PulsarMX {
      * @param dateTime    date and time of measured Temperature
      */
     public void writeTemperature(String tid, double temperature, LocalDateTime dateTime) {
-        String s = temperature + CSVSeperator + dateTime.toLocalDate() + " " + dateTime.toLocalTime() + "\n";
         String pathToDir = "files/sensoren/" + tid;
         String pathToFile = pathToDir + "/" + dateTime.toLocalDate() + ".csv";
         File dir = new File(pathToDir);
         File history = new File(pathToFile);
+
+        System.out.println("writeTemperature tidConnection");
+        String tidConnection = getCSVCell(pathToDir + "/current.csv", "NotConnected", 1);
+        if (temperature == -300 && tidConnection.equals("false")) {
+            return;
+        }
+
+        String s = temperature + CSVSeperator + dateTime.toLocalDate() + " " + dateTime.toLocalTime() + "\n";
 
         if (!dir.exists()) {
             System.out.println("Der Sensor " + tid + " wurde noch nicht hinzugefügt");
@@ -247,7 +234,7 @@ public class Reader extends PulsarMX {
             Scanner scanner = new Scanner(history);
 
             if (!scanner.hasNext()) {
-                writer.append("Temperatur" + CSVSeperator + "Date Time\n");
+                writer.append("Temperature" + CSVSeperator + "Date Time\n");
                 writer.append(s);
                 writer.close();
                 scanner.close();
@@ -287,13 +274,16 @@ public class Reader extends PulsarMX {
                 LocalDateTime lastContactTid = lastContact.get(tid);
                 Duration diffBetweenContacts = Duration.between(lastContactTid, dateTime);
 
-                double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", "timeout", 1)); //antenne soll noch raus dann 6
-                if (diffBetweenContacts.toMinutes() > timeout) {
+                System.out.println("writeCurrentTemperature timeout");
+                double timeout = Double.valueOf(getCSVCell("files/sensoren/" + tid + "/config.csv", "timeout", 1));
+                if (diffBetweenContacts.toSeconds() > timeout) {
+                    System.out.println("writeCurrentTemperature if nC false");
                     if (getCSVCell("files/sensoren/" + tid + "/current.csv", "NotConnected", 1).toLowerCase(Locale.ROOT).equals("false")) {
                         logger.log(tid + " Timeout reached!");
                     }
                     s = tid + CSVSeperator + "" + CSVSeperator + "true\n";
                 } else {
+                    System.out.println("writeCurrentTemperature oldTemperature");
                     String oldTemperature = getCSVCell("files/sensoren/" + tid + "/current.csv", "Temperatur", 1);
                     s = tid + CSVSeperator + oldTemperature + CSVSeperator + "false\n";
                 }
@@ -313,7 +303,7 @@ public class Reader extends PulsarMX {
 
             try {
                 FileWriter writer = new FileWriter(file, false);
-                writer.write("TagId;Temperatur;NotConnected\n" + s);
+                writer.write("TagId;Temperature;NotConnected\n" + s);
                 writer.close();
             } catch (IOException e) {
                 logger.log("Reader.writeCurrentTemperature(): IOException: " + e.toString());
@@ -402,7 +392,7 @@ public class Reader extends PulsarMX {
                 writer.write("Id" + CSVSeperator + "NotConnected" + CSVSeperator + "MissingTids" + CSVSeperator + "\n");
                 writer.write(this.getIdentifier() + CSVSeperator + String.valueOf(!state) + CSVSeperator);
                 writer.close();
-            }else{
+            } else {
                 ArrayList<List<String>> readerCurrentCSV = getCSVasArrayList(pathToFile);
                 readerCurrentCSV.get(1).set(1, String.valueOf(!state));
 
@@ -439,7 +429,7 @@ public class Reader extends PulsarMX {
                 }
             }
             Collections.sort(newTids);
-            for(String tid : newTids){
+            for (String tid : newTids) {
                 s += tid + ",";
             }
             if (s.length() > 0) s = s.substring(0, s.length() - 1); //letztes Komma weg
@@ -474,6 +464,22 @@ public class Reader extends PulsarMX {
             logger.log("Reader.addMissingTIDs(): RFIDReaderException: " + e.toString());
         } catch (IOException e) {
             logger.log("Reader.addMissingTIDs(): IOException: " + e.toString());
+        }
+    }
+
+    public void checkMaxTemp(String tid, Double temperature) {
+        String csvMaxTemp = getCSVCell("files/sensoren/" + tid + "/config.csv", "MaxTemperatur", 1);
+        Double maxTemp = Double.parseDouble(csvMaxTemp);
+        if (temperature > maxTemp && maxTemp != 0 && temperature != -300) {
+            logger.log(tid + ": Max Temperature reached! Temperature: " + temperature);
+        }
+    }
+
+    public void checkMinTemp(String tid, Double temperature) {
+        String csvMinTemp = getCSVCell("files/sensoren/" + tid + "/config.csv", "MinTemperatur", 1);
+        Double minTemp = Double.parseDouble(csvMinTemp);
+        if (temperature > minTemp && minTemp != 0 && temperature != -300) {
+            logger.log(tid + ": Min Temperature reached! Temperature: " + temperature);
         }
     }
 
