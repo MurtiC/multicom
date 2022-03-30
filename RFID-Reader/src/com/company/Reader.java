@@ -216,7 +216,6 @@ public class Reader extends PulsarMX {
         File dir = new File(pathToDir);
         File history = new File(pathToFile);
 
-        System.out.println("writeTemperature tidConnection");
         String tidConnection = getCSVCell(pathToDir + "/current.csv", "NotConnected", 1);
         if (temperature == -300 && tidConnection.equals("false")) {
             return;

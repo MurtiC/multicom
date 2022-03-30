@@ -54,8 +54,8 @@ public class Main {
                         double temperature = pulsarMX.readTemperature(tids.get(i));
 
                         LocalDateTime dateTime = LocalDateTime.now();
-                        pulsarMX.writeTemperature(tids.get(i), temperature, dateTime);
                         pulsarMX.writeCurrentTemperature(tids.get(i), temperature, dateTime);
+                        pulsarMX.writeTemperature(tids.get(i), temperature, dateTime);
                         pulsarMX.checkMaxTemp(tids.get(i), temperature);
                         pulsarMX.checkMinTemp(tids.get(i), temperature);
                     }
