@@ -37,7 +37,7 @@ wsl -- ip -o -4 -json addr list eth0 `
 ````
 ````
 Output:
-123.123.123.123
+192.168.2.1
 ````
 
 This Ip must inserted to the server config:  
