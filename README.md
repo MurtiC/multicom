@@ -45,7 +45,7 @@ This Ip must inserted to the server config:
 
 ```` csv
 Ip;Port
-123.123.123.123;4840
+192.168.2.1;4841
 ````
 
 
