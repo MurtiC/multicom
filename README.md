@@ -48,6 +48,11 @@ Ip;Port
 192.168.2.1;4841
 ````
 
+To change the IP Adress of the Reading Device, use the TUC Config Manager from the link below:
+```` 
+https://www.metratec.com/de/support/downloads/
+```` 
+
 
 ### Start
 To Start the server use:  
